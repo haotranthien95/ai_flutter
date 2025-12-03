@@ -28,8 +28,8 @@
 
 **Purpose**: Initialize Flutter project with dependencies and basic structure
 
-- [ ] **T001** Create Flutter project structure per `plan.md` (lib/, test/, assets/ directories)
-- [ ] **T002** Configure `pubspec.yaml` with all dependencies from `research.md`:
+- [x] **T001** Create Flutter project structure per `plan.md` (lib/, test/, assets/ directories)
+- [x] **T002** Configure `pubspec.yaml` with all dependencies from `research.md`:
   - State management: `flutter_riverpod: ^2.4.0`
   - HTTP: `dio: ^5.4.0`
   - Routing: `go_router: ^12.1.3`
@@ -40,7 +40,7 @@
   - Forms: `flutter_form_builder: ^9.1.1`
   - i18n: `intl: ^0.18.1`, `flutter_localizations` (SDK)
   - Testing: `mockito: ^5.4.4`, `build_runner: ^2.4.7`, `http_mock_adapter: ^0.6.0`
-- [ ] **T003** [P] Configure linting with `analysis_options.yaml` (strict lint rules per constitution)
+- [x] **T003** [P] Configure linting with `analysis_options.yaml` (strict lint rules per constitution)
 - [ ] **T004** [P] Setup Vietnamese localization files in `lib/l10n/app_vi.arb`
 - [ ] **T005** [P] Create `lib/app/config.dart` for environment configuration (API URLs, timeouts)
 - [ ] **T006** [P] Initialize Firebase project and add config files:
