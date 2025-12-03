@@ -298,7 +298,7 @@
 
 #### Routing Integration
 
-- [ ] **T071** [US1] Add routes to `lib/app/routes.dart`:
+- [x] **T071** [US1] Add routes to `lib/app/routes.dart`:
   - `/` → HomeScreen
   - `/search` → SearchScreen
   - `/product/:id` → ProductDetailScreen
