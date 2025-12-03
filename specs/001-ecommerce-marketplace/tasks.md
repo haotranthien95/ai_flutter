@@ -151,19 +151,19 @@
 
 #### Unit Tests
 
-- [ ] **T040** [P] [US1] Unit test for `GetProductsUseCase` in `test/unit/features/home/domain/use_cases/get_products_test.dart`:
+- [x] **T040** [P] [US1] Unit test for `GetProductsUseCase` in `test/unit/features/home/domain/use_cases/get_products_test.dart`:
   - Test successful product fetch
   - Test error handling (network, server errors)
   - Mock `ProductRepository`
-- [ ] **T041** [P] [US1] Unit test for `SearchProductsUseCase` in `test/unit/features/home/domain/use_cases/search_products_test.dart`:
+- [x] **T041** [P] [US1] Unit test for `SearchProductsUseCase` in `test/unit/features/home/domain/use_cases/search_products_test.dart`:
   - Test search with keywords
   - Test empty results
   - Test pagination
-- [ ] **T042** [P] [US1] Unit test for `GetProductDetailUseCase` in `test/unit/features/product_detail/domain/use_cases/get_product_detail_test.dart`:
+- [x] **T042** [P] [US1] Unit test for `GetProductDetailUseCase` in `test/unit/features/product_detail/domain/use_cases/get_product_detail_test.dart`:
   - Test successful fetch with variants
   - Test 404 handling
-- [ ] **T043** [P] [US1] Unit test for `GetCategoriesUseCase` in `test/unit/features/home/domain/use_cases/get_categories_test.dart`
-- [ ] **T044** [P] [US1] Unit test for `ProductRepositoryImpl` in `test/unit/features/home/data/repositories/product_repository_impl_test.dart`:
+- [x] **T043** [P] [US1] Unit test for `GetCategoriesUseCase` in `test/unit/features/home/domain/use_cases/get_categories_test.dart`
+- [x] **T044** [P] [US1] Unit test for `ProductRepositoryImpl` in `test/unit/features/home/data/repositories/product_repository_impl_test.dart`:
   - Mock remote data source
   - Test data transformation
 
@@ -200,13 +200,13 @@
 
 #### Data Layer
 
-- [ ] **T050** [P] [US1] Create remote data source in `lib/features/home/data/data_sources/product_remote_data_source.dart`:
+- [x] **T050** [P] [US1] Create remote data source in `lib/features/home/data/data_sources/product_remote_data_source.dart`:
   - `fetchProducts(limit, cursor, categoryId, search, filters)` → calls GET `/products` API
   - `fetchProductDetail(productId)` → calls GET `/products/{id}` API
   - `fetchCategories()` → calls GET `/categories` API
   - `searchAutocomplete(query)` → calls GET `/products/search/autocomplete` API
   - Handle Dio exceptions
-- [ ] **T051** [US1] Create product repository implementation in `lib/features/home/data/repositories/product_repository_impl.dart`:
+- [x] **T051** [US1] Create product repository implementation in `lib/features/home/data/repositories/product_repository_impl.dart`:
   - Implements `ProductRepository` interface
   - Delegates to `ProductRemoteDataSource`
   - Maps DTOs to domain entities
@@ -214,7 +214,7 @@
 
 #### Domain Layer
 
-- [ ] **T052** [P] [US1] Create product repository interface in `lib/features/home/domain/repositories/product_repository.dart`:
+- [x] **T052** [P] [US1] Create product repository interface in `lib/features/home/domain/repositories/product_repository.dart`:
   - Abstract methods: `getProducts()`, `searchProducts()`, `getCategories()`
 - [ ] **T053** [P] [US1] Create `GetProductsUseCase` in `lib/features/home/domain/use_cases/get_products.dart`:
   - Constructor injection of `ProductRepository`
