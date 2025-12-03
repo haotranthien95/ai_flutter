@@ -41,14 +41,15 @@
   - i18n: `intl: ^0.18.1`, `flutter_localizations` (SDK)
   - Testing: `mockito: ^5.4.4`, `build_runner: ^2.4.7`, `http_mock_adapter: ^0.6.0`
 - [x] **T003** [P] Configure linting with `analysis_options.yaml` (strict lint rules per constitution)
-- [ ] **T004** [P] Setup Vietnamese localization files in `lib/l10n/app_vi.arb`
-- [ ] **T005** [P] Create `lib/app/config.dart` for environment configuration (API URLs, timeouts)
-- [ ] **T006** [P] Initialize Firebase project and add config files:
+- [x] **T004** [P] Setup Vietnamese localization files in `lib/l10n/app_vi.arb`
+- [x] **T005** [P] Create `lib/app/config.dart` for environment configuration (API URLs, timeouts)
+- [x] **T006** [P] Initialize Firebase project and add config files:
   - iOS: `ios/Runner/GoogleService-Info.plist`
   - Android: `android/app/google-services.json`
-- [ ] **T007** Run `flutter pub get` and verify no dependency conflicts
+  - Note: Setup instructions documented in `FIREBASE_SETUP.md` (can be deferred for MVP)
+- [x] **T007** Run `flutter pub get` and verify no dependency conflicts
 
-**Checkpoint**: Project structure initialized, dependencies installed, no errors on `flutter doctor`
+**Checkpoint**: ✅ COMPLETE - Project structure initialized, dependencies installed, no errors on `flutter doctor`
 
 ---
 

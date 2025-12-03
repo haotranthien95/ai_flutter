@@ -1,0 +1,479 @@
+{
+  "@@locale": "vi",
+  "@@context": "Multi-Vendor E-Commerce Marketplace - Vietnamese Localization",
+  
+  "appName": "Chợ Online",
+  "@appName": {
+    "description": "Application name"
+  },
+
+  "home": "Trang chủ",
+  "@home": {
+    "description": "Home navigation label"
+  },
+
+  "categories": "Danh mục",
+  "@categories": {
+    "description": "Categories navigation label"
+  },
+
+  "cart": "Giỏ hàng",
+  "@cart": {
+    "description": "Shopping cart label"
+  },
+
+  "profile": "Tài khoản",
+  "@profile": {
+    "description": "User profile label"
+  },
+
+  "search": "Tìm kiếm",
+  "@search": {
+    "description": "Search placeholder"
+  },
+
+  "searchProducts": "Tìm kiếm sản phẩm...",
+  "@searchProducts": {
+    "description": "Search bar hint text"
+  },
+
+  "login": "Đăng nhập",
+  "@login": {
+    "description": "Login button text"
+  },
+
+  "register": "Đăng ký",
+  "@register": {
+    "description": "Register button text"
+  },
+
+  "logout": "Đăng xuất",
+  "@logout": {
+    "description": "Logout button text"
+  },
+
+  "phoneNumber": "Số điện thoại",
+  "@phoneNumber": {
+    "description": "Phone number field label"
+  },
+
+  "password": "Mật khẩu",
+  "@password": {
+    "description": "Password field label"
+  },
+
+  "confirmPassword": "Xác nhận mật khẩu",
+  "@confirmPassword": {
+    "description": "Confirm password field label"
+  },
+
+  "fullName": "Họ và tên",
+  "@fullName": {
+    "description": "Full name field label"
+  },
+
+  "email": "Email",
+  "@email": {
+    "description": "Email field label"
+  },
+
+  "address": "Địa chỉ",
+  "@address": {
+    "description": "Address label"
+  },
+
+  "addToCart": "Thêm vào giỏ",
+  "@addToCart": {
+    "description": "Add to cart button"
+  },
+
+  "buyNow": "Mua ngay",
+  "@buyNow": {
+    "description": "Buy now button"
+  },
+
+  "checkout": "Thanh toán",
+  "@checkout": {
+    "description": "Checkout button"
+  },
+
+  "placeOrder": "Đặt hàng",
+  "@placeOrder": {
+    "description": "Place order button"
+  },
+
+  "price": "Giá",
+  "@price": {
+    "description": "Price label"
+  },
+
+  "quantity": "Số lượng",
+  "@quantity": {
+    "description": "Quantity label"
+  },
+
+  "total": "Tổng cộng",
+  "@total": {
+    "description": "Total amount label"
+  },
+
+  "subtotal": "Tạm tính",
+  "@subtotal": {
+    "description": "Subtotal label"
+  },
+
+  "shipping": "Phí vận chuyển",
+  "@shipping": {
+    "description": "Shipping fee label"
+  },
+
+  "discount": "Giảm giá",
+  "@discount": {
+    "description": "Discount label"
+  },
+
+  "applyVoucher": "Áp dụng mã giảm giá",
+  "@applyVoucher": {
+    "description": "Apply voucher button"
+  },
+
+  "orderConfirmed": "Đơn hàng đã được xác nhận",
+  "@orderConfirmed": {
+    "description": "Order confirmed message"
+  },
+
+  "orderNumber": "Mã đơn hàng",
+  "@orderNumber": {
+    "description": "Order number label"
+  },
+
+  "orderHistory": "Lịch sử đơn hàng",
+  "@orderHistory": {
+    "description": "Order history label"
+  },
+
+  "productDetail": "Chi tiết sản phẩm",
+  "@productDetail": {
+    "description": "Product detail screen title"
+  },
+
+  "description": "Mô tả",
+  "@description": {
+    "description": "Description label"
+  },
+
+  "reviews": "Đánh giá",
+  "@reviews": {
+    "description": "Reviews label"
+  },
+
+  "rating": "Xếp hạng",
+  "@rating": {
+    "description": "Rating label"
+  },
+
+  "sold": "Đã bán",
+  "@sold": {
+    "description": "Sold count label"
+  },
+
+  "inStock": "Còn hàng",
+  "@inStock": {
+    "description": "In stock status"
+  },
+
+  "outOfStock": "Hết hàng",
+  "@outOfStock": {
+    "description": "Out of stock status"
+  },
+
+  "loading": "Đang tải...",
+  "@loading": {
+    "description": "Loading indicator text"
+  },
+
+  "error": "Lỗi",
+  "@error": {
+    "description": "Error label"
+  },
+
+  "retry": "Thử lại",
+  "@retry": {
+    "description": "Retry button"
+  },
+
+  "cancel": "Hủy",
+  "@cancel": {
+    "description": "Cancel button"
+  },
+
+  "save": "Lưu",
+  "@save": {
+    "description": "Save button"
+  },
+
+  "edit": "Chỉnh sửa",
+  "@edit": {
+    "description": "Edit button"
+  },
+
+  "delete": "Xóa",
+  "@delete": {
+    "description": "Delete button"
+  },
+
+  "confirm": "Xác nhận",
+  "@confirm": {
+    "description": "Confirm button"
+  },
+
+  "emptyCart": "Giỏ hàng trống",
+  "@emptyCart": {
+    "description": "Empty cart message"
+  },
+
+  "noProducts": "Không có sản phẩm",
+  "@noProducts": {
+    "description": "No products message"
+  },
+
+  "selectAddress": "Chọn địa chỉ",
+  "@selectAddress": {
+    "description": "Select address label"
+  },
+
+  "addAddress": "Thêm địa chỉ mới",
+  "@addAddress": {
+    "description": "Add new address button"
+  },
+
+  "defaultAddress": "Địa chỉ mặc định",
+  "@defaultAddress": {
+    "description": "Default address label"
+  },
+
+  "cashOnDelivery": "Thanh toán khi nhận hàng (COD)",
+  "@cashOnDelivery": {
+    "description": "Cash on delivery payment method"
+  },
+
+  "orderPlaced": "Đặt hàng thành công",
+  "@orderPlaced": {
+    "description": "Order placed success message"
+  },
+
+  "thankYou": "Cảm ơn bạn đã đặt hàng!",
+  "@thankYou": {
+    "description": "Thank you message after order"
+  },
+
+  "continueShoppingButton": "Tiếp tục mua sắm",
+  "@continueShoppingButton": {
+    "description": "Continue shopping button"
+  },
+
+  "viewOrder": "Xem đơn hàng",
+  "@viewOrder": {
+    "description": "View order button"
+  },
+
+  "filter": "Lọc",
+  "@filter": {
+    "description": "Filter button"
+  },
+
+  "sort": "Sắp xếp",
+  "@sort": {
+    "description": "Sort button"
+  },
+
+  "priceRange": "Khoảng giá",
+  "@priceRange": {
+    "description": "Price range filter label"
+  },
+
+  "from": "Từ",
+  "@from": {
+    "description": "From (price range)"
+  },
+
+  "to": "Đến",
+  "@to": {
+    "description": "To (price range)"
+  },
+
+  "apply": "Áp dụng",
+  "@apply": {
+    "description": "Apply button"
+  },
+
+  "clear": "Xóa",
+  "@clear": {
+    "description": "Clear button"
+  },
+
+  "newest": "Mới nhất",
+  "@newest": {
+    "description": "Sort by newest"
+  },
+
+  "bestSelling": "Bán chạy",
+  "@bestSelling": {
+    "description": "Sort by best selling"
+  },
+
+  "priceLowToHigh": "Giá thấp đến cao",
+  "@priceLowToHigh": {
+    "description": "Sort by price low to high"
+  },
+
+  "priceHighToLow": "Giá cao đến thấp",
+  "@priceHighToLow": {
+    "description": "Sort by price high to low"
+  },
+
+  "topRated": "Đánh giá cao",
+  "@topRated": {
+    "description": "Sort by top rated"
+  },
+
+  "shop": "Cửa hàng",
+  "@shop": {
+    "description": "Shop label"
+  },
+
+  "followers": "Người theo dõi",
+  "@followers": {
+    "description": "Followers count label"
+  },
+
+  "products": "Sản phẩm",
+  "@products": {
+    "description": "Products label"
+  },
+
+  "verification": "Xác thực",
+  "@verification": {
+    "description": "Verification label"
+  },
+
+  "enterOTP": "Nhập mã OTP",
+  "@enterOTP": {
+    "description": "Enter OTP prompt"
+  },
+
+  "resendOTP": "Gửi lại mã OTP",
+  "@resendOTP": {
+    "description": "Resend OTP button"
+  },
+
+  "verify": "Xác thực",
+  "@verify": {
+    "description": "Verify button"
+  },
+
+  "forgotPassword": "Quên mật khẩu?",
+  "@forgotPassword": {
+    "description": "Forgot password link"
+  },
+
+  "resetPassword": "Đặt lại mật khẩu",
+  "@resetPassword": {
+    "description": "Reset password button"
+  },
+
+  "newPassword": "Mật khẩu mới",
+  "@newPassword": {
+    "description": "New password field"
+  },
+
+  "manageAddresses": "Quản lý địa chỉ",
+  "@manageAddresses": {
+    "description": "Manage addresses label"
+  },
+
+  "editProfile": "Chỉnh sửa hồ sơ",
+  "@editProfile": {
+    "description": "Edit profile button"
+  },
+
+  "changeAvatar": "Đổi ảnh đại diện",
+  "@changeAvatar": {
+    "description": "Change avatar button"
+  },
+
+  "recipientName": "Tên người nhận",
+  "@recipientName": {
+    "description": "Recipient name field"
+  },
+
+  "streetAddress": "Địa chỉ chi tiết",
+  "@streetAddress": {
+    "description": "Street address field"
+  },
+
+  "ward": "Phường/Xã",
+  "@ward": {
+    "description": "Ward/commune field"
+  },
+
+  "district": "Quận/Huyện",
+  "@district": {
+    "description": "District field"
+  },
+
+  "city": "Tỉnh/Thành phố",
+  "@city": {
+    "description": "City/province field"
+  },
+
+  "setAsDefault": "Đặt làm địa chỉ mặc định",
+  "@setAsDefault": {
+    "description": "Set as default address checkbox"
+  },
+
+  "networkError": "Lỗi kết nối mạng",
+  "@networkError": {
+    "description": "Network error message"
+  },
+
+  "serverError": "Lỗi máy chủ",
+  "@serverError": {
+    "description": "Server error message"
+  },
+
+  "unauthorized": "Vui lòng đăng nhập lại",
+  "@unauthorized": {
+    "description": "Unauthorized error message"
+  },
+
+  "validationError": "Dữ liệu không hợp lệ",
+  "@validationError": {
+    "description": "Validation error message"
+  },
+
+  "requiredField": "Trường này là bắt buộc",
+  "@requiredField": {
+    "description": "Required field error"
+  },
+
+  "invalidPhoneNumber": "Số điện thoại không hợp lệ",
+  "@invalidPhoneNumber": {
+    "description": "Invalid phone number error"
+  },
+
+  "invalidEmail": "Email không hợp lệ",
+  "@invalidEmail": {
+    "description": "Invalid email error"
+  },
+
+  "passwordTooShort": "Mật khẩu phải có ít nhất 8 ký tự",
+  "@passwordTooShort": {
+    "description": "Password too short error"
+  },
+
+  "passwordMismatch": "Mật khẩu không khớp",
+  "@passwordMismatch": {
+    "description": "Password mismatch error"
+  }
+}
