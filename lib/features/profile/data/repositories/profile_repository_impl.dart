@@ -78,16 +78,12 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<void> deleteAddress({
-    required String addressId,
-  }) async {
+  Future<void> deleteAddress(String addressId) async {
     return _dataSource.deleteAddress(addressId: addressId);
   }
 
   @override
-  Future<Address> setDefaultAddress({
-    required String addressId,
-  }) async {
+  Future<Address> setDefaultAddress(String addressId) async {
     return _dataSource.setDefaultAddress(addressId: addressId);
   }
 }
