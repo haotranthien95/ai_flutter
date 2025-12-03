@@ -61,83 +61,83 @@
 
 ### Core API Client
 
-- [ ] **T008** Create Dio HTTP client in `lib/core/api/api_client.dart` with base configuration:
+- [x] **T008** Create Dio HTTP client in `lib/core/api/api_client.dart` with base configuration:
   - Base URL from `config.dart`
   - Connect/receive timeouts
   - JSON serialization
-- [ ] **T009** Implement auth interceptor in `lib/core/api/interceptors/auth_interceptor.dart`:
+- [x] **T009** Implement auth interceptor in `lib/core/api/interceptors/auth_interceptor.dart`:
   - Inject JWT token from secure storage
   - Handle 401 responses (token refresh)
-- [ ] **T010** [P] Implement logging interceptor in `lib/core/api/interceptors/logging_interceptor.dart`:
+- [x] **T010** [P] Implement logging interceptor in `lib/core/api/interceptors/logging_interceptor.dart`:
   - Log requests, responses, errors (dev mode only)
-- [ ] **T011** [P] Implement error interceptor in `lib/core/api/interceptors/error_interceptor.dart`:
+- [x] **T011** [P] Implement error interceptor in `lib/core/api/interceptors/error_interceptor.dart`:
   - Map HTTP errors to `AppException` types
   - Centralized error handling
-- [ ] **T012** Create `lib/core/api/api_error.dart` with exception classes:
+- [x] **T012** Create `lib/core/api/api_error.dart` with exception classes:
   - `NetworkException`, `ServerException`, `UnauthorizedException`, `ValidationException`
 
 ### Storage Infrastructure
 
-- [ ] **T013** [P] Create `lib/core/storage/local_storage.dart` wrapper for SharedPreferences:
+- [x] **T013** [P] Create `lib/core/storage/local_storage.dart` wrapper for SharedPreferences:
   - Methods: `getString()`, `setString()`, `getBool()`, `setBool()`, `remove()`, `clear()`
-- [ ] **T014** [P] Create `lib/core/storage/secure_storage.dart` wrapper for FlutterSecureStorage:
+- [x] **T014** [P] Create `lib/core/storage/secure_storage.dart` wrapper for FlutterSecureStorage:
   - Methods: `saveToken()`, `getToken()`, `deleteToken()`
   - Store JWT access/refresh tokens
-- [ ] **T015** [P] Create SQLite database helper in `lib/core/storage/database/database_helper.dart`:
+- [x] **T015** [P] Create SQLite database helper in `lib/core/storage/database/database_helper.dart`:
   - Initialize database with version management
   - Tables: `cart_items`, `favorite_products`
-- [ ] **T016** Create cart local data source in `lib/core/storage/database/cart_local_data_source.dart`:
+- [x] **T016** Create cart local data source in `lib/core/storage/database/cart_local_data_source.dart`:
   - Methods: `insertCartItem()`, `getCartItems()`, `updateQuantity()`, `deleteCartItem()`, `clearCart()`
 
 ### Entity Models (Core)
 
-- [ ] **T017** [P] Create `lib/core/models/user.dart` with User entity:
+- [x] **T017** [P] Create `lib/core/models/user.dart` with User entity:
   - Fields per `data-model.md`: id, phoneNumber, fullName, avatarUrl, role, etc.
   - `fromJson()`, `toJson()`, `copyWith()` methods
-- [ ] **T018** [P] Create `lib/core/models/address.dart` with Address entity
-- [ ] **T019** [P] Create `lib/core/models/product.dart` with Product entity
-- [ ] **T020** [P] Create `lib/core/models/product_variant.dart` with ProductVariant entity
-- [ ] **T021** [P] Create `lib/core/models/category.dart` with Category entity
-- [ ] **T022** [P] Create `lib/core/models/cart_item.dart` with CartItem entity
-- [ ] **T023** [P] Create `lib/core/models/order.dart` with Order entity
-- [ ] **T024** [P] Create `lib/core/models/order_item.dart` with OrderItem entity
-- [ ] **T025** [P] Create `lib/core/models/shop.dart` with Shop entity
-- [ ] **T026** [P] Create `lib/core/models/review.dart` with Review entity
-- [ ] **T027** [P] Create `lib/core/models/voucher.dart` with Voucher entity
+- [x] **T018** [P] Create `lib/core/models/address.dart` with Address entity
+- [x] **T019** [P] Create `lib/core/models/product.dart` with Product entity
+- [x] **T020** [P] Create `lib/core/models/product_variant.dart` with ProductVariant entity
+- [x] **T021** [P] Create `lib/core/models/category.dart` with Category entity
+- [x] **T022** [P] Create `lib/core/models/cart_item.dart` with CartItem entity
+- [x] **T023** [P] Create `lib/core/models/order.dart` with Order entity
+- [x] **T024** [P] Create `lib/core/models/order_item.dart` with OrderItem entity
+- [x] **T025** [P] Create `lib/core/models/shop.dart` with Shop entity
+- [x] **T026** [P] Create `lib/core/models/review.dart` with Review entity
+- [x] **T027** [P] Create `lib/core/models/voucher.dart` with Voucher entity
 
 ### Shared Widgets
 
-- [ ] **T028** [P] Create `lib/core/widgets/loading_indicator.dart` (CircularProgressIndicator wrapper)
-- [ ] **T029** [P] Create `lib/core/widgets/error_view.dart` (error display with retry button)
-- [ ] **T030** [P] Create `lib/core/widgets/empty_state.dart` (empty list placeholder)
-- [ ] **T031** [P] Create `lib/core/widgets/custom_button.dart` (styled primary/secondary buttons)
-- [ ] **T032** [P] Create `lib/core/widgets/product_card.dart` (reusable product tile for lists)
+- [x] **T028** [P] Create `lib/core/widgets/loading_indicator.dart` (CircularProgressIndicator wrapper)
+- [x] **T029** [P] Create `lib/core/widgets/error_view.dart` (error display with retry button)
+- [x] **T030** [P] Create `lib/core/widgets/empty_state.dart` (empty list placeholder)
+- [x] **T031** [P] Create `lib/core/widgets/custom_button.dart` (styled primary/secondary buttons)
+- [x] **T032** [P] Create `lib/core/widgets/product_card.dart` (reusable product tile for lists)
 
 ### Utilities
 
-- [ ] **T033** [P] Create `lib/core/utils/formatters.dart`:
+- [x] **T033** [P] Create `lib/core/utils/formatters.dart`:
   - `formatVND()` - currency formatting (e.g., "299,000 ₫")
   - `formatDate()` - Vietnamese date format
-- [ ] **T034** [P] Create `lib/core/utils/validators.dart`:
+- [x] **T034** [P] Create `lib/core/utils/validators.dart`:
   - `isValidVietnamesePhone()`, `isValidEmail()`, `isValidPrice()`, `isValidProductTitle()`
-- [ ] **T035** [P] Create `lib/core/utils/image_helper.dart`:
+- [x] **T035** [P] Create `lib/core/utils/image_helper.dart`:
   - `compressImage()` - reduce image size before upload
   - `pickImageFromGallery()`, `pickImageFromCamera()`
 
 ### App Configuration
 
-- [ ] **T036** Create Material Design 3 theme in `lib/app/theme.dart`:
+- [x] **T036** Create Material Design 3 theme in `lib/app/theme.dart`:
   - Color scheme, typography, component themes
   - Light theme (dark theme optional for MVP)
-- [ ] **T037** Create GoRouter configuration in `lib/app/routes.dart`:
+- [x] **T037** Create GoRouter configuration in `lib/app/routes.dart`:
   - Named routes for all screens
   - Deep linking support
   - Auth guard (redirect to login if not authenticated)
-- [ ] **T038** Create Riverpod providers container in `lib/app/providers.dart`:
+- [x] **T038** Create Riverpod providers container in `lib/app/providers.dart`:
   - `dioProvider`, `apiClientProvider`, `localStorageProvider`, `secureStorageProvider`
-- [ ] **T039** Update `lib/main.dart` with ProviderScope, MaterialApp.router, theme
+- [x] **T039** Update `lib/main.dart` with ProviderScope, MaterialApp.router, theme
 
-**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
+**Checkpoint**: ✅ COMPLETE - Foundation ready - user story implementation can now begin in parallel
 
 ---
 

@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  path: ^1.9.0
   flutter_localizations:
     sdk: flutter
 
@@ -45,6 +46,7 @@ dependencies:
   # Image Handling
   cached_network_image: ^3.3.0
   image_picker: ^1.0.5
+  flutter_image_compress: ^2.1.0
 
   # Storage
   shared_preferences: ^2.2.2
