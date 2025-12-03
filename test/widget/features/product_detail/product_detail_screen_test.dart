@@ -103,8 +103,8 @@ void main() {
         ProviderScope(
           overrides: [
             productDetailProviderProvider('1').overrideWith(
-              (ref) =>
-                  ProductDetailProvider('1')..state = const AsyncValue.loading(),
+              (ref) => ProductDetailProvider('1')
+                ..state = const AsyncValue.loading(),
             ),
           ],
           child: const MaterialApp(
@@ -371,7 +371,8 @@ void main() {
                 ..state = AsyncValue.data(testProduct),
             ),
             // Mock as guest (unauthenticated)
-            authStateProvider.overrideWith((ref) => const AsyncValue.data(null)),
+            authStateProvider
+                .overrideWith((ref) => const AsyncValue.data(null)),
           ],
           child: const MaterialApp(
             home: ProductDetailScreen(productId: '1'),

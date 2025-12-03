@@ -27,8 +27,6 @@ void main() {
         level: 0,
         sortOrder: 1,
         isActive: true,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
       ),
       Category(
         id: '2',
@@ -38,8 +36,6 @@ void main() {
         level: 0,
         sortOrder: 2,
         isActive: true,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
       ),
       Category(
         id: '3',
@@ -49,15 +45,13 @@ void main() {
         level: 1,
         sortOrder: 1,
         isActive: true,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
       ),
     ];
 
     test('should fetch all categories successfully', () async {
       // Arrange
       when(mockRepository.getCategories())
-          .thenAnswer((_) async => testCategories);
+          .thenAnswer((_) async => List<Category>.from(testCategories));
 
       // Act
       final result = await useCase.execute();
@@ -71,7 +65,7 @@ void main() {
       // Arrange
       final rootCategories = testCategories.where((c) => c.isRoot).toList();
       when(mockRepository.getCategories())
-          .thenAnswer((_) async => testCategories);
+          .thenAnswer((_) async => List<Category>.from(testCategories));
 
       // Act
       final result = await useCase.execute();
@@ -108,7 +102,7 @@ void main() {
     test('should handle hierarchical category structure', () async {
       // Arrange
       when(mockRepository.getCategories())
-          .thenAnswer((_) async => testCategories);
+          .thenAnswer((_) async => List<Category>.from(testCategories));
 
       // Act
       final result = await useCase.execute();
@@ -138,12 +132,10 @@ void main() {
           level: 0,
           sortOrder: 3,
           isActive: false,
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
         ),
       ];
       when(mockRepository.getCategories())
-          .thenAnswer((_) async => mixedCategories);
+          .thenAnswer((_) async => List<Category>.from(mixedCategories));
 
       // Act
       final result = await useCase.execute();

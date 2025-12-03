@@ -26,6 +26,7 @@ void main() {
         title: 'Test Product 1',
         description: 'Description 1',
         basePrice: 100000,
+        currency: 'VND',
         totalStock: 50,
         images: ['image1.jpg'],
         condition: ProductCondition.newProduct,
@@ -43,6 +44,7 @@ void main() {
         title: 'Test Product 2',
         description: 'Description 2',
         basePrice: 200000,
+        currency: 'VND',
         totalStock: 30,
         images: ['image2.jpg'],
         condition: ProductCondition.newProduct,
@@ -63,7 +65,7 @@ void main() {
         categoryId: anyNamed('categoryId'),
         filters: anyNamed('filters'),
         sortBy: anyNamed('sortBy'),
-      )).thenAnswer((_) async => testProducts);
+      )).thenAnswer((_) async => List<Product>.from(testProducts));
 
       // Act
       final result = await useCase.execute();
@@ -87,7 +89,7 @@ void main() {
         categoryId: anyNamed('categoryId'),
         filters: anyNamed('filters'),
         sortBy: anyNamed('sortBy'),
-      )).thenAnswer((_) async => testProducts);
+      )).thenAnswer((_) async => List<Product>.from(testProducts));
 
       // Act
       await useCase.execute();
@@ -111,7 +113,7 @@ void main() {
         categoryId: categoryId,
         filters: anyNamed('filters'),
         sortBy: anyNamed('sortBy'),
-      )).thenAnswer((_) async => testProducts);
+      )).thenAnswer((_) async => List<Product>.from(testProducts));
 
       // Act
       await useCase.execute(categoryId: categoryId);
@@ -152,7 +154,7 @@ void main() {
         categoryId: anyNamed('categoryId'),
         filters: anyNamed('filters'),
         sortBy: sortBy,
-      )).thenAnswer((_) async => testProducts);
+      )).thenAnswer((_) async => List<Product>.from(testProducts));
 
       // Act
       await useCase.execute(sortBy: sortBy);
@@ -180,7 +182,7 @@ void main() {
         categoryId: anyNamed('categoryId'),
         filters: filters,
         sortBy: anyNamed('sortBy'),
-      )).thenAnswer((_) async => testProducts);
+      )).thenAnswer((_) async => List<Product>.from(testProducts));
 
       // Act
       await useCase.execute(filters: filters);
@@ -204,7 +206,7 @@ void main() {
         categoryId: anyNamed('categoryId'),
         filters: anyNamed('filters'),
         sortBy: anyNamed('sortBy'),
-      )).thenAnswer((_) async => testProducts);
+      )).thenAnswer((_) async => List<Product>.from(testProducts));
 
       // Act
       await useCase.execute(cursor: cursor);

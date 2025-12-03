@@ -211,7 +211,7 @@ void main() {
       // Assert
       expect(find.text('iPhone 15 Pro Max 256GB'), findsOneWidget);
       expect(find.byType(CachedNetworkImage), findsOneWidget);
-      
+
       // Check if layout is horizontal (Row-based)
       final row = find.ancestor(
         of: find.text('iPhone 15 Pro Max 256GB'),

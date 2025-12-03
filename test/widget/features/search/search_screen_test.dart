@@ -251,8 +251,7 @@ void main() {
       expect(find.text('Không tìm thấy kết quả'), findsOneWidget);
     });
 
-    testWidgets('should trigger search when suggestion tapped',
-        (tester) async {
+    testWidgets('should trigger search when suggestion tapped', (tester) async {
       // Arrange
       bool searchTriggered = false;
       await tester.pumpWidget(
@@ -336,7 +335,7 @@ void main() {
       await tester.enterText(find.byType(TextField), 'iPh');
       await tester.pump(const Duration(milliseconds: 100));
       await tester.enterText(find.byType(TextField), 'iPhon');
-      
+
       // Wait for debounce period
       await tester.pump(const Duration(milliseconds: 300));
 

@@ -26,6 +26,7 @@ void main() {
         title: 'iPhone 15 Pro Max',
         description: 'Latest Apple phone',
         basePrice: 25000000,
+        currency: 'VND',
         totalStock: 50,
         images: ['iphone.jpg'],
         condition: ProductCondition.newProduct,
@@ -47,7 +48,7 @@ void main() {
         cursor: anyNamed('cursor'),
         filters: anyNamed('filters'),
         sortBy: anyNamed('sortBy'),
-      )).thenAnswer((_) async => testProducts);
+      )).thenAnswer((_) async => List<Product>.from(testProducts));
 
       // Act
       final result = await useCase.execute(query: keyword);
@@ -92,7 +93,7 @@ void main() {
         cursor: cursor,
         filters: anyNamed('filters'),
         sortBy: anyNamed('sortBy'),
-      )).thenAnswer((_) async => testProducts);
+      )).thenAnswer((_) async => List<Product>.from(testProducts));
 
       // Act
       await useCase.execute(query: keyword, limit: limit, cursor: cursor);
@@ -147,7 +148,7 @@ void main() {
         cursor: anyNamed('cursor'),
         filters: filters,
         sortBy: anyNamed('sortBy'),
-      )).thenAnswer((_) async => testProducts);
+      )).thenAnswer((_) async => List<Product>.from(testProducts));
 
       // Act
       await useCase.execute(query: keyword, filters: filters);
@@ -172,7 +173,7 @@ void main() {
         cursor: anyNamed('cursor'),
         filters: anyNamed('filters'),
         sortBy: sortBy,
-      )).thenAnswer((_) async => testProducts);
+      )).thenAnswer((_) async => List<Product>.from(testProducts));
 
       // Act
       await useCase.execute(query: keyword, sortBy: sortBy);

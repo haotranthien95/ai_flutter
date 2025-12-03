@@ -33,11 +33,13 @@ void main() {
       // Should see home screen with products (or loading indicator initially)
       // Allow time for products to load
       await tester.pump(const Duration(seconds: 1));
-      
+
       // Look for either loading indicator or product grid
-      final loadingOrProducts = find.byType(CircularProgressIndicator).evaluate().isNotEmpty ||
-          find.byType(ProductCard).evaluate().isNotEmpty;
-      expect(loadingOrProducts, isTrue, reason: 'Should show loading or products');
+      final loadingOrProducts =
+          find.byType(CircularProgressIndicator).evaluate().isNotEmpty ||
+              find.byType(ProductCard).evaluate().isNotEmpty;
+      expect(loadingOrProducts, isTrue,
+          reason: 'Should show loading or products');
 
       // Wait for products to finish loading
       await tester.pumpAndSettle(const Duration(seconds: 3));
@@ -188,7 +190,7 @@ void main() {
 
       // Find category chips
       final categoryChips = find.byType(Chip);
-      
+
       if (categoryChips.evaluate().length > 1) {
         // Tap second category
         await tester.tap(categoryChips.at(1));
@@ -224,7 +226,7 @@ void main() {
 
       // Find scrollable widget
       final scrollable = find.byType(RefreshIndicator);
-      
+
       if (scrollable.evaluate().isNotEmpty) {
         // Pull down to refresh
         await tester.drag(scrollable, const Offset(0, 300));
@@ -258,7 +260,7 @@ void main() {
       await tester.pumpAndSettle();
 
       final productCards = find.byType(ProductCard);
-      
+
       if (productCards.evaluate().length >= 2) {
         // View first product
         await tester.tap(productCards.first);
@@ -294,14 +296,14 @@ void main() {
 
       // Find cart icon in app bar
       final cartIcon = find.byIcon(Icons.shopping_cart);
-      
+
       if (cartIcon.evaluate().isNotEmpty) {
         await tester.tap(cartIcon);
         await tester.pumpAndSettle();
 
         // Should navigate to cart or show login if guest
         // This behavior depends on authentication state
-        
+
         // If still on home, that's okay (cart might redirect to login)
         // If navigated away, navigate back
         if (find.byType(ProductCard).evaluate().isEmpty) {
@@ -314,13 +316,13 @@ void main() {
     testWidgets('Error handling and retry', (tester) async {
       // This test would require mocking network errors
       // Placeholder for error state testing
-      
+
       app.main();
       await tester.pumpAndSettle(const Duration(seconds: 3));
 
       // If error view appears, test retry button
       final retryButton = find.text('Thử lại');
-      
+
       if (retryButton.evaluate().isNotEmpty) {
         await tester.tap(retryButton);
         await tester.pumpAndSettle(const Duration(seconds: 2));

@@ -107,8 +107,7 @@ void main() {
         ProviderScope(
           overrides: [
             homeProviderProvider.overrideWith(
-              (ref) =>
-                  HomeProvider()..state = AsyncValue.data(testProducts),
+              (ref) => HomeProvider()..state = AsyncValue.data(testProducts),
             ),
           ],
           child: const MaterialApp(
@@ -132,12 +131,11 @@ void main() {
         ProviderScope(
           overrides: [
             categoriesProviderProvider.overrideWith(
-              (ref) => CategoriesProvider()
-                ..state = AsyncValue.data(testCategories),
+              (ref) =>
+                  CategoriesProvider()..state = AsyncValue.data(testCategories),
             ),
             homeProviderProvider.overrideWith(
-              (ref) =>
-                  HomeProvider()..state = AsyncValue.data(testProducts),
+              (ref) => HomeProvider()..state = AsyncValue.data(testProducts),
             ),
           ],
           child: const MaterialApp(
@@ -151,7 +149,7 @@ void main() {
       // Assert
       expect(find.text('Electronics'), findsOneWidget);
       expect(find.text('Fashion'), findsOneWidget);
-      
+
       // Check horizontal scrollable list
       final chipList = find.byType(ListView);
       expect(chipList, findsWidgets);
@@ -163,8 +161,7 @@ void main() {
         ProviderScope(
           overrides: [
             homeProviderProvider.overrideWith(
-              (ref) =>
-                  HomeProvider()..state = AsyncValue.data(testProducts),
+              (ref) => HomeProvider()..state = AsyncValue.data(testProducts),
             ),
           ],
           child: const MaterialApp(
@@ -233,8 +230,7 @@ void main() {
         ProviderScope(
           overrides: [
             homeProviderProvider.overrideWith(
-              (ref) =>
-                  HomeProvider()..state = AsyncValue.data(testProducts),
+              (ref) => HomeProvider()..state = AsyncValue.data(testProducts),
             ),
           ],
           child: const MaterialApp(
@@ -260,12 +256,11 @@ void main() {
         ProviderScope(
           overrides: [
             categoriesProviderProvider.overrideWith(
-              (ref) => CategoriesProvider()
-                ..state = AsyncValue.data(testCategories),
+              (ref) =>
+                  CategoriesProvider()..state = AsyncValue.data(testCategories),
             ),
             homeProviderProvider.overrideWith(
-              (ref) =>
-                  HomeProvider()..state = AsyncValue.data(testProducts),
+              (ref) => HomeProvider()..state = AsyncValue.data(testProducts),
             ),
           ],
           child: const MaterialApp(
@@ -295,8 +290,7 @@ void main() {
         ProviderScope(
           overrides: [
             homeProviderProvider.overrideWith(
-              (ref) =>
-                  HomeProvider()..state = AsyncValue.data(testProducts),
+              (ref) => HomeProvider()..state = AsyncValue.data(testProducts),
             ),
           ],
           child: const MaterialApp(
@@ -321,8 +315,7 @@ void main() {
         ProviderScope(
           overrides: [
             homeProviderProvider.overrideWith(
-              (ref) =>
-                  HomeProvider()..state = AsyncValue.data(testProducts),
+              (ref) => HomeProvider()..state = AsyncValue.data(testProducts),
             ),
           ],
           child: const MaterialApp(
