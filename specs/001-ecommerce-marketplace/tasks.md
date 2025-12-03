@@ -227,11 +227,11 @@
 
 #### Presentation Layer - Home Feature
 
-- [ ] **T058** [US1] Create `HomeProvider` (Riverpod StateNotifier) in `lib/features/home/presentation/home_provider.dart`:
+- [x] **T058** [US1] Create `HomeProvider` (Riverpod StateNotifier) in `lib/features/home/presentation/home_provider.dart`:
   - State: `AsyncValue<List<Product>>` (loading, data, error)
   - Methods: `loadProducts()`, `loadMoreProducts()` (pagination), `filterByCategory(categoryId)`, `sortProducts(sortBy)`
   - Depends on `GetProductsUseCase`, `GetCategoriesUseCase`
-- [ ] **T059** [US1] Create `HomeScreen` in `lib/features/home/presentation/home_screen.dart`:
+- [x] **T059** [US1] Create `HomeScreen` in `lib/features/home/presentation/home_screen.dart`:
   - ConsumerWidget consuming `HomeProvider`
   - AppBar with search icon
   - Horizontal category chip list (scrollable)
@@ -240,10 +240,10 @@
   - Loading indicator on initial load
   - Error view with retry on failure
   - Empty state if no products
-- [ ] **T060** [P] [US1] Create category chip widget in `lib/features/home/presentation/widgets/category_chip.dart`:
+- [x] **T060** [P] [US1] Create category chip widget in `lib/features/home/presentation/widgets/category_chip.dart`:
   - Selected state styling
   - Tap callback
-- [ ] **T061** [P] [US1] Create filter bottom sheet in `lib/features/home/presentation/widgets/filter_bottom_sheet.dart`:
+- [x] **T061** [P] [US1] Create filter bottom sheet in `lib/features/home/presentation/widgets/filter_bottom_sheet.dart`:
   - Price range slider
   - Rating filter (1-5 stars)
   - Condition filter (new/used/refurbished)
