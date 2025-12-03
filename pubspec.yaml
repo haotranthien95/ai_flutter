@@ -36,6 +36,7 @@ dependencies:
 
   # State Management
   flutter_riverpod: ^2.4.0
+  freezed_annotation: ^2.4.1
 
   # HTTP Client
   dio: ^5.4.0
@@ -78,6 +79,7 @@ dev_dependencies:
   # Testing & Mocking
   mockito: ^5.4.4
   build_runner: ^2.4.7
+  freezed: ^2.4.5
   http_mock_adapter: ^0.6.0
 
 # For information on the generic Dart part of this file, see the

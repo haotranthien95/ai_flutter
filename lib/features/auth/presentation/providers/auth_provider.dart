@@ -109,7 +109,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }) async {
     state = const AuthState.loading();
     try {
-      final user = await _registerUseCase(
+      final user = await _registerUseCase.call(
         phoneNumber: phoneNumber,
         password: password,
         fullName: fullName,
@@ -134,7 +134,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }) async {
     state = const AuthState.loading();
     try {
-      await _verifyOTPUseCase(
+      await _verifyOTPUseCase.call(
         phoneNumber: phoneNumber,
         otpCode: otpCode,
       );
@@ -159,7 +159,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }) async {
     state = const AuthState.loading();
     try {
-      final user = await _loginUseCase(
+      final user = await _loginUseCase.call(
         phoneNumber: phoneNumber,
         password: password,
       );
@@ -196,7 +196,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }) async {
     state = const AuthState.loading();
     try {
-      await _forgotPasswordUseCase(phoneNumber: phoneNumber);
+      await _forgotPasswordUseCase.call(phoneNumber: phoneNumber);
       state = const AuthState.unauthenticated();
       return true;
     } on ArgumentError catch (e) {
@@ -218,7 +218,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }) async {
     state = const AuthState.loading();
     try {
-      await _resetPasswordUseCase(
+      await _resetPasswordUseCase.call(
         phoneNumber: phoneNumber,
         otpCode: otpCode,
         newPassword: newPassword,
