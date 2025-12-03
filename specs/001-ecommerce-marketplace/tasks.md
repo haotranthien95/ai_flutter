@@ -216,14 +216,14 @@
 
 - [x] **T052** [P] [US1] Create product repository interface in `lib/features/home/domain/repositories/product_repository.dart`:
   - Abstract methods: `getProducts()`, `searchProducts()`, `getCategories()`
-- [ ] **T053** [P] [US1] Create `GetProductsUseCase` in `lib/features/home/domain/use_cases/get_products.dart`:
+- [x] **T053** [P] [US1] Create `GetProductsUseCase` in `lib/features/home/domain/use_cases/get_products.dart`:
   - Constructor injection of `ProductRepository`
   - `execute(limit, cursor, categoryId, filters, sortBy)` method
   - Business logic: validation, default values
-- [ ] **T054** [P] [US1] Create `SearchProductsUseCase` in `lib/features/home/domain/use_cases/search_products.dart`
-- [ ] **T055** [P] [US1] Create `GetCategoriesUseCase` in `lib/features/home/domain/use_cases/get_categories.dart`
-- [ ] **T056** [P] [US1] Create `GetProductDetailUseCase` in `lib/features/product_detail/domain/use_cases/get_product_detail.dart`
-- [ ] **T057** [P] [US1] Create `GetProductReviewsUseCase` in `lib/features/product_detail/domain/use_cases/get_product_reviews.dart`
+- [x] **T054** [P] [US1] Create `SearchProductsUseCase` in `lib/features/home/domain/use_cases/search_products.dart`
+- [x] **T055** [P] [US1] Create `GetCategoriesUseCase` in `lib/features/home/domain/use_cases/get_categories.dart`
+- [x] **T056** [P] [US1] Create `GetProductDetailUseCase` in `lib/features/product_detail/domain/use_cases/get_product_detail.dart`
+- [x] **T057** [P] [US1] Create `GetProductReviewsUseCase` in `lib/features/product_detail/domain/use_cases/get_product_reviews.dart`
 
 #### Presentation Layer - Home Feature
 
