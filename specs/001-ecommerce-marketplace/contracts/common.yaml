@@ -1,0 +1,247 @@
+openapi: 3.0.3
+info:
+  title: Multi-Vendor Marketplace - Common Schemas
+  description: Shared data models, error responses, and pagination patterns used across all API endpoints
+  version: 1.0.0
+
+components:
+  schemas:
+    # Common Response Wrapper
+    SuccessResponse:
+      type: object
+      required: [success, data]
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          description: Response payload (varies by endpoint)
+        message:
+          type: string
+          example: "Operation successful"
+
+    ErrorResponse:
+      type: object
+      required: [success, error]
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+              enum:
+                - INVALID_REQUEST
+                - UNAUTHORIZED
+                - FORBIDDEN
+                - NOT_FOUND
+                - CONFLICT
+                - VALIDATION_ERROR
+                - RATE_LIMIT_EXCEEDED
+                - INTERNAL_SERVER_ERROR
+              example: VALIDATION_ERROR
+            message:
+              type: string
+              example: "Phone number is required"
+            details:
+              type: object
+              description: Additional error context (field-specific errors)
+              example:
+                phoneNumber: "Invalid Vietnamese phone format"
+
+    # Pagination
+    PaginationMeta:
+      type: object
+      required: [hasMore]
+      properties:
+        nextCursor:
+          type: string
+          nullable: true
+          description: Cursor for next page (base64-encoded)
+          example: "eyJpZCI6IjEyMzQ1Njc4In0="
+        hasMore:
+          type: boolean
+          example: true
+        total:
+          type: integer
+          description: Total count (optional, expensive for large datasets)
+          example: 150
+
+    # Common Entities
+    Address:
+      type: object
+      required: [id, recipientName, phoneNumber, streetAddress, ward, district, city]
+      properties:
+        id:
+          type: string
+          format: uuid
+        recipientName:
+          type: string
+          example: "Nguyễn Văn A"
+        phoneNumber:
+          type: string
+          example: "+84901234567"
+        streetAddress:
+          type: string
+          example: "123 Đường Lê Lợi"
+        ward:
+          type: string
+          example: "Phường Bến Thành"
+        district:
+          type: string
+          example: "Quận 1"
+        city:
+          type: string
+          example: "Thành phố Hồ Chí Minh"
+        isDefault:
+          type: boolean
+          example: true
+
+    Money:
+      type: object
+      required: [amount, currency]
+      properties:
+        amount:
+          type: number
+          format: decimal
+          example: 299000
+        currency:
+          type: string
+          example: "VND"
+
+    Image:
+      type: object
+      required: [url]
+      properties:
+        url:
+          type: string
+          format: uri
+          example: "https://cdn.example.com/products/img1.jpg"
+        thumbnailUrl:
+          type: string
+          format: uri
+          example: "https://cdn.example.com/products/img1_thumb.jpg"
+        width:
+          type: integer
+          example: 1024
+        height:
+          type: integer
+          example: 768
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT access token obtained from /auth/login or /auth/register
+
+  parameters:
+    LimitParam:
+      name: limit
+      in: query
+      description: Maximum number of items to return
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+    CursorParam:
+      name: cursor
+      in: query
+      description: Pagination cursor from previous response
+      schema:
+        type: string
+        nullable: true
+
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              code: INVALID_REQUEST
+              message: "Invalid request body"
+
+    Unauthorized:
+      description: Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              code: UNAUTHORIZED
+              message: "Authentication required"
+
+    Forbidden:
+      description: User lacks permission for this action
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              code: FORBIDDEN
+              message: "Insufficient permissions"
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              code: NOT_FOUND
+              message: "Resource not found"
+
+    ValidationError:
+      description: Request validation failed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              code: VALIDATION_ERROR
+              message: "Validation failed"
+              details:
+                phoneNumber: "Invalid format"
+                password: "Must be at least 8 characters"
+
+    RateLimitExceeded:
+      description: Too many requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              code: RATE_LIMIT_EXCEEDED
+              message: "Rate limit exceeded. Try again in 60 seconds"
+
+    InternalServerError:
+      description: Unexpected server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              code: INTERNAL_SERVER_ERROR
+              message: "An unexpected error occurred"

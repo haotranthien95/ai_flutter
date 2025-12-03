@@ -1,0 +1,374 @@
+openapi: 3.0.3
+info:
+  title: Orders API
+  description: Order checkout, history, tracking, and cancellation
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Development server
+
+paths:
+  /orders:
+    get:
+      summary: Get order history
+      description: List user's orders with filtering and pagination
+      tags: [Orders]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: './common.yaml#/components/parameters/LimitParam'
+        - $ref: './common.yaml#/components/parameters/CursorParam'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [PENDING, CONFIRMED, PACKED, SHIPPING, DELIVERED, COMPLETED, CANCELLED, RETURN_REQUESTED, RETURNED]
+      responses:
+        '200':
+          description: Order list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          items:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/OrderSummary'
+                          pagination:
+                            $ref: './common.yaml#/components/schemas/PaginationMeta'
+        '401':
+          $ref: './common.yaml#/components/responses/Unauthorized'
+
+    post:
+      summary: Create order (checkout)
+      description: Place order from cart items with shipping address and payment method
+      tags: [Orders]
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [items, addressId, paymentMethod]
+              properties:
+                items:
+                  type: array
+                  description: Cart items to checkout (grouped by shop creates multiple orders)
+                  items:
+                    type: object
+                    required: [cartItemId]
+                    properties:
+                      cartItemId:
+                        type: string
+                        format: uuid
+                addressId:
+                  type: string
+                  format: uuid
+                  description: Shipping address ID
+                paymentMethod:
+                  type: string
+                  enum: [COD]
+                  default: COD
+                voucherCode:
+                  type: string
+                  nullable: true
+                  description: Optional shop voucher code
+                notes:
+                  type: string
+                  maxLength: 500
+                  nullable: true
+      responses:
+        '201':
+          description: Order(s) created successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          orders:
+                            type: array
+                            description: Multiple orders if cart contains items from different shops
+                            items:
+                              $ref: '#/components/schemas/OrderDetail'
+        '400':
+          description: Invalid cart items, address, or voucher
+          content:
+            application/json:
+              schema:
+                $ref: './common.yaml#/components/schemas/ErrorResponse'
+        '401':
+          $ref: './common.yaml#/components/responses/Unauthorized'
+        '422':
+          $ref: './common.yaml#/components/responses/ValidationError'
+
+  /orders/{orderId}:
+    get:
+      summary: Get order details
+      description: Retrieve full order information including items and tracking
+      tags: [Orders]
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Order details
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/OrderDetail'
+        '401':
+          $ref: './common.yaml#/components/responses/Unauthorized'
+        '404':
+          $ref: './common.yaml#/components/responses/NotFound'
+
+  /orders/{orderId}/cancel:
+    post:
+      summary: Cancel order
+      description: Cancel order if status is PENDING or CONFIRMED
+      tags: [Orders]
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reason]
+              properties:
+                reason:
+                  type: string
+                  enum: [CHANGED_MIND, FOUND_BETTER_PRICE, ORDERED_BY_MISTAKE, OTHER]
+                  example: CHANGED_MIND
+                notes:
+                  type: string
+                  maxLength: 200
+                  nullable: true
+      responses:
+        '200':
+          description: Order cancelled
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/OrderDetail'
+        '400':
+          description: Order cannot be cancelled (wrong status)
+          content:
+            application/json:
+              schema:
+                $ref: './common.yaml#/components/schemas/ErrorResponse'
+        '401':
+          $ref: './common.yaml#/components/responses/Unauthorized'
+        '404':
+          $ref: './common.yaml#/components/responses/NotFound'
+
+  /orders/{orderId}/complete:
+    post:
+      summary: Mark order as completed
+      description: Buyer confirms order received (auto-completes after 7 days of DELIVERED status)
+      tags: [Orders]
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Order completed
+          content:
+            application/json:
+              schema:
+                $ref: './common.yaml#/components/schemas/SuccessResponse'
+        '400':
+          description: Order not in DELIVERED status
+          content:
+            application/json:
+              schema:
+                $ref: './common.yaml#/components/schemas/ErrorResponse'
+        '401':
+          $ref: './common.yaml#/components/responses/Unauthorized'
+
+components:
+  schemas:
+    OrderSummary:
+      type: object
+      required: [id, orderNumber, shop, status, total, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        orderNumber:
+          type: string
+          example: "ORD-20231203-ABCD"
+        shop:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            logoUrl:
+              type: string
+              format: uri
+              nullable: true
+        status:
+          type: string
+          enum: [PENDING, CONFIRMED, PACKED, SHIPPING, DELIVERED, COMPLETED, CANCELLED, RETURN_REQUESTED, RETURNED]
+        paymentStatus:
+          type: string
+          enum: [PENDING, PAID, FAILED, REFUNDED]
+        itemCount:
+          type: integer
+          example: 3
+        total:
+          $ref: './common.yaml#/components/schemas/Money'
+        createdAt:
+          type: string
+          format: date-time
+        thumbnailImage:
+          type: string
+          format: uri
+          description: First product image
+
+    OrderDetail:
+      allOf:
+        - $ref: '#/components/schemas/OrderSummary'
+        - type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/OrderItem'
+            shippingAddress:
+              type: object
+              description: Address snapshot at order time
+              properties:
+                recipientName:
+                  type: string
+                phoneNumber:
+                  type: string
+                fullAddress:
+                  type: string
+            paymentMethod:
+              type: string
+              enum: [COD]
+            subtotal:
+              $ref: './common.yaml#/components/schemas/Money'
+            shippingFee:
+              $ref: './common.yaml#/components/schemas/Money'
+            discount:
+              $ref: './common.yaml#/components/schemas/Money'
+            voucherCode:
+              type: string
+              nullable: true
+            notes:
+              type: string
+              nullable: true
+            cancellationReason:
+              type: string
+              nullable: true
+            timeline:
+              type: array
+              description: Order status history
+              items:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  timestamp:
+                    type: string
+                    format: date-time
+                  note:
+                    type: string
+                    nullable: true
+            updatedAt:
+              type: string
+              format: date-time
+            completedAt:
+              type: string
+              format: date-time
+              nullable: true
+
+    OrderItem:
+      type: object
+      required: [id, product, quantity, unitPrice, subtotal]
+      properties:
+        id:
+          type: string
+          format: uuid
+        product:
+          type: object
+          description: Product snapshot at order time
+          properties:
+            id:
+              type: string
+              format: uuid
+            title:
+              type: string
+            image:
+              $ref: './common.yaml#/components/schemas/Image'
+            categoryName:
+              type: string
+        variant:
+          nullable: true
+          type: object
+          description: Variant snapshot at order time
+          properties:
+            name:
+              type: string
+            attributes:
+              type: object
+              additionalProperties:
+                type: string
+        quantity:
+          type: integer
+        unitPrice:
+          $ref: './common.yaml#/components/schemas/Money'
+        subtotal:
+          $ref: './common.yaml#/components/schemas/Money'
+
+  securitySchemes:
+    BearerAuth:
+      $ref: './common.yaml#/components/securitySchemes/BearerAuth'

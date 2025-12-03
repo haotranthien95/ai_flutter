@@ -1,0 +1,494 @@
+openapi: 3.0.3
+info:
+  title: Products & Catalog API
+  description: Product browsing, search, filtering, and reviews
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Development server
+
+paths:
+  /products:
+    get:
+      summary: List products with filters
+      description: Browse product catalog with search, category filtering, sorting, and pagination
+      tags: [Products]
+      parameters:
+        - $ref: './common.yaml#/components/parameters/LimitParam'
+        - $ref: './common.yaml#/components/parameters/CursorParam'
+        - name: search
+          in: query
+          description: Search keywords (product title, description)
+          schema:
+            type: string
+            example: "wireless headphones"
+        - name: categoryId
+          in: query
+          description: Filter by category
+          schema:
+            type: string
+            format: uuid
+        - name: minPrice
+          in: query
+          schema:
+            type: number
+            minimum: 0
+        - name: maxPrice
+          in: query
+          schema:
+            type: number
+        - name: condition
+          in: query
+          schema:
+            type: string
+            enum: [NEW, USED, REFURBISHED]
+        - name: minRating
+          in: query
+          description: Minimum average rating (1-5)
+          schema:
+            type: number
+            minimum: 1
+            maximum: 5
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum: [RELEVANCE, NEWEST, BEST_SELLING, PRICE_LOW_HIGH, PRICE_HIGH_LOW, TOP_RATED]
+            default: RELEVANCE
+      responses:
+        '200':
+          description: Product list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          items:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/ProductSummary'
+                          pagination:
+                            $ref: './common.yaml#/components/schemas/PaginationMeta'
+        '400':
+          $ref: './common.yaml#/components/responses/BadRequest'
+
+  /products/{productId}:
+    get:
+      summary: Get product details
+      description: Retrieve full product information including variants, shop, reviews
+      tags: [Products]
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Product details
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/ProductDetail'
+        '404':
+          $ref: './common.yaml#/components/responses/NotFound'
+
+  /products/search/autocomplete:
+    get:
+      summary: Search autocomplete suggestions
+      description: Real-time search suggestions for product titles
+      tags: [Products]
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 2
+            example: "head"
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+            maximum: 20
+      responses:
+        '200':
+          description: Autocomplete suggestions
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          suggestions:
+                            type: array
+                            items:
+                              type: string
+                            example: ["headphones", "headphones wireless", "headphones bluetooth"]
+
+  /products/{productId}/reviews:
+    get:
+      summary: Get product reviews
+      description: List reviews for a specific product with filtering
+      tags: [Products, Reviews]
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - $ref: './common.yaml#/components/parameters/LimitParam'
+        - $ref: './common.yaml#/components/parameters/CursorParam'
+        - name: rating
+          in: query
+          description: Filter by star rating
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 5
+        - name: hasPhotos
+          in: query
+          description: Only reviews with photos
+          schema:
+            type: boolean
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum: [NEWEST, HIGHEST_RATING, LOWEST_RATING]
+            default: NEWEST
+      responses:
+        '200':
+          description: Product reviews
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          items:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/Review'
+                          pagination:
+                            $ref: './common.yaml#/components/schemas/PaginationMeta'
+                          summary:
+                            type: object
+                            properties:
+                              averageRating:
+                                type: number
+                                format: float
+                                example: 4.5
+                              totalReviews:
+                                type: integer
+                                example: 128
+                              ratingDistribution:
+                                type: object
+                                properties:
+                                  "5":
+                                    type: integer
+                                    example: 80
+                                  "4":
+                                    type: integer
+                                    example: 30
+                                  "3":
+                                    type: integer
+                                    example: 10
+                                  "2":
+                                    type: integer
+                                    example: 5
+                                  "1":
+                                    type: integer
+                                    example: 3
+
+    post:
+      summary: Create product review
+      description: Submit review for purchased product (requires delivered order)
+      tags: [Reviews]
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [orderId, rating]
+              properties:
+                orderId:
+                  type: string
+                  format: uuid
+                  description: Order containing this product (verification)
+                rating:
+                  type: integer
+                  minimum: 1
+                  maximum: 5
+                content:
+                  type: string
+                  maxLength: 1000
+                  nullable: true
+                images:
+                  type: array
+                  maxItems: 5
+                  items:
+                    type: string
+                    format: uri
+      responses:
+        '201':
+          description: Review created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Review'
+        '400':
+          description: Product not purchased or already reviewed
+          content:
+            application/json:
+              schema:
+                $ref: './common.yaml#/components/schemas/ErrorResponse'
+        '401':
+          $ref: './common.yaml#/components/responses/Unauthorized'
+        '422':
+          $ref: './common.yaml#/components/responses/ValidationError'
+
+  /categories:
+    get:
+      summary: List all categories
+      description: Get category tree (root categories with subcategories)
+      tags: [Products]
+      responses:
+        '200':
+          description: Category tree
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Category'
+
+components:
+  schemas:
+    ProductSummary:
+      type: object
+      required: [id, title, basePrice, images, shop, averageRating, soldCount]
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: "Wireless Bluetooth Headphones"
+        basePrice:
+          $ref: './common.yaml#/components/schemas/Money'
+        images:
+          type: array
+          items:
+            $ref: './common.yaml#/components/schemas/Image'
+          minItems: 1
+        shop:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            rating:
+              type: number
+              format: float
+        averageRating:
+          type: number
+          format: float
+          example: 4.5
+        totalReviews:
+          type: integer
+          example: 128
+        soldCount:
+          type: integer
+          example: 523
+        condition:
+          type: string
+          enum: [NEW, USED, REFURBISHED]
+        isInStock:
+          type: boolean
+
+    ProductDetail:
+      allOf:
+        - $ref: '#/components/schemas/ProductSummary'
+        - type: object
+          properties:
+            description:
+              type: string
+            category:
+              $ref: '#/components/schemas/Category'
+            variants:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProductVariant'
+            totalStock:
+              type: integer
+              example: 150
+            shop:
+              $ref: '#/components/schemas/ShopInfo'
+
+    ProductVariant:
+      type: object
+      required: [id, name, price, stock, isActive]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: "Black - Bluetooth 5.0"
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            color: "Black"
+            connectivity: "Bluetooth 5.0"
+        sku:
+          type: string
+          nullable: true
+          example: "WH-BT50-BLK"
+        price:
+          $ref: './common.yaml#/components/schemas/Money'
+        stock:
+          type: integer
+          example: 50
+        isActive:
+          type: boolean
+
+    ShopInfo:
+      type: object
+      required: [id, name, rating, followerCount, productCount]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: "TechStore Vietnam"
+        logoUrl:
+          type: string
+          format: uri
+          nullable: true
+        rating:
+          type: number
+          format: float
+          example: 4.7
+        totalRatings:
+          type: integer
+          example: 1250
+        followerCount:
+          type: integer
+          example: 5430
+        productCount:
+          type: integer
+          example: 342
+
+    Review:
+      type: object
+      required: [id, productId, user, rating, isVerifiedPurchase, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        productId:
+          type: string
+          format: uuid
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            fullName:
+              type: string
+            avatarUrl:
+              type: string
+              format: uri
+              nullable: true
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        content:
+          type: string
+          nullable: true
+        images:
+          type: array
+          items:
+            $ref: './common.yaml#/components/schemas/Image'
+        isVerifiedPurchase:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    Category:
+      type: object
+      required: [id, name, level]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: "Electronics"
+        iconUrl:
+          type: string
+          format: uri
+          nullable: true
+        level:
+          type: integer
+          description: 0 = root, 1 = subcategory
+          example: 0
+        subcategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+
+  securitySchemes:
+    BearerAuth:
+      $ref: './common.yaml#/components/securitySchemes/BearerAuth'
