@@ -1,0 +1,146 @@
+/speckit.specify
+Build a multi-vendor e-commerce application inspired by Shopee.
+
+### 1. Product vision & goals
+
+We want a marketplace where many independent sellers can list products and buyers can easily discover, compare, and purchase them in a safe and convenient way.  
+
+Primary goals:
+- Make it very easy for buyers to search, filter, and discover products across many categories.
+- Make it simple for small and medium merchants to open a shop, upload products, manage inventory, and handle orders.
+- Build trust with ratings, reviews, clear shipping information, and buyer protection.
+- Support growth-oriented features like vouchers, free-shipping campaigns, flash sales, and recommendation sections.
+
+The first target market is Vietnam, mobile-first experience (iOS, Android, and responsive web), with a single currency (VND) in the first version.
+
+### 2. Primary user types
+
+1. **Guest user**
+   - Can browse categories, search products, view product details, view public reviews and ratings.
+   - Can see campaign banners, flash sale sections, and best-seller lists.
+   - Must sign up / log in before adding to cart or checking out.
+
+2. **Buyer**
+   - Has an account with phone/email login.
+   - Can maintain profile, addresses, and payment methods.
+   - Can follow shops, favorite products, add to cart, place orders, track shipping, rate and review products.
+   - Receives notifications about order status and promotions.
+
+3. **Seller (Shop owner)**
+   - Can register a shop, submit required documents/basic verification.
+   - Can create and manage product listings (images, variants, stock, price, description).
+   - Can manage orders (confirm, pack, hand over to shipping partner).
+   - Can manage vouchers, discounts, and basic marketing campaigns for their own shop.
+   - Can chat with buyers and respond to questions/complaints.
+
+4. **Platform admin**
+   - Manages categories, global campaigns, and content moderation.
+   - Handles user reports, dispute resolution, and policy enforcement.
+   - Oversees sellers (approval, suspension) and monitors platform health (fraud, spam).
+
+### 3. Core buyer journeys
+
+1. **Account & onboarding**
+   - User signs up using phone number, email, or social login.
+   - User verifies account (OTP/email code).
+   - User sets basic profile and at least one shipping address.
+
+2. **Browsing & discovery**
+   - Home page shows:
+     - Top categories, banners for campaigns, flash sale carousel, recommended products.
+   - Category pages:
+     - Product grid with filters (price range, location, rating, shipping options) and sorting (relevance, newest, best-selling, price).
+   - Search:
+     - Keyword search with autocomplete suggestions.
+     - Ability to filter and sort search results similarly to categories.
+   - Product detail:
+     - Multiple images, video (optional), price, stock, variants (size, color).
+     - Rating summary and detailed reviews with photos.
+     - Seller info (rating, number of followers, number of products).
+
+3. **Cart & checkout**
+   - Buyer can add items from multiple shops into a single cart view.
+   - Cart groups items by shop; each shop can have its own shipping fee and voucher.
+   - Buyer can:
+     - Select/deselect items.
+     - Apply platform vouchers and shop vouchers.
+     - Choose shipping options if available (standard/express).
+   - Checkout flow:
+     - Confirm delivery address.
+     - Choose payment method (COD in first version; online payment can be future phase).
+     - See order summary with product subtotal, discounts, shipping, final total.
+     - Place order and get confirmation screen plus notification.
+
+4. **Order tracking & after-sales**
+   - Order list with status: Pending, Confirmed, Shipping, Completed, Cancelled.
+   - Order detail shows:
+     - Items, prices, shipping info, tracking steps, and contact to seller support.
+   - Buyer can:
+     - Cancel order before seller confirmation (based on business rules).
+     - Rate and review products after delivery (1–5 stars, text, optional photos).
+     - Contact seller via chat for questions or simple disputes.
+
+5. **Messaging & notifications**
+   - In-app notification center:
+     - Order updates, promotions, voucher reminders, shipping status changes.
+   - Buyer–seller chat:
+     - Text messages and product reference (seller can send specific product links).
+
+### 4. Core seller journeys
+
+1. **Shop registration & setup**
+   - Seller creates an account or converts buyer account to seller account.
+   - Seller registers shop name, avatar, cover image, description, address.
+   - Seller accepts platform policies and may upload basic verification documents.
+
+2. **Product & inventory management**
+   - Create/edit product listings:
+     - Title, description, category, price, variants, stock levels, images/videos.
+   - Mark product as active/inactive.
+   - Adjust stock after orders or manual changes.
+   - Bulk update for price and stock (MVP can be simple per-item editing).
+
+3. **Order management**
+   - View new orders in a dedicated dashboard.
+   - For each order:
+     - Confirm order or request cancellation.
+     - Mark order as packed and ready for pickup.
+   - Update order status based on shipping steps (integrated with logistics later; MVP can be manual status changes).
+
+4. **Promotion & shop insights**
+   - Create and manage shop vouchers (discount by percentage or fixed amount, min spend, start/end date).
+   - View basic statistics:
+     - Total orders, revenue, top selling products, cancellation rate.
+   - See recent ratings and reviews for their products.
+
+### 5. Trust, safety & platform rules
+
+- Buyers must be able to see:
+  - Seller rating, number of completed orders, response rate (simple version).
+  - Clear policies around returns/refunds (can start with static content pages).
+- Platform admin tools should support:
+  - Reporting of products, reviews, and chats (e.g. spam, fake items, offensive content).
+  - Flagging and deactivating problematic products or shops.
+
+### 6. Non-functional requirements (high-level)
+
+- Mobile-first UX with fast page loads on typical 4G connections.
+- Clear, localized Vietnamese UI copy and error messages in the first market.
+- Basic accessibility (legible text, sufficient contrast, meaningful icons and labels).
+- Secure handling of accounts and personal data (proper authentication, no plain-text passwords, etc.).
+- Design the flows so they can later be localized for additional countries and currencies.
+
+### 7. Out of scope for the initial version
+
+- Live streaming commerce and in-app short-video feed.
+- Complex logistics integrations with multiple shipping carriers (start with a simple manual status workflow).
+- Wallet/coins, cash-back systems, and advanced gamification mechanics.
+- Cross-border selling and multiple currencies.
+- Refunds and returns automation (can be handled via support chat and manual admin workflows at first).
+
+### 8. Open questions to refine later
+
+- Exact payment methods supported at launch beyond COD.
+- Detailed business rules for cancellation windows and penalties to sellers.
+- Specific integration strategy with logistics partners (carrier APIs vs manual).
+- Level of KYC/verification required for sellers at initial launch.
