@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/product.dart';
-import '../../domain/use_cases/search_products.dart';
-import '../../domain/repositories/product_repository.dart';
+import '../../../home/domain/use_cases/search_products.dart';
+import '../../../home/domain/repositories/product_repository.dart';
 
 /// Search screen state.
 class SearchState {
