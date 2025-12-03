@@ -25,8 +25,9 @@ class _AddressListScreenState extends ConsumerState<AddressListScreen> {
   }
 
   Future<void> _handleSetDefault(String addressId) async {
-    final success =
-        await ref.read(userAddressesProvider.notifier).setDefaultAddress(addressId);
+    final success = await ref
+        .read(userAddressesProvider.notifier)
+        .setDefaultAddress(addressId);
 
     if (success && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -43,7 +44,8 @@ class _AddressListScreenState extends ConsumerState<AddressListScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Xóa địa chỉ'),
-        content: Text('Bạn có chắc chắn muốn xóa địa chỉ:\n${address.fullAddress}?'),
+        content:
+            Text('Bạn có chắc chắn muốn xóa địa chỉ:\n${address.fullAddress}?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
@@ -59,8 +61,9 @@ class _AddressListScreenState extends ConsumerState<AddressListScreen> {
     );
 
     if (confirmed == true) {
-      final success =
-          await ref.read(userAddressesProvider.notifier).deleteAddress(address.id);
+      final success = await ref
+          .read(userAddressesProvider.notifier)
+          .deleteAddress(address.id);
 
       if (success && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

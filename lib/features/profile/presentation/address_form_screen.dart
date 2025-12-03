@@ -78,14 +78,14 @@ class _AddressFormScreenState extends ConsumerState<AddressFormScreen> {
                     widget.address!.recipientName
                 ? _recipientNameController.text.trim()
                 : null,
-            phoneNumber: _phoneController.text.trim() !=
-                    widget.address!.phoneNumber
-                ? _phoneController.text.trim()
-                : null,
-            streetAddress: _streetController.text.trim() !=
-                    widget.address!.streetAddress
-                ? _streetController.text.trim()
-                : null,
+            phoneNumber:
+                _phoneController.text.trim() != widget.address!.phoneNumber
+                    ? _phoneController.text.trim()
+                    : null,
+            streetAddress:
+                _streetController.text.trim() != widget.address!.streetAddress
+                    ? _streetController.text.trim()
+                    : null,
             ward: _wardController.text.trim() != widget.address!.ward
                 ? _wardController.text.trim()
                 : null,
@@ -215,7 +215,8 @@ class _AddressFormScreenState extends ConsumerState<AddressFormScreen> {
                   prefixIcon: Icon(Icons.location_on),
                   border: OutlineInputBorder(),
                 ),
-                validator: (value) => _validateRequired(value, 'tỉnh/thành phố'),
+                validator: (value) =>
+                    _validateRequired(value, 'tỉnh/thành phố'),
               ),
               const SizedBox(height: 16),
               // Set as default checkbox (only for new address)

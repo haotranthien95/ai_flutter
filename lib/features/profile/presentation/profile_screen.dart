@@ -22,7 +22,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   void initState() {
     super.initState();
     // Load profile when screen opens
-    Future.microtask(() => ref.read(userProfileProvider.notifier).loadProfile());
+    Future.microtask(
+        () => ref.read(userProfileProvider.notifier).loadProfile());
   }
 
   Future<void> _handleLogout() async {
