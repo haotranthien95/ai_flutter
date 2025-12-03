@@ -158,7 +158,8 @@ class User {
   }
 
   /// Check if user can create a shop (must be verified buyer).
-  bool get canCreateShop => role == UserRole.buyer && isVerified && !isSuspended;
+  bool get canCreateShop =>
+      role == UserRole.buyer && isVerified && !isSuspended;
 
   /// Check if user has admin privileges.
   bool get isAdmin => role == UserRole.admin;

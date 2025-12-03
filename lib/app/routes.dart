@@ -18,7 +18,7 @@ class AppRouter {
         name: 'home',
         builder: (context, state) => const HomeScreen(),
       ),
-      
+
       // TODO: Add more routes as features are implemented:
       // - /auth/login
       // - /auth/register

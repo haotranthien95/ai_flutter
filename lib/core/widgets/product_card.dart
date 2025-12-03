@@ -43,9 +43,8 @@ class ProductCard extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   ),
                 ),
-                errorWidget:
-                    (BuildContext context, String url, Object error) =>
-                        Container(
+                errorWidget: (BuildContext context, String url, Object error) =>
+                    Container(
                   color: Theme.of(context).colorScheme.surfaceContainerHighest,
                   child: const Icon(Icons.image_not_supported_outlined),
                 ),
@@ -148,9 +147,8 @@ class HorizontalProductCard extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   ),
                 ),
-                errorWidget:
-                    (BuildContext context, String url, Object error) =>
-                        Container(
+                errorWidget: (BuildContext context, String url, Object error) =>
+                    Container(
                   color: Theme.of(context).colorScheme.surfaceContainerHighest,
                   child: const Icon(Icons.image_not_supported_outlined),
                 ),
@@ -256,7 +254,8 @@ class CompactProductCard extends StatelessWidget {
               errorWidget: (BuildContext context, String url, Object error) =>
                   Container(
                 color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                child: const Icon(Icons.image_not_supported_outlined, size: 20.0),
+                child:
+                    const Icon(Icons.image_not_supported_outlined, size: 20.0),
               ),
             ),
           ),

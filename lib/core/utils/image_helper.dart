@@ -62,8 +62,7 @@ class ImageHelper {
       );
 
       // Limit to maxImages
-      final List<XFile> limitedImages =
-          images.take(maxImages).toList();
+      final List<XFile> limitedImages = images.take(maxImages).toList();
 
       return limitedImages.map((XFile image) => File(image.path)).toList();
     } catch (e) {

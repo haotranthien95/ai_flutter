@@ -232,7 +232,8 @@ class Order {
       buyerId: json['buyerId'] as String,
       shopId: json['shopId'] as String,
       addressId: json['addressId'] as String,
-      shippingAddress: Map<String, dynamic>.from(json['shippingAddress'] as Map),
+      shippingAddress:
+          Map<String, dynamic>.from(json['shippingAddress'] as Map),
       status: OrderStatus.fromJson(json['status'] as String),
       paymentMethod: PaymentMethod.fromJson(json['paymentMethod'] as String),
       paymentStatus: PaymentStatus.fromJson(json['paymentStatus'] as String),

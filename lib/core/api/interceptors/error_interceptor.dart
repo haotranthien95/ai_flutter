@@ -151,8 +151,7 @@ class ErrorInterceptor extends Interceptor {
 
     errors.forEach((String key, dynamic value) {
       if (value is List) {
-        validationErrors[key] =
-            value.map((dynamic e) => e.toString()).toList();
+        validationErrors[key] = value.map((dynamic e) => e.toString()).toList();
       } else if (value is String) {
         validationErrors[key] = <String>[value];
       }

@@ -133,9 +133,12 @@ String formatShortAddress({
   required String district,
   required String city,
 }) {
-  final String shortWard = ward.replaceAll('Phường ', 'P.').replaceAll('Xã ', 'X.');
-  final String shortDistrict = district.replaceAll('Quận ', 'Q.').replaceAll('Huyện ', 'H.');
-  final String shortCity = city.replaceAll('Thành phố ', 'TP. ').replaceAll('Tỉnh ', '');
+  final String shortWard =
+      ward.replaceAll('Phường ', 'P.').replaceAll('Xã ', 'X.');
+  final String shortDistrict =
+      district.replaceAll('Quận ', 'Q.').replaceAll('Huyện ', 'H.');
+  final String shortCity =
+      city.replaceAll('Thành phố ', 'TP. ').replaceAll('Tỉnh ', '');
 
   return '$shortWard, $shortDistrict, $shortCity';
 }

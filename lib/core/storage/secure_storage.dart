@@ -30,7 +30,8 @@ class SecureStorage {
   ///
   /// Returns true if successful.
   Future<void> saveAccessToken(String token) async {
-    await _storage.write(key: AppConfig.secureStorageAccessTokenKey, value: token);
+    await _storage.write(
+        key: AppConfig.secureStorageAccessTokenKey, value: token);
   }
 
   /// Get the access token.
@@ -49,7 +50,8 @@ class SecureStorage {
   ///
   /// Returns true if successful.
   Future<void> saveRefreshToken(String token) async {
-    await _storage.write(key: AppConfig.secureStorageRefreshTokenKey, value: token);
+    await _storage.write(
+        key: AppConfig.secureStorageRefreshTokenKey, value: token);
   }
 
   /// Get the refresh token.

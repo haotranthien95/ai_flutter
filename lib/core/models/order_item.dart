@@ -51,7 +51,8 @@ class OrderItem {
       orderId: json['orderId'] as String,
       productId: json['productId'] as String,
       variantId: json['variantId'] as String?,
-      productSnapshot: Map<String, dynamic>.from(json['productSnapshot'] as Map),
+      productSnapshot:
+          Map<String, dynamic>.from(json['productSnapshot'] as Map),
       variantSnapshot: json['variantSnapshot'] != null
           ? Map<String, dynamic>.from(json['variantSnapshot'] as Map)
           : null,
@@ -106,7 +107,8 @@ class OrderItem {
   }
 
   /// Get product title from snapshot.
-  String get productTitle => productSnapshot['title'] as String? ?? 'Unknown Product';
+  String get productTitle =>
+      productSnapshot['title'] as String? ?? 'Unknown Product';
 
   /// Get product image URL from snapshot.
   String? get productImageUrl => productSnapshot['imageUrl'] as String?;

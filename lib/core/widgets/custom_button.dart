@@ -55,9 +55,8 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isDisabled = onPressed == null || isLoading;
 
-    Widget buttonChild = isLoading
-        ? const SmallLoadingIndicator(color: Colors.white)
-        : child;
+    Widget buttonChild =
+        isLoading ? const SmallLoadingIndicator(color: Colors.white) : child;
 
     if (icon != null && !isLoading) {
       buttonChild = Row(
