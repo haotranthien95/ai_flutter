@@ -127,7 +127,7 @@ class VariantSelector extends StatelessWidget {
 
   String _formatVariantName(ProductVariant variant) {
     if (variant.attributes.isEmpty) {
-      return variant.sku;
+      return variant.sku ?? 'Phiên bản ${variant.id.substring(0, 8)}';
     }
     return variant.attributes.values.join(' • ');
   }

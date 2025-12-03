@@ -59,7 +59,7 @@ class ProductDetailState {
   }
 
   /// Returns current price (variant price if selected, otherwise base price).
-  int get currentPrice {
+  num get currentPrice {
     if (selectedVariant != null) {
       return selectedVariant!.price;
     }
