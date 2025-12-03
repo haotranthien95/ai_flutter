@@ -65,6 +65,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
     String? ward,
     String? district,
     String? city,
+    bool? isDefault,
   }) async {
     return _dataSource.updateAddress(
       addressId: addressId,
@@ -74,6 +75,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       ward: ward,
       district: district,
       city: city,
+      isDefault: isDefault,
     );
   }
 

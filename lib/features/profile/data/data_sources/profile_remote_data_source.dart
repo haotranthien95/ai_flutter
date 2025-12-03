@@ -110,6 +110,7 @@ class ProfileRemoteDataSource {
     String? ward,
     String? district,
     String? city,
+    bool? isDefault,
   }) async {
     final response = await _dio.put<Map<String, dynamic>>(
       '/profile/addresses/$addressId',
@@ -120,6 +121,7 @@ class ProfileRemoteDataSource {
         if (ward != null) 'ward': ward,
         if (district != null) 'district': district,
         if (city != null) 'city': city,
+        if (isDefault != null) 'isDefault': isDefault,
       },
     );
 

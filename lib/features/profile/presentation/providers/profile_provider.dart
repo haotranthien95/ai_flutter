@@ -77,7 +77,7 @@ class ProfileNotifier extends StateNotifier<AsyncValue<User>> {
   Future<void> loadProfile() async {
     state = const AsyncValue.loading();
     try {
-      final user = await _getUserProfileUseCase.call();
+      final user = await _getUserProfileUseCase.execute();
       state = AsyncValue.data(user);
     } catch (error, stackTrace) {
       state = AsyncValue.error(error, stackTrace);
@@ -92,7 +92,7 @@ class ProfileNotifier extends StateNotifier<AsyncValue<User>> {
   }) async {
     state = const AsyncValue.loading();
     try {
-      final user = await _updateProfileUseCase.call(
+      final user = await _updateProfileUseCase.execute(
         fullName: fullName,
         email: email,
         avatarUrl: avatarUrl,
@@ -150,7 +150,7 @@ class AddressNotifier extends StateNotifier<AsyncValue<List<Address>>> {
     bool isDefault = false,
   }) async {
     try {
-      final address = await _addAddressUseCase.call(
+      final address = await _addAddressUseCase.execute(
         recipientName: recipientName,
         phoneNumber: phoneNumber,
         streetAddress: streetAddress,
@@ -186,7 +186,7 @@ class AddressNotifier extends StateNotifier<AsyncValue<List<Address>>> {
     String? city,
   }) async {
     try {
-      final updatedAddress = await _updateAddressUseCase.call(
+      final updatedAddress = await _updateAddressUseCase(
         addressId: addressId,
         recipientName: recipientName,
         phoneNumber: phoneNumber,
@@ -217,7 +217,7 @@ class AddressNotifier extends StateNotifier<AsyncValue<List<Address>>> {
   /// Delete address.
   Future<bool> deleteAddress(String addressId) async {
     try {
-      await _deleteAddressUseCase.call(addressId);
+      await _deleteAddressUseCase(addressId);
 
       // Remove from current list
       state.whenData((addresses) {
@@ -236,7 +236,7 @@ class AddressNotifier extends StateNotifier<AsyncValue<List<Address>>> {
   /// Set address as default.
   Future<bool> setDefaultAddress(String addressId) async {
     try {
-      final updatedAddress = await _setDefaultAddressUseCase.call(addressId);
+      final updatedAddress = await _setDefaultAddressUseCase(addressId);
 
       // Update in current list
       state.whenData((addresses) {

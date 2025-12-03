@@ -109,7 +109,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }) async {
     state = const AuthState.loading();
     try {
-      final user = await _registerUseCase.call(
+      final user = await _registerUseCase.execute(
         phoneNumber: phoneNumber,
         password: password,
         fullName: fullName,
@@ -134,7 +134,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }) async {
     state = const AuthState.loading();
     try {
-      await _verifyOTPUseCase.call(
+      await _verifyOTPUseCase.execute(
         phoneNumber: phoneNumber,
         otpCode: otpCode,
       );
@@ -159,7 +159,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }) async {
     state = const AuthState.loading();
     try {
-      final user = await _loginUseCase.call(
+      final user = await _loginUseCase.execute(
         phoneNumber: phoneNumber,
         password: password,
       );
@@ -180,7 +180,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   Future<void> logout() async {
     state = const AuthState.loading();
     try {
-      await _logoutUseCase();
+      await _logoutUseCase.execute();
       state = const AuthState.unauthenticated();
     } catch (e) {
       // Even if logout fails, clear local state
