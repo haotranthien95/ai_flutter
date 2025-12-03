@@ -33,7 +33,6 @@ class ReviewSummary extends StatelessWidget {
           style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(height: 16.0),
-
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

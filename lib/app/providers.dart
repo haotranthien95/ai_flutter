@@ -49,7 +49,8 @@ final databaseHelperProvider = Provider<DatabaseHelper>((ref) {
 // ============================================================================
 
 /// Product remote data source provider.
-final productRemoteDataSourceProvider = Provider<ProductRemoteDataSource>((ref) {
+final productRemoteDataSourceProvider =
+    Provider<ProductRemoteDataSource>((ref) {
   final apiClient = ref.watch(apiClientProvider);
   return ProductRemoteDataSource(apiClient);
 });
@@ -79,26 +80,30 @@ final searchProductsUseCaseProvider = Provider<SearchProductsUseCase>((ref) {
 });
 
 /// Get product detail use case provider.
-final getProductDetailUseCaseProvider = Provider<GetProductDetailUseCase>((ref) {
+final getProductDetailUseCaseProvider =
+    Provider<GetProductDetailUseCase>((ref) {
   final repository = ref.watch(productRepositoryProvider);
   return GetProductDetailUseCase(repository);
 });
 
 /// Get product reviews use case provider.
-final getProductReviewsUseCaseProvider = Provider<GetProductReviewsUseCase>((ref) {
+final getProductReviewsUseCaseProvider =
+    Provider<GetProductReviewsUseCase>((ref) {
   final repository = ref.watch(productRepositoryProvider);
   return GetProductReviewsUseCase(repository);
 });
 
 /// Home provider (overrides the stub in home_provider.dart).
-final homeProviderOverride = StateNotifierProvider<HomeNotifier, HomeState>((ref) {
+final homeProviderOverride =
+    StateNotifierProvider<HomeNotifier, HomeState>((ref) {
   final getProductsUseCase = ref.watch(getProductsUseCaseProvider);
   final getCategoriesUseCase = ref.watch(getCategoriesUseCaseProvider);
   return HomeNotifier(getProductsUseCase, getCategoriesUseCase);
 });
 
 /// Search provider (overrides the stub in search_provider.dart).
-final searchProviderOverride = StateNotifierProvider<SearchNotifier, SearchState>((ref) {
+final searchProviderOverride =
+    StateNotifierProvider<SearchNotifier, SearchState>((ref) {
   final searchProductsUseCase = ref.watch(searchProductsUseCaseProvider);
   final productRepository = ref.watch(productRepositoryProvider);
   return SearchNotifier(searchProductsUseCase, productRepository);
@@ -109,5 +114,6 @@ final productDetailProviderOverride =
     StateNotifierProvider<ProductDetailNotifier, ProductDetailState>((ref) {
   final getProductDetailUseCase = ref.watch(getProductDetailUseCaseProvider);
   final getProductReviewsUseCase = ref.watch(getProductReviewsUseCaseProvider);
-  return ProductDetailNotifier(getProductDetailUseCase, getProductReviewsUseCase);
+  return ProductDetailNotifier(
+      getProductDetailUseCase, getProductReviewsUseCase);
 });

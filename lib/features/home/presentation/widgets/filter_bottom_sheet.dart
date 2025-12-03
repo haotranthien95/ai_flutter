@@ -36,7 +36,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     final maxPrice = (filters['maxPrice'] as num?)?.toDouble() ?? _maxPrice;
     _priceRange = RangeValues(minPrice, maxPrice);
     _minRating = (filters['rating'] as num?)?.toDouble() ?? 0;
-    
+
     final conditionStr = filters['condition'] as String?;
     if (conditionStr != null) {
       _condition = ProductCondition.values.firstWhere(
@@ -91,12 +91,12 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 Row(
                   children: [
                     Text(
-                      formatVND(_priceRange.start.toInt()),
+                      formatVND(_priceRange.start),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     const Spacer(),
                     Text(
-                      formatVND(_priceRange.end.toInt()),
+                      formatVND(_priceRange.end),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],

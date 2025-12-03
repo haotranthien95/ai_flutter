@@ -90,9 +90,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
     if (state.error != null) {
       return ErrorView(
         message: state.error!,
-        onRetry: () => ref
-            .read(productDetailProvider.notifier)
-            .retry(widget.productId),
+        onRetry: () =>
+            ref.read(productDetailProvider.notifier).retry(widget.productId),
       );
     }
 
@@ -128,11 +127,12 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                 Row(
                   children: [
                     Text(
-                      formatVND(state.currentPrice),
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      formatVND(state.currentPrice.toDouble()),
+                      style:
+                          Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
                     ),
                     if (state.selectedVariant != null &&
                         state.selectedVariant!.price != product.basePrice) ...[

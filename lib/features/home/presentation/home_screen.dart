@@ -162,7 +162,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
 
             // Empty state
-            if (!state.isLoading && state.error == null && state.products.isEmpty)
+            if (!state.isLoading &&
+                state.error == null &&
+                state.products.isEmpty)
               const SliverFillRemaining(
                 child: EmptyState(
                   icon: Icons.inventory_2_outlined,
@@ -171,7 +173,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
 
             // Product grid
-            if (!state.isLoading && state.error == null && state.products.isNotEmpty)
+            if (!state.isLoading &&
+                state.error == null &&
+                state.products.isNotEmpty)
               SliverPadding(
                 padding: const EdgeInsets.all(16.0),
                 sliver: SliverGrid(
@@ -214,7 +218,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     child: Text(
                       'Đã hiển thị tất cả sản phẩm',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
                           ),
                     ),
                   ),

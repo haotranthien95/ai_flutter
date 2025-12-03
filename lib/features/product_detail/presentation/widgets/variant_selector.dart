@@ -77,7 +77,10 @@ class VariantSelector extends StatelessWidget {
                         children: [
                           Text(
                             _formatVariantName(variant),
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
                                   fontWeight: isSelected
                                       ? FontWeight.bold
                                       : FontWeight.normal,
@@ -102,7 +105,10 @@ class VariantSelector extends StatelessWidget {
                                 isAvailable
                                     ? 'Còn ${variant.stock}'
                                     : 'Hết hàng',
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(
                                       color: isAvailable
                                           ? Theme.of(context)
                                               .colorScheme

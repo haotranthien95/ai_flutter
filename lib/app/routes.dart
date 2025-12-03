@@ -40,7 +40,7 @@ class AppRouter {
 
       // TODO: Add more routes as features are implemented (US-002, US-003):
       // - /auth/login
-      // - /auth/register  
+      // - /auth/register
       // - /cart
       // - /checkout
       // - /profile

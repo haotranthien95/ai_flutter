@@ -24,6 +24,7 @@ void main() {
         description:
             'The latest flagship phone from Apple with A17 Pro chip, titanium design, and advanced camera system.',
         basePrice: 29990000,
+        currency: 'VND',
         totalStock: 50,
         images: [
           'https://example.com/iphone1.jpg',

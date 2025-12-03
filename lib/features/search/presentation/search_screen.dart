@@ -110,7 +110,9 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                     title: Text(suggestion),
                     onTap: () {
                       _searchController.text = suggestion;
-                      ref.read(searchProvider.notifier).selectSuggestion(suggestion);
+                      ref
+                          .read(searchProvider.notifier)
+                          .selectSuggestion(suggestion);
                       _searchFocusNode.unfocus();
                     },
                   );

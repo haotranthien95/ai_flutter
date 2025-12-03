@@ -47,9 +47,8 @@ class ReviewTile extends StatelessWidget {
                         )
                       : Icon(
                           Icons.person,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onPrimaryContainer,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
                 ),
                 const SizedBox(width: 12.0),
@@ -64,7 +63,10 @@ class ReviewTile extends StatelessWidget {
                           Flexible(
                             child: Text(
                               review.reviewerName,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
                               overflow: TextOverflow.ellipsis,
@@ -163,7 +165,8 @@ class ReviewTile extends StatelessWidget {
                             color: Theme.of(context)
                                 .colorScheme
                                 .surfaceContainerHighest,
-                            child: const Icon(Icons.image_not_supported_outlined),
+                            child:
+                                const Icon(Icons.image_not_supported_outlined),
                           ),
                         ),
                       ),
@@ -195,11 +198,13 @@ class ReviewTile extends StatelessWidget {
                         const SizedBox(width: 4.0),
                         Text(
                           'Phản hồi của người bán',
-                          style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).colorScheme.primary,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                         ),
                       ],
                     ),

@@ -63,7 +63,8 @@ class CategoryChip extends StatelessWidget {
                       color: isSelected
                           ? colorScheme.onPrimaryContainer
                           : colorScheme.onSurface,
-                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                      fontWeight:
+                          isSelected ? FontWeight.w600 : FontWeight.normal,
                     ),
               ),
             ],

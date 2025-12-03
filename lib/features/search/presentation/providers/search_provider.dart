@@ -265,7 +265,8 @@ class SearchNotifier extends StateNotifier<SearchState> {
 /// Provider for search screen state.
 ///
 /// This is a stub that will be overridden in app/providers.dart with proper dependencies.
-final searchProvider = StateNotifierProvider<SearchNotifier, SearchState>((ref) {
+final searchProvider =
+    StateNotifierProvider<SearchNotifier, SearchState>((ref) {
   throw UnimplementedError(
     'searchProvider must be overridden with searchProviderOverride from app/providers.dart',
   );
