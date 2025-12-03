@@ -169,20 +169,20 @@
 
 #### Widget Tests
 
-- [ ] **T045** [P] [US1] Widget test for `HomeScreen` in `test/widget/features/home/home_screen_test.dart`:
+- [x] **T045** [P] [US1] Widget test for `HomeScreen` in `test/widget/features/home/home_screen_test.dart`:
   - Test loading state renders spinner
   - Test product grid renders cards
   - Test category chips render
   - Test search bar present
-- [ ] **T046** [P] [US1] Widget test for `ProductCard` in `test/widget/core/widgets/product_card_test.dart`:
+- [x] **T046** [P] [US1] Widget test for `ProductCard` in `test/widget/core/widgets/product_card_test.dart`:
   - Test displays product title, price, image, rating
   - Test tap navigates to product detail
-- [ ] **T047** [P] [US1] Widget test for `ProductDetailScreen` in `test/widget/features/product_detail/product_detail_screen_test.dart`:
+- [x] **T047** [P] [US1] Widget test for `ProductDetailScreen` in `test/widget/features/product_detail/product_detail_screen_test.dart`:
   - Test image carousel renders
   - Test variant selector appears if variants exist
   - Test reviews section renders
   - Test "Add to Cart" button shows login prompt for guests
-- [ ] **T048** [P] [US1] Widget test for `SearchScreen` in `test/widget/features/search/search_screen_test.dart`:
+- [x] **T048** [P] [US1] Widget test for `SearchScreen` in `test/widget/features/search/search_screen_test.dart`:
   - Test autocomplete suggestions appear on typing
   - Test filter dialog opens
   - Test sort options work

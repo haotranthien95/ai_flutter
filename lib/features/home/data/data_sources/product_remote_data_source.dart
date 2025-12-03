@@ -148,8 +148,7 @@ class ProductRemoteDataSource {
   /// Fetches categories from GET /categories endpoint
   Future<List<Category>> fetchCategories() async {
     final response = await _apiClient.get('/categories');
-    final List<dynamic> categoriesJson =
-        response.data['data'] as List<dynamic>;
+    final List<dynamic> categoriesJson = response.data['data'] as List<dynamic>;
     return categoriesJson
         .map((json) => Category.fromJson(json as Map<String, dynamic>))
         .toList();

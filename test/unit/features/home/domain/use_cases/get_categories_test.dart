@@ -115,11 +115,11 @@ void main() {
 
       // Assert
       expect(result.length, equals(3));
-      
+
       // Check root categories
       final rootCategories = result.where((c) => c.isRoot).toList();
       expect(rootCategories.length, equals(2));
-      
+
       // Check subcategories
       final subCategories = result.where((c) => c.isSubcategory).toList();
       expect(subCategories.length, equals(1));
