@@ -189,7 +189,7 @@
 
 #### Integration Tests
 
-- [ ] **T049** [US1] Integration test for guest shopping flow in `integration_test/guest_shopping_flow_test.dart`:
+- [x] **T049** [US1] Integration test for guest shopping flow in `integration_test/guest_shopping_flow_test.dart`:
   - Launch app → see home screen
   - Tap category → see filtered products
   - Tap product → see detail page
