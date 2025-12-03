@@ -28,17 +28,15 @@ void main() {
       shopId: testShopId,
       title: 'Save 20%',
       description: 'Get 20% off your order',
-      discountType: DiscountType.percentage,
-      discountValue: 20,
-      minimumOrderValue: 100000,
-      maximumDiscountAmount: 50000,
+      type: VoucherType.percentage,
+      value: 20,
+      minOrderValue: 100000,
+      maxDiscount: 50000,
       startDate: DateTime.now().subtract(const Duration(days: 1)),
       endDate: DateTime.now().add(const Duration(days: 30)),
       usageLimit: 100,
-      usedCount: 10,
+      usageCount: 10,
       isActive: true,
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
     );
 
     test('should apply valid percentage voucher successfully', () async {
@@ -70,8 +68,8 @@ void main() {
     test('should apply fixed amount voucher successfully', () async {
       // Arrange
       final fixedVoucher = testVoucher.copyWith(
-        discountType: DiscountType.fixed,
-        discountValue: 30000,
+        type: VoucherType.fixedAmount,
+        value: 30000,
       );
 
       when(mockRepository.validateVoucher(
@@ -97,7 +95,7 @@ void main() {
       // Arrange
       const largeSubtotal = 1000000.0; // 1M VND
       final voucherWith50kCap = testVoucher.copyWith(
-        maximumDiscountAmount: 50000,
+        maxDiscount: 50000,
       );
 
       when(mockRepository.validateVoucher(
@@ -166,7 +164,7 @@ void main() {
       // Arrange
       final maxedVoucher = testVoucher.copyWith(
         usageLimit: 10,
-        usedCount: 10,
+        usageCount: 10,
       );
 
       when(mockRepository.validateVoucher(

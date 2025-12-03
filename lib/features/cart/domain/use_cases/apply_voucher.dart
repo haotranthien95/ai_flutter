@@ -34,28 +34,28 @@ class ApplyVoucherUseCase {
       throw Exception('Voucher is not active');
     }
 
-    if (voucher.usedCount >= voucher.usageLimit) {
+    if (voucher.usageLimit != null && voucher.usageCount >= voucher.usageLimit!) {
       throw Exception('Voucher usage limit reached');
     }
 
-    if (orderSubtotal < voucher.minimumOrderValue) {
+    if (voucher.minOrderValue != null && orderSubtotal < voucher.minOrderValue!) {
       throw Exception(
-        'Order value must be at least ${voucher.minimumOrderValue} VND',
+        'Order value must be at least ${voucher.minOrderValue} VND',
       );
     }
 
     // Calculate discount
     double discountAmount;
-    if (voucher.discountType == DiscountType.percentage) {
-      discountAmount = orderSubtotal * (voucher.discountValue / 100);
+    if (voucher.type == VoucherType.percentage) {
+      discountAmount = orderSubtotal * (voucher.value / 100);
       // Cap at maximum discount amount if specified
-      if (voucher.maximumDiscountAmount != null &&
-          discountAmount > voucher.maximumDiscountAmount!) {
-        discountAmount = voucher.maximumDiscountAmount!;
+      if (voucher.maxDiscount != null &&
+          discountAmount > voucher.maxDiscount!) {
+        discountAmount = voucher.maxDiscount!;
       }
     } else {
       // Fixed amount discount
-      discountAmount = voucher.discountValue;
+      discountAmount = voucher.value;
     }
 
     final finalAmount = orderSubtotal - discountAmount;

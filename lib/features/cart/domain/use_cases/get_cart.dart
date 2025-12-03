@@ -53,7 +53,7 @@ class GetCartUseCase {
       }
 
       // Calculate totals
-      totalAmount += product.currentPrice * cartItem.quantity;
+      totalAmount += product.basePrice * cartItem.quantity;
       itemCount += cartItem.quantity;
     }
 

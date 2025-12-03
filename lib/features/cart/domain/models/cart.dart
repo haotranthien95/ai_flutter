@@ -38,7 +38,7 @@ class Cart {
     final shopItems = shopGroups[shopId] ?? [];
     return shopItems.fold(
       0,
-      (sum, item) => sum + (item.product.currentPrice * item.cartItem.quantity),
+      (sum, item) => sum + (item.product.basePrice * item.cartItem.quantity),
     );
   }
 }
@@ -58,11 +58,11 @@ class CartItemWithProduct {
   final Product product;
 
   /// Get total price for this item (price × quantity).
-  double get totalPrice => product.currentPrice * cartItem.quantity;
+  double get totalPrice => product.basePrice * cartItem.quantity;
 
   /// Check if item is available (product active and has stock).
-  bool get isAvailable => product.isActive && product.stockQuantity > 0;
+  bool get isAvailable => product.isActive && product.totalStock > 0;
 
   /// Check if quantity exceeds stock.
-  bool get exceedsStock => cartItem.quantity > product.stockQuantity;
+  bool get exceedsStock => cartItem.quantity > product.totalStock;
 }
