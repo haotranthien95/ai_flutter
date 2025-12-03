@@ -13,6 +13,9 @@ import '../features/home/domain/use_cases/get_categories.dart';
 import '../features/home/domain/use_cases/search_products.dart';
 import '../features/home/presentation/providers/home_provider.dart';
 import '../features/search/presentation/providers/search_provider.dart';
+import '../features/product_detail/domain/use_cases/get_product_detail.dart';
+import '../features/product_detail/domain/use_cases/get_product_reviews.dart';
+import '../features/product_detail/presentation/providers/product_detail_provider.dart';
 
 /// Global providers for dependency injection.
 ///
@@ -75,6 +78,18 @@ final searchProductsUseCaseProvider = Provider<SearchProductsUseCase>((ref) {
   return SearchProductsUseCase(repository);
 });
 
+/// Get product detail use case provider.
+final getProductDetailUseCaseProvider = Provider<GetProductDetailUseCase>((ref) {
+  final repository = ref.watch(productRepositoryProvider);
+  return GetProductDetailUseCase(repository);
+});
+
+/// Get product reviews use case provider.
+final getProductReviewsUseCaseProvider = Provider<GetProductReviewsUseCase>((ref) {
+  final repository = ref.watch(productRepositoryProvider);
+  return GetProductReviewsUseCase(repository);
+});
+
 /// Home provider (overrides the stub in home_provider.dart).
 final homeProviderOverride = StateNotifierProvider<HomeNotifier, HomeState>((ref) {
   final getProductsUseCase = ref.watch(getProductsUseCaseProvider);
@@ -87,4 +102,12 @@ final searchProviderOverride = StateNotifierProvider<SearchNotifier, SearchState
   final searchProductsUseCase = ref.watch(searchProductsUseCaseProvider);
   final productRepository = ref.watch(productRepositoryProvider);
   return SearchNotifier(searchProductsUseCase, productRepository);
+});
+
+/// Product detail provider (overrides the stub in product_detail_provider.dart).
+final productDetailProviderOverride =
+    StateNotifierProvider<ProductDetailNotifier, ProductDetailState>((ref) {
+  final getProductDetailUseCase = ref.watch(getProductDetailUseCaseProvider);
+  final getProductReviewsUseCase = ref.watch(getProductReviewsUseCaseProvider);
+  return ProductDetailNotifier(getProductDetailUseCase, getProductReviewsUseCase);
 });

@@ -265,10 +265,10 @@
 
 #### Presentation Layer - Product Detail Feature
 
-- [ ] **T065** [US1] Create `ProductDetailProvider` in `lib/features/product_detail/presentation/product_detail_provider.dart`:
+- [x] **T065** [US1] Create `ProductDetailProvider` in `lib/features/product_detail/presentation/product_detail_provider.dart`:
   - State: `AsyncValue<Product>`, selected variant, reviews
   - Methods: `loadProductDetail(productId)`, `selectVariant(variantId)`, `loadReviews()`
-- [ ] **T066** [US1] Create `ProductDetailScreen` in `lib/features/product_detail/presentation/product_detail_screen.dart`:
+- [x] **T066** [US1] Create `ProductDetailScreen` in `lib/features/product_detail/presentation/product_detail_screen.dart`:
   - Image carousel (PageView with cached images)
   - Product title, price (variant price if selected)
   - Stock status indicator
@@ -278,17 +278,17 @@
   - Reviews summary (average rating, total count, rating distribution)
   - Review list (first 5 reviews, "See All" button)
   - Floating "Add to Cart" button → shows login dialog if guest
-- [ ] **T067** [P] [US1] Create image carousel widget in `lib/features/product_detail/presentation/widgets/image_carousel.dart`:
+- [x] **T067** [P] [US1] Create image carousel widget in `lib/features/product_detail/presentation/widgets/image_carousel.dart`:
   - PageView with CachedNetworkImage
   - Dot indicators
   - Zoom on tap (Hero animation)
-- [ ] **T068** [P] [US1] Create variant selector widget in `lib/features/product_detail/presentation/widgets/variant_selector.dart`:
+- [x] **T068** [P] [US1] Create variant selector widget in `lib/features/product_detail/presentation/widgets/variant_selector.dart`:
   - Dropdown or chip list for each attribute (color, size)
   - Update price and stock on selection
-- [ ] **T069** [P] [US1] Create review summary widget in `lib/features/product_detail/presentation/widgets/review_summary.dart`:
+- [x] **T069** [P] [US1] Create review summary widget in `lib/features/product_detail/presentation/widgets/review_summary.dart`:
   - Average rating (large number + stars)
   - Rating distribution bar chart (5→1 stars with percentage bars)
-- [ ] **T070** [P] [US1] Create review tile widget in `lib/features/product_detail/presentation/widgets/review_tile.dart`:
+- [x] **T070** [P] [US1] Create review tile widget in `lib/features/product_detail/presentation/widgets/review_tile.dart`:
   - Reviewer name, avatar (placeholder if null)
   - Star rating
   - Review text
