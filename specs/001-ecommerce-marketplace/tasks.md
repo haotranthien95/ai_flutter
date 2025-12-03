@@ -251,16 +251,16 @@
 
 #### Presentation Layer - Search Feature
 
-- [ ] **T062** [US1] Create `SearchProvider` in `lib/features/search/presentation/search_provider.dart`:
+- [x] **T062** [US1] Create `SearchProvider` in `lib/features/search/presentation/search_provider.dart`:
   - State: search query, autocomplete suggestions, search results
   - Debounced autocomplete (300ms delay)
   - Methods: `updateQuery()`, `search()`, `applyFilters()`, `applySorting()`
-- [ ] **T063** [US1] Create `SearchScreen` in `lib/features/search/presentation/search_screen.dart`:
+- [x] **T063** [US1] Create `SearchScreen` in `lib/features/search/presentation/search_screen.dart`:
   - Search bar with autocomplete dropdown
   - Filter/Sort action buttons
   - Product grid with search results
   - Handle empty results with helpful message
-- [ ] **T064** [P] [US1] Create sort options dialog in `lib/features/search/presentation/widgets/sort_options_dialog.dart`:
+- [x] **T064** [P] [US1] Create sort options dialog in `lib/features/search/presentation/widgets/sort_options_dialog.dart`:
   - Radio buttons: Relevance, Newest, Best-selling, Price (low-high), Price (high-low), Top Rated
 
 #### Presentation Layer - Product Detail Feature

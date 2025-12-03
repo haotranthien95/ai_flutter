@@ -10,7 +10,9 @@ import '../features/home/data/repositories/product_repository_impl.dart';
 import '../features/home/domain/repositories/product_repository.dart';
 import '../features/home/domain/use_cases/get_products.dart';
 import '../features/home/domain/use_cases/get_categories.dart';
+import '../features/home/domain/use_cases/search_products.dart';
 import '../features/home/presentation/providers/home_provider.dart';
+import '../features/search/presentation/providers/search_provider.dart';
 
 /// Global providers for dependency injection.
 ///
@@ -67,9 +69,22 @@ final getCategoriesUseCaseProvider = Provider<GetCategoriesUseCase>((ref) {
   return GetCategoriesUseCase(repository);
 });
 
+/// Search products use case provider.
+final searchProductsUseCaseProvider = Provider<SearchProductsUseCase>((ref) {
+  final repository = ref.watch(productRepositoryProvider);
+  return SearchProductsUseCase(repository);
+});
+
 /// Home provider (overrides the stub in home_provider.dart).
 final homeProviderOverride = StateNotifierProvider<HomeNotifier, HomeState>((ref) {
   final getProductsUseCase = ref.watch(getProductsUseCaseProvider);
   final getCategoriesUseCase = ref.watch(getCategoriesUseCaseProvider);
   return HomeNotifier(getProductsUseCase, getCategoriesUseCase);
+});
+
+/// Search provider (overrides the stub in search_provider.dart).
+final searchProviderOverride = StateNotifierProvider<SearchNotifier, SearchState>((ref) {
+  final searchProductsUseCase = ref.watch(searchProductsUseCaseProvider);
+  final productRepository = ref.watch(productRepositoryProvider);
+  return SearchNotifier(searchProductsUseCase, productRepository);
 });
