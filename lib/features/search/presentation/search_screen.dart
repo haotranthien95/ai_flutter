@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/widgets/product_card.dart';
 import '../../../core/widgets/error_view.dart';
 import '../../../core/widgets/empty_state.dart';
+import '../../../core/widgets/skeleton_loading.dart';
 import '../../home/presentation/widgets/filter_bottom_sheet.dart';
 import 'providers/search_provider.dart';
 import 'widgets/sort_options_dialog.dart';
@@ -169,10 +170,26 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
       );
     }
 
-    // Loading state
-    if (state.isSearching) {
-      return const Center(
-        child: CircularProgressIndicator(),
+    // Loading state - show skeleton
+    if (state.isSearching && state.results.isEmpty) {
+      return CustomScrollView(
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.all(16.0),
+            sliver: SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.7,
+                crossAxisSpacing: 12.0,
+                mainAxisSpacing: 12.0,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => const ProductCardSkeleton(),
+                childCount: 6,
+              ),
+            ),
+          ),
+        ],
       );
     }
 

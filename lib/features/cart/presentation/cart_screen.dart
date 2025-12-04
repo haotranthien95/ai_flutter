@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/routes.dart';
 import '../../../core/widgets/error_view.dart';
+import '../../../core/widgets/skeleton_loading.dart';
 import 'providers/cart_provider.dart';
 import 'widgets/shop_cart_section.dart';
 import 'widgets/voucher_selector_bottom_sheet.dart';
@@ -63,7 +64,11 @@ class CartScreen extends ConsumerWidget {
             ],
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => ListView.builder(
+          padding: const EdgeInsets.all(16),
+          itemCount: 3,
+          itemBuilder: (context, index) => const CartItemSkeleton(),
+        ),
         error: (error, stack) => ErrorView(
           message: error.toString(),
           onRetry: () {

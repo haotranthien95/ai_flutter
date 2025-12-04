@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/widgets/product_card.dart';
 import '../../../core/widgets/error_view.dart';
 import '../../../core/widgets/empty_state.dart';
+import '../../../core/widgets/skeleton_loading.dart';
 import 'providers/home_provider.dart';
 import 'widgets/category_chip.dart';
 import 'widgets/filter_bottom_sheet.dart';
@@ -144,11 +145,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
             ),
 
-            // Loading state
-            if (state.isLoading)
-              const SliverFillRemaining(
-                child: Center(
-                  child: CircularProgressIndicator(),
+            // Loading state - show skeleton
+            if (state.isLoading && state.products.isEmpty)
+              SliverPadding(
+                padding: const EdgeInsets.all(16.0),
+                sliver: SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.7,
+                    crossAxisSpacing: 12.0,
+                    mainAxisSpacing: 12.0,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) => const ProductCardSkeleton(),
+                    childCount: 6, // Show 6 skeleton cards
+                  ),
                 ),
               ),
 

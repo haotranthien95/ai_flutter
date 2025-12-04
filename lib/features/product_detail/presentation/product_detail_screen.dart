@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/widgets/error_view.dart';
+import '../../../core/widgets/skeleton_loading.dart';
 import '../../../core/utils/formatters.dart';
 import 'providers/product_detail_provider.dart';
 import 'widgets/image_carousel.dart';
@@ -79,11 +80,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   }
 
   Widget _buildBody(ProductDetailState state) {
-    // Loading state
+    // Loading state - show skeleton
     if (state.isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
+      return const ProductDetailSkeleton();
     }
 
     // Error state
