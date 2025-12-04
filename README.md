@@ -1,6 +1,25 @@
 # AI Flutter E-Commerce Marketplace 🛍️
 
-A multi-vendor e-commerce marketplace mobile application built with Flutter, featuring guest browsing, buyer authentication, and shopping cart functionality.
+A full-stack multi-vendor e-commerce marketplace with Flutter mobile app and Node.js backend, featuring guest browsing, buyer authentication, and shopping cart functionality.
+
+## 📁 Project Structure
+
+```
+ai_flutter/
+├── mobile/           # Flutter mobile application
+│   ├── lib/          # Dart source code
+│   ├── test/         # Unit & widget tests
+│   ├── integration_test/
+│   ├── docs/         # API documentation
+│   └── pubspec.yaml
+├── backend/          # Node.js backend API (coming soon)
+│   └── README.md
+├── specs/            # Product specifications
+├── brandstorm/       # Project planning documents
+├── .claude/          # Claude AI configuration
+├── .specify/         # Specify design system
+└── README.md         # This file
+```
 
 ## 📱 Features
 
@@ -39,10 +58,10 @@ A multi-vendor e-commerce marketplace mobile application built with Flutter, fea
 - **Testing**: 174 passing unit tests (>80% coverage on business logic)
 - **Code Quality**: Zero linting errors, formatted codebase
 
-## 🏗️ Architecture
+## 🏗️ Mobile App Architecture
 
 ```
-lib/
+mobile/lib/
 ├── app/                    # App-level configuration
 │   ├── config.dart        # Environment config (API URLs, timeouts)
 │   ├── providers.dart     # Dependency injection
@@ -82,24 +101,36 @@ lib/
    cd ai_flutter
    ```
 
-2. **Install dependencies**
+2. **Setup Mobile App**
    ```bash
+   cd mobile
    flutter pub get
    ```
 
 3. **Configure environment** (Optional)
-   - Edit `lib/app/config.dart` to set API URLs
-   - Default: Mock API endpoints
+   - Edit `mobile/lib/app/config.dart` to set API URLs
+   - Default: `http://localhost:3000/api/v1`
 
-4. **Run the app**
+4. **Run the mobile app**
    ```bash
+   cd mobile
+   
    # iOS simulator
    flutter run -d "iPhone 15 Pro"
    
    # Android emulator
-   flutter run -d emulator-5554
-   ```
+### Firebase Setup (Optional)
+For push notifications, follow instructions in [FIREBASE_SETUP.md](FIREBASE_SETUP.md).
 
+### API Documentation
+See [mobile/docs/API_DOCUMENTATION.md](mobile/docs/API_DOCUMENTATION.md) for complete API specification.
+
+5. **Setup Backend** (Coming Soon)
+**Q: "DioException: Connection timeout"**
+```dart
+// Edit mobile/lib/app/config.dart to adjust timeout
+static const Duration connectionTimeout = Duration(seconds: 30);
+```
 ### Firebase Setup (Optional)
 For push notifications, follow instructions in [FIREBASE_SETUP.md](FIREBASE_SETUP.md).
 
@@ -123,10 +154,10 @@ flutter run
 
 **Q: "Unhandled Exception: type 'Null' is not a subtype of type 'String'"**
 - Check API response format matches data models
-- Verify network connectivity (see OfflineBanner)
-- Check console logs for detailed error
-
 **Q: Widget tests failing with StateNotifier mocking errors**
+- Widget tests temporarily disabled (marked with .skip)
+- See mobile/test/widget/ for mocking examples
+- Run unit tests instead: `cd mobile && flutter test test/unit/`g errors**
 - Widget tests temporarily disabled (marked with .skip)
 - See test/widget/ for mocking examples
 - Run unit tests instead: `flutter test test/unit/`
@@ -149,12 +180,11 @@ flutter run integration_test/
 1. **Hot Reload**: Press `r` in terminal during `flutter run`
 2. **Hot Restart**: Press `R` to fully restart app
 3. **Inspector**: Press `i` to open Flutter DevTools
-4. **Logs**: Use `debugPrint()` for development logging
-5. **State**: Use Riverpod DevTools extension for state inspection
-
 ## 🧪 Testing
 
 ```bash
+cd mobile
+
 # Run all unit tests
 flutter test test/unit/
 
@@ -163,6 +193,9 @@ flutter test integration_test/
 
 # Generate coverage report
 flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html
+open coverage/html/index.html  # macOS
+```tter test --coverage
 genhtml coverage/lcov.info -o coverage/html
 open coverage/html/index.html  # macOS
 ```
@@ -181,14 +214,15 @@ Key packages:
 - **Images**: `cached_network_image: ^3.3.0`
 - **Storage**: `sqflite: ^2.3.0`, `flutter_secure_storage: ^9.0.0`
 - **Animations**: `shimmer: ^3.0.0`
-- **Testing**: `mockito: ^5.4.4`, `build_runner: ^2.4.7`
-
-See [pubspec.yaml](pubspec.yaml) for complete list.
+See [mobile/pubspec.yaml](mobile/pubspec.yaml) for complete list..4.7`
 
 ## 📚 Documentation
 
-- **Specification**: [specs/001-ecommerce-marketplace/spec.md](specs/001-ecommerce-marketplace/spec.md)
+- **API Documentation**: [mobile/docs/API_DOCUMENTATION.md](mobile/docs/API_DOCUMENTATION.md) - Complete REST API specification
+- **Product Specification**: [specs/001-ecommerce-marketplace/spec.md](specs/001-ecommerce-marketplace/spec.md)
 - **Data Model**: [specs/001-ecommerce-marketplace/data-model.md](specs/001-ecommerce-marketplace/data-model.md)
+- **API Contracts**: [specs/001-ecommerce-marketplace/contracts/](specs/001-ecommerce-marketplace/contracts/)
+- **Task List**: [specs/001-ecommerce-marketplace/tasks.md](specs/001-ecommerce-marketplace/tasks.md)a-model.md)
 - **API Contracts**: [specs/001-ecommerce-marketplace/contracts/](specs/001-ecommerce-marketplace/contracts/)
 - **Task List**: [specs/001-ecommerce-marketplace/tasks.md](specs/001-ecommerce-marketplace/tasks.md)
 
@@ -209,17 +243,19 @@ This MVP focuses on **buyer experience** with Polish & Cross-Cutting Concerns:
 - Reviews & ratings management
 - Order tracking & logistics
 - Admin panel
-
-## 🛠️ Development
-
 ### Code Quality
 ```bash
+cd mobile
+
 # Run linter
 flutter analyze
 
 # Format code
 dart format lib/ test/
 
+# Fix common issues
+dart fix --apply
+```
 # Fix common issues
 dart fix --apply
 ```
@@ -295,9 +331,9 @@ Before deploying to production, ensure:
 [Add your license here]
 
 ## 👥 Team
+**Status**: ✅ Mobile MVP Phase 1-6 Complete | Backend Coming Soon | **Branch**: `001-ecommerce-marketplace` | **Tests**: 174 passing
 
-Built with ❤️ using Flutter and Clean Architecture principles.
-
+**Quick Start**: `cd mobile && flutter pub get && flutter run`
 ---
 
 **Status**: ✅ MVP Phase 1-6 Complete | **Branch**: `001-ecommerce-marketplace` | **Tests**: 174 passing
