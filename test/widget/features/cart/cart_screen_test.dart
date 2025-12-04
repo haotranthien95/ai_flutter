@@ -184,8 +184,7 @@ void main() {
       expect(find.text('₫400,000'), findsOneWidget);
     });
 
-    testWidgets('should display checkout button in bottom bar',
-        (tester) async {
+    testWidgets('should display checkout button in bottom bar', (tester) async {
       // Arrange
       await tester.pumpWidget(
         ProviderScope(
@@ -342,7 +341,9 @@ void main() {
         products: [testCartItems[0].product, product3],
         shopGroups: {
           'shop1': [testCartItems[0]],
-          'shop2': [CartItemWithProduct(cartItem: cartItem3, product: product3)],
+          'shop2': [
+            CartItemWithProduct(cartItem: cartItem3, product: product3)
+          ],
         },
         itemCount: 3,
         totalAmount: 350000,

@@ -583,7 +583,7 @@
 
 #### Integration Tests
 
-- [ ] **T132** [US3] Integration test for shopping flow in `integration_test/shopping_flow_test.dart`:
+- [x] **T132** [US3] Integration test for shopping flow in `integration_test/shopping_flow_test.dart` (8 test scenarios, 493 lines, **BLOCKED** - requires Phase 4 auth integration to run):
   - Login
   - Browse products → tap product
   - Select variant → add to cart
