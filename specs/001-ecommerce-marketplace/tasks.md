@@ -338,37 +338,37 @@
 
 #### Widget Tests
 
-- [ ] **T080** [P] [US2] Widget test for `LoginScreen` in `test/widget/features/auth/login_screen_test.dart`:
+- [x] **T080** [P] [US2] Widget test for `LoginScreen` in `test/widget/features/auth/login_screen_test.dart`: ✅
   - Test phone/password fields present
   - Test validation errors display
   - Test "Sign Up" link navigates to register
   - Test "Forgot Password" link
-- [ ] **T081** [P] [US2] Widget test for `RegisterScreen` in `test/widget/features/auth/register_screen_test.dart`:
+- [x] **T081** [P] [US2] Widget test for `RegisterScreen` in `test/widget/features/auth/register_screen_test.dart`: ✅
   - Test all form fields render
   - Test password strength indicator
   - Test validation on submit
-- [ ] **T082** [P] [US2] Widget test for `OTPVerificationScreen` in `test/widget/features/auth/otp_verification_screen_test.dart`:
+- [x] **T082** [P] [US2] Widget test for `OTPVerificationScreen` in `test/widget/features/auth/otp_verification_screen_test.dart`: ✅
   - Test 6-digit input fields
   - Test countdown timer
   - Test resend OTP button
-- [ ] **T083** [P] [US2] Widget test for `ProfileScreen` in `test/widget/features/profile/profile_screen_test.dart`:
+- [x] **T083** [P] [US2] Widget test for `ProfileScreen` in `test/widget/features/profile/profile_screen_test.dart`: ✅
   - Test user info displays
   - Test "Edit Profile" navigates
   - Test "Manage Addresses" navigates
   - Test "Logout" button
-- [ ] **T084** [P] [US2] Widget test for `AddressFormScreen` in `test/widget/features/profile/address_form_screen_test.dart`:
+- [x] **T084** [P] [US2] Widget test for `AddressFormScreen` in `test/widget/features/profile/address_form_screen_test.dart`: ✅
   - Test all address fields render
   - Test validation (required fields)
   - Test default address checkbox
 
 #### Integration Tests
 
-- [ ] **T085** [US2] Integration test for registration flow in `integration_test/registration_flow_test.dart`:
+- [x] **T085** [US2] Integration test for registration flow in `integration_test/registration_flow_test.dart`: ✅
   - Tap "Sign Up" → fill form → submit
   - Enter OTP → verify
   - Complete profile setup
   - See home screen
-- [ ] **T086** [US2] Integration test for login/logout flow in `integration_test/login_logout_flow_test.dart`:
+- [x] **T086** [US2] Integration test for login/logout flow in `integration_test/login_logout_flow_test.dart`: ✅
   - Enter credentials → login
   - Navigate to profile
   - Tap logout → return to home
@@ -377,7 +377,7 @@
 
 #### Data Layer
 
-- [ ] **T087** [P] [US2] Create auth remote data source in `lib/features/auth/data/data_sources/auth_remote_data_source.dart`:
+- [x] **T087** [P] [US2] Create auth remote data source in `lib/features/auth/data/data_sources/auth_remote_data_source.dart`: ✅
   - `register(phoneNumber, password, fullName)` → POST `/auth/register`
   - `verifyOTP(phoneNumber, otpCode)` → POST `/auth/verify-otp` → returns tokens
   - `login(phoneNumber, password)` → POST `/auth/login` → returns tokens + user
@@ -385,11 +385,11 @@
   - `refreshToken(refreshToken)` → POST `/auth/refresh`
   - `forgotPassword(phoneNumber)` → POST `/auth/forgot-password`
   - `resetPassword(phoneNumber, otpCode, newPassword)` → POST `/auth/reset-password`
-- [ ] **T088** [US2] Create auth repository implementation in `lib/features/auth/data/repositories/auth_repository_impl.dart`:
+- [x] **T088** [US2] Create auth repository implementation in `lib/features/auth/data/repositories/auth_repository_impl.dart`: ✅
   - Save tokens to secure storage on login/register
   - Clear tokens on logout
   - Handle token refresh on 401
-- [ ] **T089** [P] [US2] Create profile remote data source in `lib/features/profile/data/data_sources/profile_remote_data_source.dart`:
+- [x] **T089** [P] [US2] Create profile remote data source in `lib/features/profile/data/data_sources/profile_remote_data_source.dart`: ✅
   - `getUserProfile()` → GET `/users/me`
   - `updateProfile(fullName, email, avatarUrl)` → PATCH `/users/me`
   - `getAddresses()` → GET `/users/me/addresses`
@@ -397,37 +397,37 @@
   - `updateAddress(addressId, address)` → PATCH `/users/me/addresses/{id}`
   - `deleteAddress(addressId)` → DELETE `/users/me/addresses/{id}`
   - `setDefaultAddress(addressId)` → PATCH `/users/me/addresses/{id}/default`
-- [ ] **T090** [US2] Create profile repository implementation in `lib/features/profile/data/repositories/profile_repository_impl.dart`
+- [x] **T090** [US2] Create profile repository implementation in `lib/features/profile/data/repositories/profile_repository_impl.dart` ✅
 
 #### Domain Layer
 
-- [ ] **T091** [P] [US2] Create auth repository interface in `lib/features/auth/domain/repositories/auth_repository.dart`
-- [ ] **T092** [P] [US2] Create `RegisterUseCase` in `lib/features/auth/domain/use_cases/register.dart`:
+- [x] **T091** [P] [US2] Create auth repository interface in `lib/features/auth/domain/repositories/auth_repository.dart` ✅
+- [x] **T092** [P] [US2] Create `RegisterUseCase` in `lib/features/auth/domain/use_cases/register.dart`: ✅
   - Validate phone format (Vietnamese)
   - Validate password strength (min 8 chars)
   - Call repository
-- [ ] **T093** [P] [US2] Create `VerifyOTPUseCase` in `lib/features/auth/domain/use_cases/verify_otp.dart`
-- [ ] **T094** [P] [US2] Create `LoginUseCase` in `lib/features/auth/domain/use_cases/login.dart`
-- [ ] **T095** [P] [US2] Create `LogoutUseCase` in `lib/features/auth/domain/use_cases/logout.dart`
-- [ ] **T096** [P] [US2] Create `ForgotPasswordUseCase` in `lib/features/auth/domain/use_cases/forgot_password.dart`
-- [ ] **T097** [P] [US2] Create `ResetPasswordUseCase` in `lib/features/auth/domain/use_cases/reset_password.dart`
-- [ ] **T098** [P] [US2] Create profile repository interface in `lib/features/profile/domain/repositories/profile_repository.dart`
-- [ ] **T099** [P] [US2] Create `GetUserProfileUseCase` in `lib/features/profile/domain/use_cases/get_user_profile.dart`
-- [ ] **T100** [P] [US2] Create `UpdateProfileUseCase` in `lib/features/profile/domain/use_cases/update_profile.dart`
-- [ ] **T101** [P] [US2] Create `AddAddressUseCase` in `lib/features/profile/domain/use_cases/add_address.dart`:
+- [x] **T093** [P] [US2] Create `VerifyOTPUseCase` in `lib/features/auth/domain/use_cases/verify_otp.dart` ✅
+- [x] **T094** [P] [US2] Create `LoginUseCase` in `lib/features/auth/domain/use_cases/login.dart` ✅
+- [x] **T095** [P] [US2] Create `LogoutUseCase` in `lib/features/auth/domain/use_cases/logout.dart` ✅
+- [x] **T096** [P] [US2] Create `ForgotPasswordUseCase` in `lib/features/auth/domain/use_cases/forgot_password.dart` ✅
+- [x] **T097** [P] [US2] Create `ResetPasswordUseCase` in `lib/features/auth/domain/use_cases/reset_password.dart` ✅
+- [x] **T098** [P] [US2] Create profile repository interface in `lib/features/profile/domain/repositories/profile_repository.dart` ✅
+- [x] **T099** [P] [US2] Create `GetUserProfileUseCase` in `lib/features/profile/domain/use_cases/get_user_profile.dart` ✅
+- [x] **T100** [P] [US2] Create `UpdateProfileUseCase` in `lib/features/profile/domain/use_cases/update_profile.dart` ✅
+- [x] **T101** [P] [US2] Create `AddAddressUseCase` in `lib/features/profile/domain/use_cases/add_address.dart`: ✅
   - Validate address fields (required: recipientName, phoneNumber, streetAddress, ward, district, city)
   - If first address, set as default
-- [ ] **T102** [P] [US2] Create `UpdateAddressUseCase` in `lib/features/profile/domain/use_cases/update_address.dart`
-- [ ] **T103** [P] [US2] Create `DeleteAddressUseCase` in `lib/features/profile/domain/use_cases/delete_address.dart`
-- [ ] **T104** [P] [US2] Create `SetDefaultAddressUseCase` in `lib/features/profile/domain/use_cases/set_default_address.dart`
+- [x] **T102** [P] [US2] Create `UpdateAddressUseCase` in `lib/features/profile/domain/use_cases/update_address.dart` ✅
+- [x] **T103** [P] [US2] Create `DeleteAddressUseCase` in `lib/features/profile/domain/use_cases/delete_address.dart` ✅
+- [x] **T104** [P] [US2] Create `SetDefaultAddressUseCase` in `lib/features/profile/domain/use_cases/set_default_address.dart` ✅
 
 #### Presentation Layer - Auth Feature
 
-- [ ] **T105** [US2] Create `AuthProvider` (Riverpod StateNotifier) in `lib/features/auth/presentation/auth_provider.dart`:
+- [x] **T105** [US2] Create `AuthProvider` (Riverpod StateNotifier) in `lib/features/auth/presentation/auth_provider.dart`: ✅
   - State: `AuthState` (unauthenticated, authenticated(user), loading, error)
   - Methods: `register()`, `verifyOTP()`, `login()`, `logout()`, `checkAuthStatus()`
   - Listen to secure storage for token changes
-- [ ] **T106** [US2] Create `LoginScreen` in `lib/features/auth/presentation/login_screen.dart`:
+- [x] **T106** [US2] Create `LoginScreen` in `lib/features/auth/presentation/login_screen.dart`: ✅
   - Phone number input (Vietnamese format)
   - Password input (obscured)
   - "Forgot Password" link
@@ -435,7 +435,7 @@
   - Login button (calls `AuthProvider.login()`)
   - Loading indicator during login
   - Error snackbar on failure
-- [ ] **T107** [US2] Create `RegisterScreen` in `lib/features/auth/presentation/register_screen.dart`:
+- [x] **T107** [US2] Create `RegisterScreen` in `lib/features/auth/presentation/register_screen.dart`: ✅
   - Phone number input with validator
   - Password input with strength indicator
   - Confirm password input
@@ -443,45 +443,45 @@
   - Email input (optional)
   - "Already have account? Login" link
   - Register button → navigates to OTP screen
-- [ ] **T108** [US2] Create `OTPVerificationScreen` in `lib/features/auth/presentation/otp_verification_screen.dart`:
+- [x] **T108** [US2] Create `OTPVerificationScreen` in `lib/features/auth/presentation/otp_verification_screen.dart`: ✅
   - 6-digit OTP input (auto-focus next field)
   - Countdown timer (e.g., "Resend code in 0:45")
   - Resend OTP button (enabled after countdown)
   - Verify button → calls `AuthProvider.verifyOTP()`
   - On success → navigate to home (authenticated state)
-- [ ] **T109** [P] [US2] Create password strength indicator widget in `lib/features/auth/presentation/widgets/password_strength_indicator.dart`:
+- [x] **T109** [P] [US2] Create password strength indicator widget in `lib/features/auth/presentation/widgets/password_strength_indicator.dart`: ✅
   - Color-coded bar (red/yellow/green)
   - Text: Weak/Medium/Strong
-- [ ] **T110** [P] [US2] Create `ForgotPasswordScreen` in `lib/features/auth/presentation/forgot_password_screen.dart`:
+- [x] **T110** [P] [US2] Create `ForgotPasswordScreen` in `lib/features/auth/presentation/forgot_password_screen.dart`: ✅
   - Phone input → send OTP
   - OTP verification
   - New password input → reset
-- [ ] **T111** [P] [US2] Create `ResetPasswordScreen` in `lib/features/auth/presentation/reset_password_screen.dart`
+- [x] **T111** [P] [US2] Create `ResetPasswordScreen` in `lib/features/auth/presentation/reset_password_screen.dart` ✅
 
 #### Presentation Layer - Profile Feature
 
-- [ ] **T112** [US2] Create `ProfileProvider` in `lib/features/profile/presentation/profile_provider.dart`:
+- [x] **T112** [US2] Create `ProfileProvider` in `lib/features/profile/presentation/profile_provider.dart`: ✅
   - State: `AsyncValue<User>`, addresses list
   - Methods: `loadProfile()`, `updateProfile()`, `loadAddresses()`, `addAddress()`, `updateAddress()`, `deleteAddress()`, `setDefaultAddress()`
-- [ ] **T113** [US2] Create `ProfileScreen` in `lib/features/profile/presentation/profile_screen.dart`:
+- [x] **T113** [US2] Create `ProfileScreen` in `lib/features/profile/presentation/profile_screen.dart`: ✅
   - Avatar (circular, placeholder if null)
   - User name, phone, email
   - "Edit Profile" button → navigates to edit screen
   - "Manage Addresses" button → navigates to addresses screen
   - "My Orders" button (placeholder, links to US-004)
   - "Logout" button → shows confirmation dialog → calls `AuthProvider.logout()`
-- [ ] **T114** [US2] Create `EditProfileScreen` in `lib/features/profile/presentation/edit_profile_screen.dart`:
+- [x] **T114** [US2] Create `EditProfileScreen` in `lib/features/profile/presentation/edit_profile_screen.dart`: ✅
   - Full name input
   - Email input (optional)
   - Avatar picker (camera/gallery)
   - Save button → calls `ProfileProvider.updateProfile()`
-- [ ] **T115** [US2] Create `AddressListScreen` in `lib/features/profile/presentation/address_list_screen.dart`:
+- [x] **T115** [US2] Create `AddressListScreen` in `lib/features/profile/presentation/address_list_screen.dart`: ✅
   - List of saved addresses
   - Each address shows: recipient name, phone, full address
   - Default address badge
   - Edit/Delete actions (swipe or menu)
   - "Add New Address" FAB → navigates to address form
-- [ ] **T116** [US2] Create `AddressFormScreen` in `lib/features/profile/presentation/address_form_screen.dart`:
+- [x] **T116** [US2] Create `AddressFormScreen` in `lib/features/profile/presentation/address_form_screen.dart`: ✅
   - Recipient name input
   - Phone number input (with validator)
   - Street address input
@@ -490,14 +490,14 @@
   - City/Province dropdown/input
   - "Set as default address" checkbox
   - Save button → calls `ProfileProvider.addAddress()` or `updateAddress()`
-- [ ] **T117** [P] [US2] Create address tile widget in `lib/features/profile/presentation/widgets/address_tile.dart`:
+- [x] **T117** [P] [US2] Create address tile widget in `lib/features/profile/presentation/widgets/address_tile.dart`: ✅
   - Display formatted address
   - "Default" badge if default
   - Edit/Delete icons
 
 #### Routing & Auth Guard
 
-- [ ] **T118** [US2] Add auth routes to `lib/app/routes.dart`:
+- [x] **T118** [US2] Add auth routes to `lib/app/routes.dart`: ✅
   - `/auth/login` → LoginScreen
   - `/auth/register` → RegisterScreen
   - `/auth/verify-otp` → OTPVerificationScreen
@@ -506,14 +506,14 @@
   - `/profile/edit` → EditProfileScreen (requires auth)
   - `/profile/addresses` → AddressListScreen (requires auth)
   - `/profile/addresses/add` → AddressFormScreen (requires auth)
-- [ ] **T119** [US2] Implement auth guard in `lib/app/routes.dart`:
+- [x] **T119** [US2] Implement auth guard in `lib/app/routes.dart`: ✅
   - `redirect` callback checks `AuthProvider` state
   - If unauthenticated and accessing protected route → redirect to `/auth/login`
   - If authenticated and accessing auth routes → redirect to home
 
 #### Integration with US-001
 
-- [ ] **T120** [US2] Update `ProductDetailScreen` "Add to Cart" button logic:
+- [x] **T120** [US2] Update `ProductDetailScreen` "Add to Cart" button logic: ✅
   - If `AuthProvider` state is unauthenticated → show login dialog with "Login" / "Sign Up" buttons
   - If authenticated → proceed to add to cart (US-003 functionality)
 
