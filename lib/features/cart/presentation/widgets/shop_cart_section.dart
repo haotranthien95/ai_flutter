@@ -134,7 +134,8 @@ class ShopCartSection extends StatelessWidget {
     );
   }
 
-  Widget _buildAppliedVoucher(BuildContext context, ThemeData theme, double discount) {
+  Widget _buildAppliedVoucher(
+      BuildContext context, ThemeData theme, double discount) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(

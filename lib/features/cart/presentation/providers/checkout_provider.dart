@@ -127,7 +127,8 @@ class CheckoutNotifier extends StateNotifier<CheckoutState> {
 }
 
 /// Checkout provider
-final checkoutProvider = StateNotifierProvider<CheckoutNotifier, CheckoutState>((ref) {
+final checkoutProvider =
+    StateNotifierProvider<CheckoutNotifier, CheckoutState>((ref) {
   final placeOrderUseCase = ref.watch(placeOrderUseCaseProvider);
   return CheckoutNotifier(placeOrderUseCase);
 });

@@ -86,14 +86,15 @@ class AppRouter {
 /// Route path constants for easy reference
 class Routes {
   Routes._();
-  
+
   static const String home = '/';
   static const String search = '/search';
   static const String cart = '/cart';
   static const String checkout = '/checkout';
   static const String addressSelector = '/checkout/address';
   static const String orderConfirmation = '/order/confirmation';
-  
+
   static String productDetail(String id) => '/product/$id';
-  static String orderConfirmationWithId(String orderId) => '/order/confirmation/$orderId';
+  static String orderConfirmationWithId(String orderId) =>
+      '/order/confirmation/$orderId';
 }

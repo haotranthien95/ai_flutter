@@ -65,7 +65,8 @@ class _VoucherSelectorBottomSheetState
                       height: 4,
                       margin: const EdgeInsets.only(bottom: 16),
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.onSurfaceVariant.withOpacity(0.4),
+                        color:
+                            theme.colorScheme.onSurfaceVariant.withOpacity(0.4),
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
@@ -73,7 +74,9 @@ class _VoucherSelectorBottomSheetState
                       children: [
                         Expanded(
                           child: Text(
-                            isShopVoucher ? 'Shop Vouchers' : 'Platform Vouchers',
+                            isShopVoucher
+                                ? 'Shop Vouchers'
+                                : 'Platform Vouchers',
                             style: theme.textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),

@@ -34,7 +34,8 @@ class CartScreen extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     final shopId = shopGroups.keys.elementAt(index);
                     final shopItems = shopGroups[shopId]!;
-                    final shopName = shopItems.first.product.shopId; // Use shopId as name for now
+                    final shopName = shopItems
+                        .first.product.shopId; // Use shopId as name for now
 
                     return ShopCartSection(
                       shopId: shopId,
@@ -46,9 +47,9 @@ class CartScreen extends ConsumerWidget {
                       },
                       onUpdateQuantity: (cartItemId, quantity) {
                         ref.read(cartProvider.notifier).updateQuantity(
-                          cartItemId: cartItemId,
-                          quantity: quantity,
-                        );
+                              cartItemId: cartItemId,
+                              quantity: quantity,
+                            );
                       },
                       onSelectVoucher: () {
                         _showVoucherSelector(context, ref, shopId);
@@ -161,7 +162,8 @@ class CartScreen extends ConsumerWidget {
     );
   }
 
-  void _showVoucherSelector(BuildContext context, WidgetRef ref, String shopId) {
+  void _showVoucherSelector(
+      BuildContext context, WidgetRef ref, String shopId) {
     final cart = ref.read(cartProvider).value;
     if (cart == null) return;
 

@@ -377,9 +377,10 @@ class CheckoutScreen extends ConsumerWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: checkoutState.canPlaceOrder && !checkoutState.isProcessing
-                    ? () => _placeOrder(context, ref, cart)
-                    : null,
+                onPressed:
+                    checkoutState.canPlaceOrder && !checkoutState.isProcessing
+                        ? () => _placeOrder(context, ref, cart)
+                        : null,
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
@@ -389,7 +390,8 @@ class CheckoutScreen extends ConsumerWidget {
                         width: 20,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
                         ),
                       )
                     : Text(
@@ -404,13 +406,14 @@ class CheckoutScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _placeOrder(BuildContext context, WidgetRef ref, Cart cart) async {
+  Future<void> _placeOrder(
+      BuildContext context, WidgetRef ref, Cart cart) async {
     try {
       final cartItemIds = cart.items.map((item) => item.id).toList();
-      
+
       final orderId = await ref.read(checkoutProvider.notifier).placeOrder(
-        cartItemIds: cartItemIds,
-      );
+            cartItemIds: cartItemIds,
+          );
 
       if (orderId != null && context.mounted) {
         // Navigate to order confirmation

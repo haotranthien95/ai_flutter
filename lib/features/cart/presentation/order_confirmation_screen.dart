@@ -138,9 +138,9 @@ class OrderConfirmationScreen extends ConsumerWidget {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/',
-                      (route) => false,
-                    );
+                    '/',
+                    (route) => false,
+                  );
                 },
                 child: const Text('Continue Shopping'),
               ),
