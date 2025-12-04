@@ -53,9 +53,10 @@ class _ImageCarouselState extends State<ImageCarousel> {
             },
             itemCount: widget.images.length,
             itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () => _showFullscreenImage(context, index),
-                child: Hero(
+              return RepaintBoundary(
+                child: GestureDetector(
+                  onTap: () => _showFullscreenImage(context, index),
+                  child: Hero(
                   tag: 'product_image_$index',
                   child: CachedNetworkImage(
                     imageUrl: widget.images[index],

@@ -24,11 +24,12 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: Column(
+    return RepaintBoundary(
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             // Product image with Hero animation
@@ -112,6 +113,7 @@ class ProductCard extends StatelessWidget {
           ],
         ),
       ),
+    ),
     );
   }
 }
@@ -133,11 +135,12 @@ class HorizontalProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: Row(
+    return RepaintBoundary(
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             // Product image (square thumbnail)
@@ -209,10 +212,11 @@ class HorizontalProductCard extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
+    ),
     );
   }
 }
@@ -242,9 +246,10 @@ class CompactProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Row(
+    return RepaintBoundary(
+      child: InkWell(
+        onTap: onTap,
+        child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           // Product image (small thumbnail)
@@ -308,6 +313,7 @@ class CompactProductCard extends StatelessWidget {
           ),
         ],
       ),
+    ),
     );
   }
 }
