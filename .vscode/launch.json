@@ -8,19 +8,22 @@
         {
             "name": "ai_flutter",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "mobile/lib/main.dart"
         },
         {
             "name": "ai_flutter (profile mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "program": "mobile/lib/main.dart"
         },
         {
             "name": "ai_flutter (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "program": "mobile/lib/main.dart"
         }
     ]
 }
