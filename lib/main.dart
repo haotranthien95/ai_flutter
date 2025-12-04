@@ -8,6 +8,9 @@ import 'core/services/connectivity_service.dart';
 import 'features/auth/presentation/providers/auth_provider.dart';
 import 'features/profile/presentation/providers/profile_provider.dart';
 import 'features/cart/presentation/providers/cart_provider.dart';
+import 'features/home/presentation/providers/home_provider.dart';
+import 'features/search/presentation/providers/search_provider.dart';
+import 'features/product_detail/presentation/providers/product_detail_provider.dart';
 
 /// Application entry point.
 void main() {
@@ -17,6 +20,27 @@ void main() {
   runApp(
     ProviderScope(
       overrides: [
+        // Home/Product providers (Phase 1-3)
+        homeProvider.overrideWith((ref) {
+          final getProductsUseCase = ref.watch(getProductsUseCaseProvider);
+          final getCategoriesUseCase = ref.watch(getCategoriesUseCaseProvider);
+          return HomeNotifier(getProductsUseCase, getCategoriesUseCase);
+        }),
+        searchProvider.overrideWith((ref) {
+          final searchProductsUseCase =
+              ref.watch(searchProductsUseCaseProvider);
+          final productRepository = ref.watch(productRepositoryProvider);
+          return SearchNotifier(searchProductsUseCase, productRepository);
+        }),
+        productDetailProvider.overrideWith((ref) {
+          final getProductDetailUseCase =
+              ref.watch(getProductDetailUseCaseProvider);
+          final getProductReviewsUseCase =
+              ref.watch(getProductReviewsUseCaseProvider);
+          return ProductDetailNotifier(
+              getProductDetailUseCase, getProductReviewsUseCase);
+        }),
+
         // Auth providers (Phase 4)
         authRepositoryProvider
             .overrideWith((ref) => ref.watch(authRepositoryProviderImpl)),
