@@ -1,5 +1,5 @@
 import 'package:ai_flutter/core/models/cart_item.dart';
-import 'package:ai_flutter/features/auth/presentation/auth_provider.dart';
+import 'package:ai_flutter/features/auth/presentation/providers/auth_provider.dart';
 import 'package:ai_flutter/features/cart/domain/models/cart.dart';
 import 'package:ai_flutter/features/cart/domain/use_cases/add_to_cart.dart';
 import 'package:ai_flutter/features/cart/domain/use_cases/get_cart.dart';
@@ -28,7 +28,11 @@ class CartNotifier extends StateNotifier<AsyncValue<Cart>> {
 
   /// Loads cart for current user.
   Future<void> loadCart() async {
-    final user = _authNotifier.currentUser;
+    final authState = _authNotifier.state;
+    final user = authState.maybeWhen(
+      authenticated: (user) => user,
+      orElse: () => null,
+    );
     if (user == null) {
       state = const AsyncValue.data(Cart(
         items: [],
@@ -55,7 +59,11 @@ class CartNotifier extends StateNotifier<AsyncValue<Cart>> {
     String? variantId,
     required int quantity,
   }) async {
-    final user = _authNotifier.currentUser;
+    final authState = _authNotifier.state;
+    final user = authState.maybeWhen(
+      authenticated: (user) => user,
+      orElse: () => null,
+    );
     if (user == null) throw Exception('User not authenticated');
 
     try {

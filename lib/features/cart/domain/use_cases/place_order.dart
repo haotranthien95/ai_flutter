@@ -1,14 +1,14 @@
 import 'package:ai_flutter/features/cart/domain/repositories/order_repository.dart';
 
 /// Place order use case (T142 - stub implementation)
-/// 
+///
 /// Creates orders from cart items with address, payment, and voucher details.
 class PlaceOrderUseCase {
   /// Creates place order use case.
   const PlaceOrderUseCase(OrderRepository orderRepository);
 
   /// Execute place order.
-  /// 
+  ///
   /// Parameters:
   /// - [cartItemIds]: List of cart item IDs to checkout
   /// - [addressId]: Delivery address ID
@@ -16,9 +16,9 @@ class PlaceOrderUseCase {
   /// - [notes]: Optional order notes
   /// - [shopVouchers]: Map of shop IDs to voucher codes
   /// - [platformVoucherCode]: Optional platform-wide voucher
-  /// 
+  ///
   /// Returns order ID.
-  /// 
+  ///
   /// TODO: Implement actual order creation logic.
   Future<String> execute({
     required List<String> cartItemIds,
