@@ -318,23 +318,23 @@
 
 #### Unit Tests
 
-- [ ] **T072** [P] [US2] Unit test for `RegisterUseCase` in `test/unit/features/auth/domain/use_cases/register_test.dart`:
+- [x] **T072** [P] [US2] Unit test for `RegisterUseCase` in `test/unit/features/auth/domain/use_cases/register_test.dart`: ✅
   - Test successful registration
   - Test validation errors (invalid phone, weak password)
   - Test 409 conflict (phone already exists)
-- [ ] **T073** [P] [US2] Unit test for `VerifyOTPUseCase` in `test/unit/features/auth/domain/use_cases/verify_otp_test.dart`:
+- [x] **T073** [P] [US2] Unit test for `VerifyOTPUseCase` in `test/unit/features/auth/domain/use_cases/verify_otp_test.dart`: ✅
   - Test successful verification
   - Test invalid/expired OTP
-- [ ] **T074** [P] [US2] Unit test for `LoginUseCase` in `test/unit/features/auth/domain/use_cases/login_test.dart`:
+- [x] **T074** [P] [US2] Unit test for `LoginUseCase` in `test/unit/features/auth/domain/use_cases/login_test.dart`: ✅
   - Test successful login with valid credentials
   - Test 401 unauthorized (wrong password)
-- [ ] **T075** [P] [US2] Unit test for `LogoutUseCase` in `test/unit/features/auth/domain/use_cases/logout_test.dart`
-- [ ] **T076** [P] [US2] Unit test for `GetUserProfileUseCase` in `test/unit/features/profile/domain/use_cases/get_user_profile_test.dart`
-- [ ] **T077** [P] [US2] Unit test for `UpdateProfileUseCase` in `test/unit/features/profile/domain/use_cases/update_profile_test.dart`
-- [ ] **T078** [P] [US2] Unit test for `AddAddressUseCase` in `test/unit/features/profile/domain/use_cases/add_address_test.dart`:
+- [x] **T075** [P] [US2] Unit test for `LogoutUseCase` in `test/unit/features/auth/domain/use_cases/logout_test.dart` ✅
+- [x] **T076** [P] [US2] Unit test for `GetUserProfileUseCase` in `test/unit/features/profile/domain/use_cases/get_user_profile_test.dart` ✅
+- [x] **T077** [P] [US2] Unit test for `UpdateProfileUseCase` in `test/unit/features/profile/domain/use_cases/update_profile_test.dart` ✅
+- [x] **T078** [P] [US2] Unit test for `AddAddressUseCase` in `test/unit/features/profile/domain/use_cases/add_address_test.dart`: ✅
   - Test address validation
   - Test setting first address as default
-- [ ] **T079** [P] [US2] Unit test for `AuthRepositoryImpl` in `test/unit/features/auth/data/repositories/auth_repository_impl_test.dart`
+- [x] **T079** [P] [US2] Unit test for `AuthRepositoryImpl` in `test/unit/features/auth/data/repositories/auth_repository_impl_test.dart` ✅
 
 #### Widget Tests
 
