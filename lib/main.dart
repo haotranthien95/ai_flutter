@@ -4,12 +4,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app/routes.dart';
 import 'app/theme.dart';
 import 'app/providers.dart';
+import 'core/services/connectivity_service.dart';
 import 'features/auth/presentation/providers/auth_provider.dart';
 import 'features/profile/presentation/providers/profile_provider.dart';
 import 'features/cart/presentation/providers/cart_provider.dart';
 
 /// Application entry point.
 void main() {
+  // Initialize connectivity monitoring
+  ConnectivityService.instance.initialize();
+
   runApp(
     ProviderScope(
       overrides: [
