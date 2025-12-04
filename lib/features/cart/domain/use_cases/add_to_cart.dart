@@ -28,9 +28,7 @@ class AddToCartUseCase {
 
     // Check if item already exists with same product and variant
     final existingItem = existingCart.firstWhere(
-      (item) =>
-          item.productId == productId &&
-          item.variantId == variantId,
+      (item) => item.productId == productId && item.variantId == variantId,
       orElse: () => CartItem(
         id: '',
         userId: '',

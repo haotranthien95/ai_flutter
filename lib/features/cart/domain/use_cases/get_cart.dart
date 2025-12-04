@@ -37,7 +37,8 @@ class GetCartUseCase {
     for (final cartItem in cartItems) {
       final product = products.firstWhere(
         (p) => p.id == cartItem.productId,
-        orElse: () => throw Exception('Product not found: ${cartItem.productId}'),
+        orElse: () =>
+            throw Exception('Product not found: ${cartItem.productId}'),
       );
 
       final itemWithProduct = CartItemWithProduct(

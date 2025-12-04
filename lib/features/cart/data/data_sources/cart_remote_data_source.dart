@@ -14,13 +14,15 @@ class CartRemoteDataSource {
     final response = await _dio.get('/cart');
     final data = response.data as Map<String, dynamic>;
     final items = data['items'] as List<dynamic>;
-    return items.map((json) => CartItem.fromJson(json as Map<String, dynamic>)).toList();
+    return items
+        .map((json) => CartItem.fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 
   /// Get products for cart items.
   Future<List<Product>> getProducts(List<String> productIds) async {
     if (productIds.isEmpty) return [];
-    
+
     final response = await _dio.get(
       '/products',
       queryParameters: {
@@ -29,7 +31,9 @@ class CartRemoteDataSource {
     );
     final data = response.data as Map<String, dynamic>;
     final products = data['items'] as List<dynamic>;
-    return products.map((json) => Product.fromJson(json as Map<String, dynamic>)).toList();
+    return products
+        .map((json) => Product.fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 
   /// Add item to cart.
@@ -76,6 +80,8 @@ class CartRemoteDataSource {
     );
     final data = response.data as Map<String, dynamic>;
     final items = data['items'] as List<dynamic>;
-    return items.map((json) => CartItem.fromJson(json as Map<String, dynamic>)).toList();
+    return items
+        .map((json) => CartItem.fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 }

@@ -16,10 +16,9 @@ class CartRepositoryImpl implements CartRepository {
   Future<List<CartItem>> getCart(String userId) async {
     // Try to get from local first
     final localItemsData = await _localDataSource.getCartItems(userId);
-    final localItems = localItemsData
-        .map((data) => CartItem.fromJson(data))
-        .toList();
-    
+    final localItems =
+        localItemsData.map((data) => CartItem.fromJson(data)).toList();
+
     // Sync with server in background
     try {
       final remoteItems = await _remoteDataSource.getCart(userId);
@@ -27,7 +26,7 @@ class CartRepositoryImpl implements CartRepository {
       await _localDataSource.clearCart(userId);
       final productIds = remoteItems.map((item) => item.productId).toList();
       final products = await _remoteDataSource.getProducts(productIds);
-      
+
       for (final item in remoteItems) {
         final product = products.firstWhere((p) => p.id == item.productId);
         await _localDataSource.insertCartItem(item, product);
@@ -57,7 +56,7 @@ class CartRepositoryImpl implements CartRepository {
       throw Exception('Product not found');
     }
     final product = products.first;
-    
+
     // Add to local first
     final cartItem = CartItem(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -68,9 +67,9 @@ class CartRepositoryImpl implements CartRepository {
       addedAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
-    
+
     await _localDataSource.insertCartItem(cartItem, product);
-    
+
     // Sync with server
     try {
       final remoteItem = await _remoteDataSource.addToCart(
@@ -78,11 +77,11 @@ class CartRepositoryImpl implements CartRepository {
         variantId: variantId,
         quantity: quantity,
       );
-      
+
       // Update local with server ID
       await _localDataSource.deleteCartItem(cartItem.id);
       await _localDataSource.insertCartItem(remoteItem, product);
-      
+
       return remoteItem;
     } catch (e) {
       // Return local item if server sync fails
@@ -97,21 +96,22 @@ class CartRepositoryImpl implements CartRepository {
   }) async {
     // Update local first
     await _localDataSource.updateQuantity(cartItemId, quantity);
-    
+
     // Sync with server
     try {
       final remoteItem = await _remoteDataSource.updateQuantity(
         cartItemId: cartItemId,
         quantity: quantity,
       );
-      
+
       // Update local with server data - need to reload product
-      final products = await _remoteDataSource.getProducts([remoteItem.productId]);
+      final products =
+          await _remoteDataSource.getProducts([remoteItem.productId]);
       if (products.isNotEmpty) {
         await _localDataSource.deleteCartItem(cartItemId);
         await _localDataSource.insertCartItem(remoteItem, products.first);
       }
-      
+
       return remoteItem;
     } catch (e) {
       // If server fails, return updated local item
@@ -127,7 +127,7 @@ class CartRepositoryImpl implements CartRepository {
   Future<void> removeCartItem(String cartItemId) async {
     // Remove from local first
     await _localDataSource.deleteCartItem(cartItemId);
-    
+
     // Sync with server
     try {
       await _remoteDataSource.removeItem(cartItemId);
@@ -145,12 +145,12 @@ class CartRepositoryImpl implements CartRepository {
   Future<void> syncCart(String userId, List<CartItem> localItems) async {
     try {
       final remoteItems = await _remoteDataSource.syncCart(localItems);
-      
+
       // Update local database with server state - need products
       await _localDataSource.clearCart(userId);
       final productIds = remoteItems.map((item) => item.productId).toList();
       final products = await _remoteDataSource.getProducts(productIds);
-      
+
       for (final item in remoteItems) {
         final product = products.firstWhere((p) => p.id == item.productId);
         await _localDataSource.insertCartItem(item, product);

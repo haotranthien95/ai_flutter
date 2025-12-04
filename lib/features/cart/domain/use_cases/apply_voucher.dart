@@ -34,11 +34,13 @@ class ApplyVoucherUseCase {
       throw Exception('Voucher is not active');
     }
 
-    if (voucher.usageLimit != null && voucher.usageCount >= voucher.usageLimit!) {
+    if (voucher.usageLimit != null &&
+        voucher.usageCount >= voucher.usageLimit!) {
       throw Exception('Voucher usage limit reached');
     }
 
-    if (voucher.minOrderValue != null && orderSubtotal < voucher.minOrderValue!) {
+    if (voucher.minOrderValue != null &&
+        orderSubtotal < voucher.minOrderValue!) {
       throw Exception(
         'Order value must be at least ${voucher.minOrderValue} VND',
       );

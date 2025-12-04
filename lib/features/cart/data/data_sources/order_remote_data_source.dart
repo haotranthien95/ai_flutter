@@ -33,7 +33,9 @@ class OrderRemoteDataSource {
     );
 
     final ordersData = response.data!['orders'] as List<dynamic>;
-    return ordersData.map((json) => Order.fromJson(json as Map<String, dynamic>)).toList();
+    return ordersData
+        .map((json) => Order.fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 
   /// Gets user's orders with optional filters.
@@ -54,7 +56,9 @@ class OrderRemoteDataSource {
     );
 
     final ordersData = response.data!['orders'] as List<dynamic>;
-    return ordersData.map((json) => Order.fromJson(json as Map<String, dynamic>)).toList();
+    return ordersData
+        .map((json) => Order.fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 
   /// Gets order detail by ID.
@@ -112,6 +116,8 @@ class OrderRemoteDataSource {
     );
 
     final vouchersData = response.data!['vouchers'] as List<dynamic>;
-    return vouchersData.map((json) => Voucher.fromJson(json as Map<String, dynamic>)).toList();
+    return vouchersData
+        .map((json) => Voucher.fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 }
