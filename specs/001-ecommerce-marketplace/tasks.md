@@ -553,7 +553,7 @@
   - Test expired voucher rejection
   - Test usage limit enforcement
   - Test minimum order value validation
-- [ ] **T127** [P] [US3] Unit test for `CartRepositoryImpl` in `test/unit/features/cart/data/repositories/cart_repository_impl_test.dart`:
+- [x] **T127** [P] [US3] Unit test for `OrderRepositoryImpl` in `test/unit/features/cart/data/repositories/order_repository_impl_test.dart` (15 tests passing):
   - Mock local and remote data sources
   - Test sync logic
 
