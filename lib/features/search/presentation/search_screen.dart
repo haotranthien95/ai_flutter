@@ -78,7 +78,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
             }
           },
           textInputAction: TextInputAction.search,
-        },
+        ),
         actions: [
           AnimatedCartBadge(
             onTap: () => context.push('/cart'),
