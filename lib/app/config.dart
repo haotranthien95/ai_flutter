@@ -75,7 +75,12 @@ class AppConfig {
   /// Image Upload Configuration
   static const int maxImageSizeInMB = 5;
   static const int maxImagesPerUpload = 5;
-  static const List<String> allowedImageExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+  static const List<String> allowedImageExtensions = [
+    'jpg',
+    'jpeg',
+    'png',
+    'webp'
+  ];
 
   /// OTP Configuration
   static const Duration otpExpiryDuration = Duration(minutes: 5);

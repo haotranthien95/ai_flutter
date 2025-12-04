@@ -30,26 +30,10 @@ class ReviewTile extends StatelessWidget {
                   radius: 20.0,
                   backgroundColor:
                       Theme.of(context).colorScheme.primaryContainer,
-                  child: review.reviewerAvatar != null
-                      ? ClipOval(
-                          child: CachedNetworkImage(
-                            imageUrl: review.reviewerAvatar!,
-                            width: 40.0,
-                            height: 40.0,
-                            fit: BoxFit.cover,
-                            errorWidget: (context, url, error) => Icon(
-                              Icons.person,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer,
-                            ),
-                          ),
-                        )
-                      : Icon(
-                          Icons.person,
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
-                        ),
+                  child: Icon(
+                    Icons.person,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  ),
                 ),
                 const SizedBox(width: 12.0),
 
@@ -62,7 +46,7 @@ class ReviewTile extends StatelessWidget {
                         children: [
                           Flexible(
                             child: Text(
-                              review.reviewerName,
+                              'User ${review.userId.substring(0, 8)}',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
@@ -134,12 +118,12 @@ class ReviewTile extends StatelessWidget {
 
             // Review text
             Text(
-              review.comment,
+              review.content ?? 'No comment provided',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
 
             // Review images
-            if (review.images.isNotEmpty) ...[
+            if (review.images != null && review.images!.isNotEmpty) ...[
               const SizedBox(height: 12.0),
               SizedBox(
                 height: 80.0,
@@ -172,48 +156,6 @@ class ReviewTile extends StatelessWidget {
                       ),
                     );
                   },
-                ),
-              ),
-            ],
-
-            // Seller reply
-            if (review.sellerReply != null) ...[
-              const SizedBox(height: 12.0),
-              Container(
-                padding: const EdgeInsets.all(12.0),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.store,
-                          size: 16.0,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        const SizedBox(width: 4.0),
-                        Text(
-                          'Phản hồi của người bán',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4.0),
-                    Text(
-                      review.sellerReply!,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
                 ),
               ),
             ],

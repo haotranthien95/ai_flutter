@@ -73,7 +73,7 @@ class CartNotifier extends StateNotifier<AsyncValue<Cart>> {
         variantId: variantId,
         quantity: quantity,
       );
-      
+
       // Reload cart to get updated state
       await loadCart();
     } catch (error, stackTrace) {
@@ -136,10 +136,10 @@ class CartNotifier extends StateNotifier<AsyncValue<Cart>> {
         cartItemId: cartItemId,
         quantity: quantity,
       );
-      
+
       // Reload to get server state
       await loadCart();
-    } catch (error, stackTrace) {
+    } catch (error) {
       // Revert on error
       await loadCart();
       rethrow;
@@ -150,8 +150,9 @@ class CartNotifier extends StateNotifier<AsyncValue<Cart>> {
   Future<void> removeItem(String cartItemId) async {
     // Optimistic update
     state.whenData((cart) {
-      final updatedItems = cart.items.where((item) => item.id != cartItemId).toList();
-      
+      final updatedItems =
+          cart.items.where((item) => item.id != cartItemId).toList();
+
       // Recalculate cart
       final shopGroups = <String, List<CartItemWithProduct>>{};
       var itemCount = 0;
@@ -181,10 +182,10 @@ class CartNotifier extends StateNotifier<AsyncValue<Cart>> {
 
     try {
       await _removeItemUseCase.execute(cartItemId);
-      
+
       // Reload to confirm server state
       await loadCart();
-    } catch (error, stackTrace) {
+    } catch (error) {
       // Revert on error
       await loadCart();
       rethrow;
@@ -201,10 +202,12 @@ class CartNotifier extends StateNotifier<AsyncValue<Cart>> {
 }
 
 /// Cart provider (T148).
-final cartProvider = StateNotifierProvider<CartNotifier, AsyncValue<Cart>>((ref) {
+final cartProvider =
+    StateNotifierProvider<CartNotifier, AsyncValue<Cart>>((ref) {
   final getCartUseCase = ref.watch(getCartUseCaseProvider);
   final addToCartUseCase = ref.watch(addToCartUseCaseProvider);
-  final updateQuantityUseCase = ref.watch(updateCartItemQuantityUseCaseProvider);
+  final updateQuantityUseCase =
+      ref.watch(updateCartItemQuantityUseCaseProvider);
   final removeItemUseCase = ref.watch(removeCartItemUseCaseProvider);
   final authNotifier = ref.watch(authProvider.notifier);
 
@@ -226,7 +229,8 @@ final addToCartUseCaseProvider = Provider<AddToCartUseCase>((ref) {
   throw UnimplementedError('Define in app/providers.dart');
 });
 
-final updateCartItemQuantityUseCaseProvider = Provider<UpdateCartItemQuantityUseCase>((ref) {
+final updateCartItemQuantityUseCaseProvider =
+    Provider<UpdateCartItemQuantityUseCase>((ref) {
   throw UnimplementedError('Define in app/providers.dart');
 });
 

@@ -14,8 +14,7 @@ class AddressSelectorScreen extends ConsumerStatefulWidget {
       _AddressSelectorScreenState();
 }
 
-class _AddressSelectorScreenState
-    extends ConsumerState<AddressSelectorScreen> {
+class _AddressSelectorScreenState extends ConsumerState<AddressSelectorScreen> {
   String? _selectedAddressId;
 
   @override
@@ -146,9 +145,7 @@ class _AddressSelectorScreenState
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       elevation: isSelected ? 4 : 1,
-      color: isSelected
-          ? Theme.of(context).colorScheme.primaryContainer
-          : null,
+      color: isSelected ? Theme.of(context).colorScheme.primaryContainer : null,
       child: InkWell(
         onTap: () {
           setState(() {
@@ -193,17 +190,15 @@ class _AddressSelectorScreenState
                                   vertical: 2,
                                 ),
                                 decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).colorScheme.primary,
+                                  color: Theme.of(context).colorScheme.primary,
                                   borderRadius: BorderRadius.circular(4),
                                 ),
                                 child: Text(
                                   'Mặc định',
                                   style: TextStyle(
                                     fontSize: 10,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimary,
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

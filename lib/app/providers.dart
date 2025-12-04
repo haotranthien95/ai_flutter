@@ -202,7 +202,8 @@ final logoutUseCaseProviderImpl = Provider<LogoutUseCase>((ref) {
 });
 
 /// Forgot password use case provider.
-final forgotPasswordUseCaseProviderImpl = Provider<ForgotPasswordUseCase>((ref) {
+final forgotPasswordUseCaseProviderImpl =
+    Provider<ForgotPasswordUseCase>((ref) {
   final repository = ref.watch(authRepositoryProviderImpl);
   return ForgotPasswordUseCase(repository);
 });
@@ -218,7 +219,8 @@ final resetPasswordUseCaseProviderImpl = Provider<ResetPasswordUseCase>((ref) {
 // ============================================================================
 
 /// Profile remote data source provider.
-final profileRemoteDataSourceProvider = Provider<ProfileRemoteDataSource>((ref) {
+final profileRemoteDataSourceProvider =
+    Provider<ProfileRemoteDataSource>((ref) {
   final dio = ref.watch(dioProvider);
   return ProfileRemoteDataSource(dio);
 });
@@ -230,7 +232,8 @@ final profileRepositoryProviderImpl = Provider<ProfileRepository>((ref) {
 });
 
 /// Get user profile use case provider.
-final getUserProfileUseCaseProviderImpl = Provider<GetUserProfileUseCase>((ref) {
+final getUserProfileUseCaseProviderImpl =
+    Provider<GetUserProfileUseCase>((ref) {
   final repository = ref.watch(profileRepositoryProviderImpl);
   return GetUserProfileUseCase(repository);
 });
@@ -260,7 +263,8 @@ final deleteAddressUseCaseProviderImpl = Provider<DeleteAddressUseCase>((ref) {
 });
 
 /// Set default address use case provider.
-final setDefaultAddressUseCaseProviderImpl = Provider<SetDefaultAddressUseCase>((ref) {
+final setDefaultAddressUseCaseProviderImpl =
+    Provider<SetDefaultAddressUseCase>((ref) {
   final repository = ref.watch(profileRepositoryProviderImpl);
   return SetDefaultAddressUseCase(repository);
 });
@@ -307,13 +311,15 @@ final addToCartUseCaseProviderImpl = Provider<AddToCartUseCase>((ref) {
 });
 
 /// Update cart item quantity use case provider.
-final updateCartItemQuantityUseCaseProviderImpl = Provider<UpdateCartItemQuantityUseCase>((ref) {
+final updateCartItemQuantityUseCaseProviderImpl =
+    Provider<UpdateCartItemQuantityUseCase>((ref) {
   final repository = ref.watch(cartRepositoryProviderImpl);
   return UpdateCartItemQuantityUseCase(repository);
 });
 
 /// Remove cart item use case provider.
-final removeCartItemUseCaseProviderImpl = Provider<RemoveCartItemUseCase>((ref) {
+final removeCartItemUseCaseProviderImpl =
+    Provider<RemoveCartItemUseCase>((ref) {
   final repository = ref.watch(cartRepositoryProviderImpl);
   return RemoveCartItemUseCase(repository);
 });
