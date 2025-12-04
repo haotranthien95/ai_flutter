@@ -661,7 +661,7 @@
   - Cart model includes: items grouped by shop, subtotals, grand total
   - Methods: `loadCart()`, `addToCart(productId, variantId, quantity)`, `updateQuantity(itemId, quantity)`, `removeItem(itemId)`, `applyVoucher(shopId, voucherCode)`, `removeVoucher(shopId)`
   - Listen to cart changes (optimistic updates)
-- [ ] **T149** [US3] Create `CartScreen` in `lib/features/cart/presentation/cart_screen.dart`:
+- [x] **T149** [US3] Create `CartScreen` in `lib/features/cart/presentation/cart_screen.dart`: ✅
   - AppBar with "Cart" title and item count
   - If cart empty → show empty state with "Start Shopping" button
   - List of shop groups (each shop as section)
@@ -671,7 +671,7 @@
     - Shop subtotal, shipping fee
   - Grand total section at bottom (sticky)
   - "Proceed to Checkout" button (disabled if cart empty)
-- [ ] **T150** [P] [US3] Create cart item tile widget in `lib/features/cart/presentation/widgets/cart_item_tile.dart`:
+- [x] **T150** [P] [US3] Create cart item tile widget in `lib/features/cart/presentation/widgets/cart_item_tile.dart`: ✅
   - Product image (CachedNetworkImage)
   - Product title, variant name (if applicable)
   - Price (unit price × quantity)
@@ -679,12 +679,12 @@
   - Stock warning if quantity > available stock
   - Remove button (trash icon)
   - Inactive product warning (if product no longer active)
-- [ ] **T151** [P] [US3] Create shop cart section widget in `lib/features/cart/presentation/widgets/shop_cart_section.dart`:
+- [x] **T151** [P] [US3] Create shop cart section widget in `lib/features/cart/presentation/widgets/shop_cart_section.dart`: ✅
   - Shop header (name, "Apply Voucher" button)
   - List of CartItemTiles for shop
   - Subtotal and shipping fee rows
   - Applied voucher badge (removable)
-- [ ] **T152** [P] [US3] Create voucher selector bottom sheet in `lib/features/cart/presentation/widgets/voucher_selector_bottom_sheet.dart`:
+- [x] **T152** [P] [US3] Create voucher selector bottom sheet in `lib/features/cart/presentation/widgets/voucher_selector_bottom_sheet.dart`: ✅
   - Manual code input field with "Apply" button
   - List of available shop vouchers (if any)
   - Each voucher shows: title, discount, minimum spend, expiry
