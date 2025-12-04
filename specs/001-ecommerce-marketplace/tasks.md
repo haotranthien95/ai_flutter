@@ -531,24 +531,24 @@
 
 #### Unit Tests
 
-- [ ] **T121** [P] [US3] Unit test for `AddToCartUseCase` in `test/unit/features/cart/domain/use_cases/add_to_cart_test.dart`:
+- [x] **T121** [P] [US3] Unit test for `AddToCartUseCase` in `test/unit/features/cart/domain/use_cases/add_to_cart_test.dart`: ✅
   - Test adding product to empty cart
   - Test adding product with variant
   - Test quantity validation (> 0, <= stock)
   - Test duplicate item handling (update quantity)
-- [ ] **T122** [P] [US3] Unit test for `UpdateCartItemQuantityUseCase` in `test/unit/features/cart/domain/use_cases/update_quantity_test.dart`:
+- [x] **T122** [P] [US3] Unit test for `UpdateCartItemQuantityUseCase` in `test/unit/features/cart/domain/use_cases/update_quantity_test.dart`: ✅
   - Test quantity update
   - Test stock limit enforcement
-- [ ] **T123** [P] [US3] Unit test for `RemoveCartItemUseCase` in `test/unit/features/cart/domain/use_cases/remove_cart_item_test.dart`
-- [ ] **T124** [P] [US3] Unit test for `GetCartUseCase` in `test/unit/features/cart/domain/use_cases/get_cart_test.dart`:
+- [x] **T123** [P] [US3] Unit test for `RemoveCartItemUseCase` in `test/unit/features/cart/domain/use_cases/remove_cart_item_test.dart` ✅
+- [x] **T124** [P] [US3] Unit test for `GetCartUseCase` in `test/unit/features/cart/domain/use_cases/get_cart_test.dart`: ✅
   - Test cart grouping by shop
   - Test subtotal calculations
-- [ ] **T125** [P] [US3] Unit test for `CheckoutUseCase` in `test/unit/features/cart/domain/use_cases/checkout_test.dart`:
+- [x] **T125** [P] [US3] Unit test for `CheckoutUseCase` in `test/unit/features/cart/domain/use_cases/checkout_test.dart`: ✅
   - Test order creation from cart
   - Test voucher application
   - Test cart clearing after successful checkout
   - Test insufficient stock handling
-- [ ] **T126** [P] [US3] Unit test for `ApplyVoucherUseCase` in `test/unit/features/cart/domain/use_cases/apply_voucher_test.dart`:
+- [x] **T126** [P] [US3] Unit test for `ApplyVoucherUseCase` in `test/unit/features/cart/domain/use_cases/apply_voucher_test.dart`: ✅
   - Test valid voucher application
   - Test expired voucher rejection
   - Test usage limit enforcement
@@ -601,62 +601,62 @@
 
 #### Data Layer
 
-- [ ] **T133** [P] [US3] Create cart remote data source in `lib/features/cart/data/data_sources/cart_remote_data_source.dart`:
+- [x] **T133** [P] [US3] Create cart remote data source in `lib/features/cart/data/data_sources/cart_remote_data_source.dart`: ✅
   - `getCart()` → GET `/cart`
   - `addItem(productId, variantId, quantity)` → POST `/cart`
   - `updateItemQuantity(itemId, quantity)` → PATCH `/cart/items/{id}`
   - `removeItem(itemId)` → DELETE `/cart/items/{id}`
   - `syncCart(items)` → POST `/cart/sync`
-- [ ] **T134** [US3] Create cart repository implementation in `lib/features/cart/data/repositories/cart_repository_impl.dart`:
+- [x] **T134** [US3] Create cart repository implementation in `lib/features/cart/data/repositories/cart_repository_impl.dart`: ✅
   - Sync between local SQLite and remote server
   - Offline-first approach: writes to local DB immediately, syncs to server in background
   - Merge conflicts: server cart wins
-- [ ] **T135** [P] [US3] Create order remote data source in `lib/features/cart/data/data_sources/order_remote_data_source.dart`:
+- [x] **T135** [P] [US3] Create order remote data source in `lib/features/cart/data/data_sources/order_remote_data_source.dart`: ✅
   - `createOrder(items, addressId, paymentMethod, voucherCode, notes)` → POST `/orders`
   - `getOrders(status, limit, cursor)` → GET `/orders`
   - `getOrderDetail(orderId)` → GET `/orders/{id}`
   - `cancelOrder(orderId, reason, notes)` → POST `/orders/{id}/cancel`
-- [ ] **T136** [US3] Create order repository implementation in `lib/features/cart/data/repositories/order_repository_impl.dart`
-- [ ] **T137** [P] [US3] Create voucher remote data source in `lib/features/cart/data/data_sources/voucher_remote_data_source.dart`:
+- [x] **T136** [US3] Create order repository implementation in `lib/features/cart/data/repositories/order_repository_impl.dart` ✅
+- [x] **T137** [P] [US3] Create voucher remote data source in `lib/features/cart/data/data_sources/voucher_remote_data_source.dart`: ✅
   - `getAvailableVouchers(shopId, orderSubtotal)` → GET `/shops/{id}/vouchers`
   - `validateVoucher(voucherCode, shopId, orderSubtotal)` → POST `/vouchers/validate`
 
 #### Domain Layer
 
-- [ ] **T138** [P] [US3] Create cart repository interface in `lib/features/cart/domain/repositories/cart_repository.dart`
-- [ ] **T139** [P] [US3] Create `AddToCartUseCase` in `lib/features/cart/domain/use_cases/add_to_cart.dart`:
+- [x] **T138** [P] [US3] Create cart repository interface in `lib/features/cart/domain/repositories/cart_repository.dart` ✅
+- [x] **T139** [P] [US3] Create `AddToCartUseCase` in `lib/features/cart/domain/use_cases/add_to_cart.dart`: ✅
   - Validate quantity > 0
   - Check stock availability
   - If item already in cart with same variant → update quantity
   - Otherwise add new cart item
-- [ ] **T140** [P] [US3] Create `UpdateCartItemQuantityUseCase` in `lib/features/cart/domain/use_cases/update_quantity.dart`:
+- [x] **T140** [P] [US3] Create `UpdateCartItemQuantityUseCase` in `lib/features/cart/domain/use_cases/update_quantity.dart`: ✅
   - Validate quantity > 0 and <= stock
-- [ ] **T141** [P] [US3] Create `RemoveCartItemUseCase` in `lib/features/cart/domain/use_cases/remove_cart_item.dart`
-- [ ] **T142** [P] [US3] Create `GetCartUseCase` in `lib/features/cart/domain/use_cases/get_cart.dart`:
+- [x] **T141** [P] [US3] Create `RemoveCartItemUseCase` in `lib/features/cart/domain/use_cases/remove_cart_item.dart` ✅
+- [x] **T142** [P] [US3] Create `GetCartUseCase` in `lib/features/cart/domain/use_cases/get_cart.dart`: ✅
   - Fetch cart from repository
   - Group items by shop
   - Calculate subtotals per shop
   - Calculate grand total
-- [ ] **T143** [P] [US3] Create `ClearCartUseCase` in `lib/features/cart/domain/use_cases/clear_cart.dart`
-- [ ] **T144** [P] [US3] Create order repository interface in `lib/features/cart/domain/repositories/order_repository.dart`
-- [ ] **T145** [P] [US3] Create `CheckoutUseCase` in `lib/features/cart/domain/use_cases/checkout.dart`:
+- [x] **T143** [P] [US3] Create `ClearCartUseCase` in `lib/features/cart/domain/use_cases/clear_cart.dart` ✅
+- [x] **T144** [P] [US3] Create order repository interface in `lib/features/cart/domain/repositories/order_repository.dart` ✅
+- [x] **T145** [P] [US3] Create `CheckoutUseCase` in `lib/features/cart/domain/use_cases/checkout.dart`: ✅
   - Validate cart not empty
   - Validate address selected
   - Create orders (one per shop in cart)
   - Apply voucher if provided
   - Clear cart on success
   - Return list of created orders
-- [ ] **T146** [P] [US3] Create `ApplyVoucherUseCase` in `lib/features/cart/domain/use_cases/apply_voucher.dart`:
+- [x] **T146** [P] [US3] Create `ApplyVoucherUseCase` in `lib/features/cart/domain/use_cases/apply_voucher.dart`: ✅
   - Validate voucher code format
   - Check voucher validity (active, not expired, usage limit)
   - Check minimum order value
   - Calculate discount (percentage or fixed amount)
   - Return discounted total
-- [ ] **T147** [P] [US3] Create `GetAvailableVouchersUseCase` in `lib/features/cart/domain/use_cases/get_available_vouchers.dart`
+- [x] **T147** [P] [US3] Create `GetAvailableVouchersUseCase` in `lib/features/cart/domain/use_cases/get_available_vouchers.dart` ✅
 
 #### Presentation Layer - Cart Feature
 
-- [ ] **T148** [US3] Create `CartProvider` (Riverpod StateNotifier) in `lib/features/cart/presentation/cart_provider.dart`:
+- [x] **T148** [US3] Create `CartProvider` (Riverpod StateNotifier) in `lib/features/cart/presentation/cart_provider.dart`: ✅
   - State: `AsyncValue<Cart>` (loading, data, error)
   - Cart model includes: items grouped by shop, subtotals, grand total
   - Methods: `loadCart()`, `addToCart(productId, variantId, quantity)`, `updateQuantity(itemId, quantity)`, `removeItem(itemId)`, `applyVoucher(shopId, voucherCode)`, `removeVoucher(shopId)`
