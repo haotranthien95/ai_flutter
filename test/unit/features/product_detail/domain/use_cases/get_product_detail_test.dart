@@ -49,7 +49,6 @@ void main() {
         stock: 20,
         isActive: true,
         createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
       ),
       ProductVariant(
         id: 'var2',
@@ -58,13 +57,11 @@ void main() {
         attributes: {'color': 'Blue', 'size': 'M'},
         sku: 'PROD-BLUE-M',
         price: 100000,
-        stock: 30,
+        stock: 20,
         isActive: true,
         createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
       ),
     ];
-
     test('should fetch product detail successfully', () async {
       // Arrange
       const productId = '1';

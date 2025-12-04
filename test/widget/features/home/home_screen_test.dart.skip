@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ai_flutter/features/home/presentation/home_screen.dart';
-import 'package:ai_flutter/features/home/presentation/home_provider.dart';
+import 'package:ai_flutter/features/home/presentation/providers/home_provider.dart';
 import 'package:ai_flutter/core/models/product.dart';
 import 'package:ai_flutter/core/models/category.dart';
 import 'package:ai_flutter/core/widgets/product_card.dart';
@@ -64,8 +64,6 @@ void main() {
           level: 0,
           sortOrder: 1,
           isActive: true,
-          createdAt: DateTime(2024, 1, 1),
-          updatedAt: DateTime(2024, 1, 1),
         ),
         Category(
           id: '2',
@@ -75,8 +73,6 @@ void main() {
           level: 0,
           sortOrder: 2,
           isActive: true,
-          createdAt: DateTime(2024, 1, 1),
-          updatedAt: DateTime(2024, 1, 1),
         ),
       ];
     });

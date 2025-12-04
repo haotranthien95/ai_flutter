@@ -82,8 +82,7 @@ final databaseHelperProvider = Provider<DatabaseHelper>((ref) {
 
 /// Cart local data source provider.
 final cartLocalDataSourceProvider = Provider<CartLocalDataSource>((ref) {
-  final dbHelper = ref.watch(databaseHelperProvider);
-  return CartLocalDataSource(dbHelper);
+  return CartLocalDataSource();
 });
 
 // ============================================================================

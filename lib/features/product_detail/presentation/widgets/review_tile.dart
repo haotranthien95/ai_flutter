@@ -129,14 +129,14 @@ class ReviewTile extends StatelessWidget {
                 height: 80.0,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: review.images.length,
+                  itemCount: review.images!.length,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(right: 8.0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
                         child: CachedNetworkImage(
-                          imageUrl: review.images[index],
+                          imageUrl: review.images![index],
                           width: 80.0,
                           height: 80.0,
                           fit: BoxFit.cover,

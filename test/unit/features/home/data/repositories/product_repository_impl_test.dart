@@ -234,8 +234,6 @@ void main() {
         level: 0,
         sortOrder: 1,
         isActive: true,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
       ),
     ];
 

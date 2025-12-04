@@ -37,7 +37,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ProductCard(product: testProduct),
+            body: HorizontalProductCard(product: testProduct, onTap: () {}),
           ),
         ),
       );
@@ -51,7 +51,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ProductCard(product: testProduct),
+            body: ProductCard(product: testProduct, onTap: () {}),
           ),
         ),
       );
@@ -67,7 +67,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ProductCard(product: testProduct),
+            body: ProductCard(product: testProduct, onTap: () {}),
           ),
         ),
       );
@@ -81,7 +81,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ProductCard(product: testProduct),
+            body: ProductCard(product: testProduct, onTap: () {}),
           ),
         ),
       );
@@ -96,7 +96,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ProductCard(product: testProduct),
+            body: ProductCard(product: testProduct, onTap: () {}),
           ),
         ),
       );
@@ -155,7 +155,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ProductCard(product: productWithInvalidImage),
+            body: ProductCard(product: productWithInvalidImage, onTap: () {}),
           ),
         ),
       );
@@ -191,7 +191,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ProductCard(product: outOfStockProduct),
+            body: ProductCard(product: outOfStockProduct, onTap: () {}),
           ),
         ),
       );
@@ -206,7 +206,11 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: HorizontalProductCard(product: testProduct),
+            body: CompactProductCard(
+              product: testProduct,
+              quantity: 2,
+              onTap: () {},
+            ),
           ),
         ),
       );
@@ -229,7 +233,11 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: CompactProductCard(product: testProduct, quantity: 2),
+            body: CompactProductCard(
+              product: testProduct,
+              quantity: 2,
+              onTap: () {},
+            ),
           ),
         ),
       );
@@ -266,7 +274,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ProductCard(product: productWithLongTitle),
+            body: ProductCard(product: productWithLongTitle, onTap: () {}),
           ),
         ),
       );
@@ -302,7 +310,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ProductCard(product: usedProduct),
+            body: ProductCard(product: usedProduct, onTap: () {}),
           ),
         ),
       );
