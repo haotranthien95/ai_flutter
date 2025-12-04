@@ -43,12 +43,11 @@ class OfflineBanner extends ConsumerWidget {
                     Expanded(
                       child: Text(
                         'Không có kết nối Internet',
-                        style:
-                            Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onErrorContainer,
-                                ),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onErrorContainer,
+                            ),
                       ),
                     ),
                     TextButton(
@@ -67,8 +66,7 @@ class OfflineBanner extends ConsumerWidget {
                       child: Text(
                         'Thử lại',
                         style: TextStyle(
-                          color:
-                              Theme.of(context).colorScheme.onErrorContainer,
+                          color: Theme.of(context).colorScheme.onErrorContainer,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

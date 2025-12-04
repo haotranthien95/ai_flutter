@@ -6,6 +6,7 @@ import '../../../core/widgets/product_card.dart';
 import '../../../core/widgets/error_view.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/skeleton_loading.dart';
+import '../../../core/widgets/animated_widgets.dart';
 import 'providers/home_provider.dart';
 import 'widgets/category_chip.dart';
 import 'widgets/filter_bottom_sheet.dart';
@@ -54,10 +55,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onPressed: () => context.push('/search'),
             tooltip: 'Tìm kiếm',
           ),
-          IconButton(
-            icon: const Icon(Icons.shopping_cart_outlined),
-            onPressed: () => context.push('/cart'),
-            tooltip: 'Giỏ hàng',
+          AnimatedCartBadge(
+            onTap: () => context.push('/cart'),
           ),
         ],
       ),

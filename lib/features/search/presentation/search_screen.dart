@@ -6,6 +6,7 @@ import '../../../core/widgets/product_card.dart';
 import '../../../core/widgets/error_view.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/skeleton_loading.dart';
+import '../../../core/widgets/animated_widgets.dart';
 import '../../home/presentation/widgets/filter_bottom_sheet.dart';
 import 'providers/search_provider.dart';
 import 'widgets/sort_options_dialog.dart';
@@ -77,12 +78,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
             }
           },
           textInputAction: TextInputAction.search,
-        ),
+        },
         actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart_outlined),
-            onPressed: () => context.push('/cart'),
-            tooltip: 'Giỏ hàng',
+          AnimatedCartBadge(
+            onTap: () => context.push('/cart'),
           ),
         ],
       ),

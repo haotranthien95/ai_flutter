@@ -31,22 +31,28 @@ class ProductCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // Product image
-            AspectRatio(
-              aspectRatio: 1.0,
-              child: CachedNetworkImage(
-                imageUrl: product.primaryImageUrl,
-                fit: BoxFit.cover,
-                placeholder: (BuildContext context, String url) => Container(
-                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  child: const Center(
-                    child: CircularProgressIndicator(),
+            // Product image with Hero animation
+            Hero(
+              tag: 'product-image-${product.id}',
+              child: AspectRatio(
+                aspectRatio: 1.0,
+                child: CachedNetworkImage(
+                  imageUrl: product.primaryImageUrl,
+                  fit: BoxFit.cover,
+                  placeholder: (BuildContext context, String url) => Container(
+                    color:
+                        Theme.of(context).colorScheme.surfaceContainerHighest,
+                    child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
-                ),
-                errorWidget: (BuildContext context, String url, Object error) =>
-                    Container(
-                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  child: const Icon(Icons.image_not_supported_outlined),
+                  errorWidget:
+                      (BuildContext context, String url, Object error) =>
+                          Container(
+                    color:
+                        Theme.of(context).colorScheme.surfaceContainerHighest,
+                    child: const Icon(Icons.image_not_supported_outlined),
+                  ),
                 ),
               ),
             ),
