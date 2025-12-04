@@ -56,7 +56,7 @@ class CartItemTile extends StatelessWidget {
                 children: [
                   // Product name
                   Text(
-                    product.name,
+                    product.title,
                     style: theme.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),

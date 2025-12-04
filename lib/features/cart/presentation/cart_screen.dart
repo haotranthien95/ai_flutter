@@ -34,7 +34,7 @@ class CartScreen extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     final shopId = shopGroups.keys.elementAt(index);
                     final shopItems = shopGroups[shopId]!;
-                    final shopName = shopItems.first.product.shopName;
+                    final shopName = shopItems.first.product.shopId; // Use shopId as name for now
 
                     return ShopCartSection(
                       shopId: shopId,
@@ -113,7 +113,8 @@ class CartScreen extends ConsumerWidget {
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
             blurRadius: 8,
-            offset: const Offset(0, -2),\n          ),
+            offset: const Offset(0, -2),
+          ),
         ],
       ),
       padding: const EdgeInsets.all(16),

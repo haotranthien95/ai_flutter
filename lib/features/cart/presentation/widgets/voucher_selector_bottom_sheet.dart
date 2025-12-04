@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ai_flutter/core/models/voucher.dart';
-import '../providers/cart_provider.dart';
 
 class VoucherSelectorBottomSheet extends ConsumerStatefulWidget {
   final String? shopId; // null for platform vouchers
@@ -224,7 +223,8 @@ class _VoucherSelectorBottomSheetState
 
   Widget _buildVoucherCard(Voucher voucher) {
     final theme = Theme.of(context);
-    final isEligible = widget.orderTotal >= voucher.minOrderValue;
+    final minOrder = voucher.minOrderValue ?? 0;
+    final isEligible = widget.orderTotal >= minOrder;
     final discount = voucher.calculateDiscount(widget.orderTotal);
 
     return Card(
@@ -285,7 +285,7 @@ class _VoucherSelectorBottomSheetState
               Row(
                 children: [
                   Text(
-                    'Min. order: \$${voucher.minOrderValue.toStringAsFixed(2)}',
+                    'Min. order: \$${minOrder.toStringAsFixed(2)}',
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
@@ -301,19 +301,17 @@ class _VoucherSelectorBottomSheetState
                   ],
                 ],
               ),
-              if (voucher.expiryDate != null) ...[
-                const SizedBox(height: 4),
-                Text(
-                  'Valid until: ${_formatDate(voucher.expiryDate!)}',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
+              const SizedBox(height: 4),
+              Text(
+                'Valid until: ${_formatDate(voucher.endDate)}',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
                 ),
-              ],
+              ),
               if (!isEligible) ...[
                 const SizedBox(height: 8),
                 Text(
-                  'Add \$${(voucher.minOrderValue - widget.orderTotal).toStringAsFixed(2)} more to use this voucher',
+                  'Add \$${(minOrder - widget.orderTotal).toStringAsFixed(2)} more to use this voucher',
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.error,
                   ),
