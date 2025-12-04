@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../features/home/presentation/home_screen.dart';
 import '../features/search/presentation/search_screen.dart';
 import '../features/product_detail/presentation/product_detail_screen.dart';
+import '../features/cart/presentation/cart_screen.dart';
 
 /// Application routing configuration.
 ///
@@ -38,14 +39,32 @@ class AppRouter {
         },
       ),
 
+      // Cart route
+      GoRoute(
+        path: '/cart',
+        name: 'cart',
+        builder: (context, state) => const CartScreen(),
+      ),
+
       // TODO: Add more routes as features are implemented (US-002, US-003):
       // - /auth/login
       // - /auth/register
-      // - /cart
       // - /checkout
       // - /profile
       // - /orders
       // - /shop/:id (seller profile, US-006)
     ],
   );
+}
+
+/// Route path constants for easy reference
+class Routes {
+  Routes._();
+  
+  static const String home = '/';
+  static const String search = '/search';
+  static const String cart = '/cart';
+  static const String checkout = '/checkout';
+  
+  static String productDetail(String id) => '/product/$id';
 }
