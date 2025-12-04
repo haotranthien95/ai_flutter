@@ -693,10 +693,10 @@
 
 #### Presentation Layer - Checkout Feature
 
-- [ ] **T153** [US3] Create `CheckoutProvider` in `lib/features/cart/presentation/checkout_provider.dart`:
+- [x] **T153** [US3] Create `CheckoutProvider` in `lib/features/cart/presentation/checkout_provider.dart`: ✅
   - State: selected address, applied vouchers (per shop), payment method, order processing status
   - Methods: `selectAddress(addressId)`, `placeOrder()`, `setNotes(notes)`
-- [ ] **T154** [US3] Create `CheckoutScreen` in `lib/features/cart/presentation/checkout_screen.dart`:
+- [x] **T154** [US3] Create `CheckoutScreen` in `lib/features/cart/presentation/checkout_screen.dart`: ✅
   - Address section:
     - Shows selected address (recipient, phone, full address)
     - "Change Address" button → navigates to address selection
@@ -715,12 +715,12 @@
     - Grand total (large, bold)
   - "Place Order" button → calls `CheckoutProvider.placeOrder()`
   - Loading overlay during order creation
-- [ ] **T155** [P] [US3] Create address selector screen in `lib/features/cart/presentation/address_selector_screen.dart`:
+- [x] **T155** [P] [US3] Create address selector screen in `lib/features/cart/presentation/address_selector_screen.dart`: ✅
   - List of saved addresses (radio buttons)
   - Selected address highlighted
   - "Add New Address" button → navigates to address form
   - "Confirm" button → returns selected address
-- [ ] **T156** [US3] Create `OrderConfirmationScreen` in `lib/features/cart/presentation/order_confirmation_screen.dart`:
+- [x] **T156** [US3] Create `OrderConfirmationScreen` in `lib/features/cart/presentation/order_confirmation_screen.dart`: ✅
   - Success checkmark animation
   - "Order Placed Successfully!" message
   - Order number(s) (if multiple orders from different shops)
@@ -731,7 +731,7 @@
 
 #### Routing Integration
 
-- [ ] **T157** [US3] Add cart/checkout routes to `lib/app/routes.dart`:
+- [x] **T157** [US3] Add cart/checkout routes to `lib/app/routes.dart`: ✅
   - `/cart` → CartScreen (requires auth)
   - `/checkout` → CheckoutScreen (requires auth + non-empty cart)
   - `/checkout/address-selector` → AddressSelectorScreen (requires auth)
