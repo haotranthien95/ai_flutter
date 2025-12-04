@@ -78,7 +78,7 @@ class CheckoutScreen extends ConsumerWidget {
     return Card(
       child: InkWell(
         onTap: () async {
-          final result = await Navigator.of(context).pushNamed(
+          await Navigator.of(context).pushNamed(
             Routes.addressSelector,
           );
           // TODO: Handle selected address
