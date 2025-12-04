@@ -1,125 +1,107 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'app/routes.dart';
+import 'app/theme.dart';
+import 'app/providers.dart';
+import 'core/services/connectivity_service.dart';
+import 'features/auth/presentation/providers/auth_provider.dart';
+import 'features/profile/presentation/providers/profile_provider.dart';
+import 'features/cart/presentation/providers/cart_provider.dart';
+import 'features/home/presentation/providers/home_provider.dart';
+import 'features/search/presentation/providers/search_provider.dart';
+import 'features/product_detail/presentation/providers/product_detail_provider.dart';
+
+/// Application entry point.
 void main() {
-  runApp(const MyApp());
+  // Initialize connectivity monitoring
+  ConnectivityService.instance.initialize();
+
+  runApp(
+    ProviderScope(
+      overrides: [
+        // Home/Product providers (Phase 1-3)
+        homeProvider.overrideWith((ref) {
+          final getProductsUseCase = ref.watch(getProductsUseCaseProvider);
+          final getCategoriesUseCase = ref.watch(getCategoriesUseCaseProvider);
+          return HomeNotifier(getProductsUseCase, getCategoriesUseCase);
+        }),
+        searchProvider.overrideWith((ref) {
+          final searchProductsUseCase =
+              ref.watch(searchProductsUseCaseProvider);
+          final productRepository = ref.watch(productRepositoryProvider);
+          return SearchNotifier(searchProductsUseCase, productRepository);
+        }),
+        productDetailProvider.overrideWith((ref) {
+          final getProductDetailUseCase =
+              ref.watch(getProductDetailUseCaseProvider);
+          final getProductReviewsUseCase =
+              ref.watch(getProductReviewsUseCaseProvider);
+          return ProductDetailNotifier(
+              getProductDetailUseCase, getProductReviewsUseCase);
+        }),
+
+        // Auth providers (Phase 4)
+        authRepositoryProvider
+            .overrideWith((ref) => ref.watch(authRepositoryProviderImpl)),
+        registerUseCaseProvider
+            .overrideWith((ref) => ref.watch(registerUseCaseProviderImpl)),
+        verifyOTPUseCaseProvider
+            .overrideWith((ref) => ref.watch(verifyOTPUseCaseProviderImpl)),
+        loginUseCaseProvider
+            .overrideWith((ref) => ref.watch(loginUseCaseProviderImpl)),
+        logoutUseCaseProvider
+            .overrideWith((ref) => ref.watch(logoutUseCaseProviderImpl)),
+        forgotPasswordUseCaseProvider.overrideWith(
+            (ref) => ref.watch(forgotPasswordUseCaseProviderImpl)),
+        resetPasswordUseCaseProvider
+            .overrideWith((ref) => ref.watch(resetPasswordUseCaseProviderImpl)),
+
+        // Profile providers (Phase 4)
+        profileRepositoryProvider
+            .overrideWith((ref) => ref.watch(profileRepositoryProviderImpl)),
+        getUserProfileUseCaseProvider.overrideWith(
+            (ref) => ref.watch(getUserProfileUseCaseProviderImpl)),
+        updateProfileUseCaseProvider
+            .overrideWith((ref) => ref.watch(updateProfileUseCaseProviderImpl)),
+        addAddressUseCaseProvider
+            .overrideWith((ref) => ref.watch(addAddressUseCaseProviderImpl)),
+        updateAddressUseCaseProvider
+            .overrideWith((ref) => ref.watch(updateAddressUseCaseProviderImpl)),
+        deleteAddressUseCaseProvider
+            .overrideWith((ref) => ref.watch(deleteAddressUseCaseProviderImpl)),
+        setDefaultAddressUseCaseProvider.overrideWith(
+            (ref) => ref.watch(setDefaultAddressUseCaseProviderImpl)),
+
+        // Cart providers (Phase 5)
+        getCartUseCaseProvider
+            .overrideWith((ref) => ref.watch(getCartUseCaseProviderImpl)),
+        addToCartUseCaseProvider
+            .overrideWith((ref) => ref.watch(addToCartUseCaseProviderImpl)),
+        updateCartItemQuantityUseCaseProvider.overrideWith(
+            (ref) => ref.watch(updateCartItemQuantityUseCaseProviderImpl)),
+        removeCartItemUseCaseProvider.overrideWith(
+            (ref) => ref.watch(removeCartItemUseCaseProviderImpl)),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
+/// Root application widget.
 class MyApp extends StatelessWidget {
+  /// Creates the root application widget.
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    return MaterialApp.router(
+      title: 'AI Flutter Marketplace',
+      theme: AppTheme.lightTheme(),
+      darkTheme: AppTheme.darkTheme(),
+      themeMode: ThemeMode.light,
+      routerConfig: AppRouter.router,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

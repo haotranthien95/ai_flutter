@@ -1,0 +1,302 @@
+openapi: 3.0.3
+info:
+  title: Shopping Cart API
+  description: Cart management operations (add, update, remove, sync)
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Development server
+
+paths:
+  /cart:
+    get:
+      summary: Get user's cart
+      description: Retrieve all cart items grouped by shop
+      tags: [Cart]
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Cart contents
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Cart'
+        '401':
+          $ref: './common.yaml#/components/responses/Unauthorized'
+
+    post:
+      summary: Add item to cart
+      description: Add product (with optional variant) to cart
+      tags: [Cart]
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [productId, quantity]
+              properties:
+                productId:
+                  type: string
+                  format: uuid
+                variantId:
+                  type: string
+                  format: uuid
+                  nullable: true
+                quantity:
+                  type: integer
+                  minimum: 1
+                  example: 2
+      responses:
+        '200':
+          description: Item added to cart
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/CartItem'
+        '400':
+          description: Product out of stock or invalid quantity
+          content:
+            application/json:
+              schema:
+                $ref: './common.yaml#/components/schemas/ErrorResponse'
+        '401':
+          $ref: './common.yaml#/components/responses/Unauthorized'
+        '404':
+          $ref: './common.yaml#/components/responses/NotFound'
+
+  /cart/items/{itemId}:
+    patch:
+      summary: Update cart item quantity
+      description: Change quantity of existing cart item
+      tags: [Cart]
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [quantity]
+              properties:
+                quantity:
+                  type: integer
+                  minimum: 1
+                  example: 3
+      responses:
+        '200':
+          description: Quantity updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/CartItem'
+        '400':
+          description: Quantity exceeds stock
+          content:
+            application/json:
+              schema:
+                $ref: './common.yaml#/components/schemas/ErrorResponse'
+        '401':
+          $ref: './common.yaml#/components/responses/Unauthorized'
+        '404':
+          $ref: './common.yaml#/components/responses/NotFound'
+
+    delete:
+      summary: Remove item from cart
+      description: Delete cart item by ID
+      tags: [Cart]
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Item removed
+          content:
+            application/json:
+              schema:
+                $ref: './common.yaml#/components/schemas/SuccessResponse'
+        '401':
+          $ref: './common.yaml#/components/responses/Unauthorized'
+        '404':
+          $ref: './common.yaml#/components/responses/NotFound'
+
+  /cart/sync:
+    post:
+      summary: Sync local cart with server
+      description: Merge local cart items (offline changes) with server cart
+      tags: [Cart]
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [items]
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required: [productId, quantity]
+                    properties:
+                      productId:
+                        type: string
+                        format: uuid
+                      variantId:
+                        type: string
+                        format: uuid
+                        nullable: true
+                      quantity:
+                        type: integer
+                        minimum: 1
+      responses:
+        '200':
+          description: Cart synced
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Cart'
+        '401':
+          $ref: './common.yaml#/components/responses/Unauthorized'
+
+components:
+  schemas:
+    Cart:
+      type: object
+      required: [items, summary]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItem'
+        shopGroups:
+          type: array
+          description: Items grouped by shop for UI display
+          items:
+            type: object
+            properties:
+              shop:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CartItem'
+              subtotal:
+                $ref: './common.yaml#/components/schemas/Money'
+              shippingFee:
+                $ref: './common.yaml#/components/schemas/Money'
+        summary:
+          type: object
+          properties:
+            totalItems:
+              type: integer
+              example: 5
+            subtotal:
+              $ref: './common.yaml#/components/schemas/Money'
+            totalShipping:
+              $ref: './common.yaml#/components/schemas/Money'
+            grandTotal:
+              $ref: './common.yaml#/components/schemas/Money'
+
+    CartItem:
+      type: object
+      required: [id, product, quantity, subtotal, addedAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        product:
+          type: object
+          required: [id, title, basePrice, image]
+          properties:
+            id:
+              type: string
+              format: uuid
+            title:
+              type: string
+            basePrice:
+              $ref: './common.yaml#/components/schemas/Money'
+            image:
+              $ref: './common.yaml#/components/schemas/Image'
+            shopId:
+              type: string
+              format: uuid
+            shopName:
+              type: string
+            isActive:
+              type: boolean
+            stock:
+              type: integer
+        variant:
+          nullable: true
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            price:
+              $ref: './common.yaml#/components/schemas/Money'
+            stock:
+              type: integer
+            isActive:
+              type: boolean
+        quantity:
+          type: integer
+          minimum: 1
+        subtotal:
+          $ref: './common.yaml#/components/schemas/Money'
+        addedAt:
+          type: string
+          format: date-time
+
+  securitySchemes:
+    BearerAuth:
+      $ref: './common.yaml#/components/securitySchemes/BearerAuth'

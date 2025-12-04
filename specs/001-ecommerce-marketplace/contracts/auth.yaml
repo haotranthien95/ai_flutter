@@ -1,0 +1,352 @@
+openapi: 3.0.3
+info:
+  title: Authentication & Authorization API
+  description: User registration, login, OTP verification, and token management
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Development server
+  - url: https://api.marketplace.example.com/api/v1
+    description: Production server
+
+paths:
+  /auth/register:
+    post:
+      summary: Register new user account
+      description: Create buyer account with phone number and send OTP for verification
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [phoneNumber, password, fullName]
+              properties:
+                phoneNumber:
+                  type: string
+                  pattern: '^\+84[3|5|7|8|9][0-9]{8}$'
+                  example: "+84901234567"
+                password:
+                  type: string
+                  minLength: 8
+                  example: "SecurePass123!"
+                fullName:
+                  type: string
+                  minLength: 2
+                  example: "Nguyễn Văn A"
+                email:
+                  type: string
+                  format: email
+                  nullable: true
+                  example: "user@example.com"
+      responses:
+        '201':
+          description: Account created, OTP sent
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          userId:
+                            type: string
+                            format: uuid
+                          otpSent:
+                            type: boolean
+                            example: true
+                          expiresAt:
+                            type: string
+                            format: date-time
+        '400':
+          $ref: './common.yaml#/components/responses/BadRequest'
+        '409':
+          description: Phone number already registered
+          content:
+            application/json:
+              schema:
+                $ref: './common.yaml#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                error:
+                  code: CONFLICT
+                  message: "Phone number already registered"
+        '422':
+          $ref: './common.yaml#/components/responses/ValidationError'
+
+  /auth/verify-otp:
+    post:
+      summary: Verify phone number with OTP
+      description: Confirm OTP code sent via SMS to activate account
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [phoneNumber, otpCode]
+              properties:
+                phoneNumber:
+                  type: string
+                  example: "+84901234567"
+                otpCode:
+                  type: string
+                  pattern: '^[0-9]{6}$'
+                  example: "123456"
+      responses:
+        '200':
+          description: OTP verified successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/AuthTokens'
+        '400':
+          description: Invalid or expired OTP
+          content:
+            application/json:
+              schema:
+                $ref: './common.yaml#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                error:
+                  code: INVALID_REQUEST
+                  message: "Invalid or expired OTP code"
+
+  /auth/login:
+    post:
+      summary: Login with credentials
+      description: Authenticate user and return access/refresh tokens
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [phoneNumber, password]
+              properties:
+                phoneNumber:
+                  type: string
+                  example: "+84901234567"
+                password:
+                  type: string
+                  example: "SecurePass123!"
+                fcmToken:
+                  type: string
+                  description: Firebase Cloud Messaging token for push notifications
+                  nullable: true
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        allOf:
+                          - $ref: '#/components/schemas/AuthTokens'
+                          - type: object
+                            properties:
+                              user:
+                                $ref: '#/components/schemas/UserProfile'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: './common.yaml#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                error:
+                  code: UNAUTHORIZED
+                  message: "Invalid phone number or password"
+
+  /auth/refresh:
+    post:
+      summary: Refresh access token
+      description: Obtain new access token using refresh token
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refreshToken]
+              properties:
+                refreshToken:
+                  type: string
+                  example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+      responses:
+        '200':
+          description: Token refreshed
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/AuthTokens'
+        '401':
+          $ref: './common.yaml#/components/responses/Unauthorized'
+
+  /auth/logout:
+    post:
+      summary: Logout user
+      description: Invalidate refresh token and clear FCM token
+      tags: [Authentication]
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Logged out successfully
+          content:
+            application/json:
+              schema:
+                $ref: './common.yaml#/components/schemas/SuccessResponse'
+        '401':
+          $ref: './common.yaml#/components/responses/Unauthorized'
+
+  /auth/forgot-password:
+    post:
+      summary: Request password reset
+      description: Send OTP to phone number for password reset
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [phoneNumber]
+              properties:
+                phoneNumber:
+                  type: string
+                  example: "+84901234567"
+      responses:
+        '200':
+          description: OTP sent
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './common.yaml#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          otpSent:
+                            type: boolean
+                          expiresAt:
+                            type: string
+                            format: date-time
+        '404':
+          $ref: './common.yaml#/components/responses/NotFound'
+
+  /auth/reset-password:
+    post:
+      summary: Reset password with OTP
+      description: Set new password after OTP verification
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [phoneNumber, otpCode, newPassword]
+              properties:
+                phoneNumber:
+                  type: string
+                  example: "+84901234567"
+                otpCode:
+                  type: string
+                  example: "123456"
+                newPassword:
+                  type: string
+                  minLength: 8
+                  example: "NewSecurePass123!"
+      responses:
+        '200':
+          description: Password reset successful
+          content:
+            application/json:
+              schema:
+                $ref: './common.yaml#/components/schemas/SuccessResponse'
+        '400':
+          $ref: './common.yaml#/components/responses/BadRequest'
+
+components:
+  schemas:
+    AuthTokens:
+      type: object
+      required: [accessToken, refreshToken, expiresIn]
+      properties:
+        accessToken:
+          type: string
+          description: JWT access token (expires in 1 hour)
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.SflKxw"
+        refreshToken:
+          type: string
+          description: JWT refresh token (expires in 30 days)
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZWZyZXNoIjp0cnVlfQ.abc123"
+        expiresIn:
+          type: integer
+          description: Access token expiry in seconds
+          example: 3600
+        tokenType:
+          type: string
+          example: "Bearer"
+
+    UserProfile:
+      type: object
+      required: [id, phoneNumber, fullName, role, isVerified]
+      properties:
+        id:
+          type: string
+          format: uuid
+        phoneNumber:
+          type: string
+          example: "+84901234567"
+        email:
+          type: string
+          nullable: true
+          example: "user@example.com"
+        fullName:
+          type: string
+          example: "Nguyễn Văn A"
+        avatarUrl:
+          type: string
+          format: uri
+          nullable: true
+        role:
+          type: string
+          enum: [BUYER, SELLER, ADMIN]
+          example: "BUYER"
+        isVerified:
+          type: boolean
+          example: true
+        createdAt:
+          type: string
+          format: date-time
+
+  securitySchemes:
+    BearerAuth:
+      $ref: './common.yaml#/components/securitySchemes/BearerAuth'
