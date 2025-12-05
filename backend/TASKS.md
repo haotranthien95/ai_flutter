@@ -835,21 +835,28 @@
 
 ### Testing Tasks
 
-- [ ] **T081**: Write unit tests for Order service
-  - Create `tests/unit/services/test_order.py`
-  - Test order creation (single shop)
-  - Test order creation (multi-shop)
-  - Test stock validation
-  - Test order status updates
-  - Test order cancellation
+- [x] **T081**: Write unit tests for Order service ✅
+  - Created `tests/unit/services/test_order_service.py`
+  - 6 test classes with ~20 test methods
+  - Test order creation (single shop, multi-shop scenarios)
+  - Test stock validation and error handling
+  - Test order listing with filters
+  - Test order detail retrieval
+  - Test order cancellation with stock restoration
+  - Test seller order management (list, detail, status update)
+  - Test status transition validation
+  - Mock all repositories and database
 
-- [ ] **T082**: Write integration tests for Order endpoints
-  - Create `tests/integration/api/test_orders.py`
-  - Test full checkout flow
-  - Test order listing and filtering
-  - Test order cancellation
-  - Test seller order management
-  - Test status update validation
+- [x] **T082**: Write integration tests for Order endpoints ✅
+  - Created `tests/integration/api/test_orders.py`
+  - 7 test classes with complete workflow tests
+  - Test full checkout flow (create, list, view, cancel)
+  - Test order listing and filtering by status
+  - Test order cancellation with stock restoration verification
+  - Test seller order management endpoints
+  - Test status update validation and transitions
+  - Test complete order lifecycle: PENDING → CONFIRMED → PACKED → SHIPPING → DELIVERED → COMPLETED
+  - Test authentication and authorization on all endpoints
 
 ---
 
