@@ -779,47 +779,59 @@
     * Inherited from BaseRepository: create, update, get, delete
   - Both repositories support eager loading with joinedload/selectinload
 
-- [ ] **T076**: Implement Order service (buyer)
-  - Create `app/services/order.py`
-  - Implement `create_orders(user_id, items, address_id, payment_method, voucher_code, notes) -> List[OrderResponse]`
-    - Validate stock availability
-    - Group items by shop
-    - Create multiple orders for multi-shop cart
-    - Create product snapshots
-    - Calculate totals (subtotal, shipping, discount)
-    - Decrement product stock
-    - Clear cart after order creation
-    - Generate unique order_number
-  - Implement `list_orders(user_id, filters, pagination) -> OrderListResponse`
-  - Implement `get_order_detail(user_id, order_id) -> OrderResponse`
-  - Implement `cancel_order(user_id, order_id, reason) -> OrderResponse`
+- [x] **T076**: Implement Order service (buyer) ✅
+  - Created `app/services/order.py`
+  - Implemented `create_orders()` - create orders from cart
+    * Validates stock availability
+    * Groups items by shop (one order per shop)
+    * Creates product/variant snapshots (immutable)
+    * Calculates totals (subtotal, shipping, discount)
+    * Decrements product stock atomically
+    * Clears cart after successful order creation
+    * Generates unique order_number (ORD-YYYYMMDD-XXXXXX)
+  - Implemented `list_orders()` - list with filters and pagination
+  - Implemented `get_order_detail()` - order detail with ownership check
+  - Implemented `cancel_order()` - cancel with stock restoration
+    * Only PENDING/CONFIRMED orders can be cancelled
+    * Restores stock for cancelled items
 
-- [ ] **T077**: Implement Order service (seller)
+- [x] **T077**: Implement Order service (seller) ✅
   - In `app/services/order.py`
-  - Implement `list_shop_orders(shop_id, filters, pagination) -> OrderListResponse`
-  - Implement `get_shop_order_detail(shop_id, order_id) -> OrderResponse`
-  - Implement `update_order_status(shop_id, order_id, new_status) -> OrderResponse`
-  - Validate status transitions
-  - Create notifications on status change
+  - Implemented `list_shop_orders()` - list shop orders with filters
+  - Implemented `get_shop_order_detail()` - shop order detail with ownership check
+  - Implemented `update_order_status()` - update with transition validation
+    * Valid transitions: PENDING → CONFIRMED → PACKED → SHIPPING → DELIVERED → COMPLETED
+    * Can cancel from PENDING or CONFIRMED
+    * Auto-set completed_at and payment_status on COMPLETED
+  - Helper: `_is_valid_status_transition()` - validates state machine
+  - Helper: `_generate_order_number()` - generates unique order numbers
+  - Helper: `_build_order_response()` / `_build_order_summary()` - response builders
 
-- [ ] **T078**: Create Order API routes (buyer)
-  - Create `app/api/v1/orders.py`
-  - Implement `POST /orders` (create from cart)
-  - Implement `GET /orders` (list with filters)
-  - Implement `GET /orders/{order_id}` (detail)
-  - Implement `POST /orders/{order_id}/cancel`
-  - Add authentication
+- [x] **T078**: Create Order API routes (buyer) ✅
+  - Created `app/api/v1/orders.py`
+  - Implemented `POST /orders` - create orders from cart
+    * Validates shipping address ownership
+    * Creates multiple orders for multi-shop carts
+    * Returns list of created orders
+  - Implemented `GET /orders` - list user orders with status filter
+  - Implemented `GET /orders/{order_id}` - order detail
+  - Implemented `POST /orders/{order_id}/cancel` - cancel order
+  - All endpoints require authentication
 
-- [ ] **T079**: Create Order API routes (seller)
-  - Update `app/api/v1/seller.py`
-  - Implement `GET /seller/orders`
-  - Implement `GET /seller/orders/{order_id}`
-  - Implement `PATCH /seller/orders/{order_id}/status`
-  - Add seller authentication
+- [x] **T079**: Create Order API routes (seller) ✅
+  - Updated `app/api/v1/seller.py`
+  - Implemented `GET /seller/orders` - list shop orders with status filter
+  - Implemented `GET /seller/orders/{order_id}` - shop order detail
+  - Implemented `PATCH /seller/orders/{order_id}/status` - update order status
+    * Validates status transitions
+    * Requires shop ownership
+  - All endpoints require seller authentication
 
-- [ ] **T080**: Include orders router in main router
-  - Update `app/api/v1/router.py`
-  - Include orders router with prefix `/orders`
+- [x] **T080**: Include orders router in main router ✅
+  - Updated `app/api/v1/router.py`
+  - Included orders router with prefix `/orders`
+  - Added order service dependency in `app/dependencies.py`:
+    * `get_order_service()` - returns OrderService with all repos and db session
 
 ### Testing Tasks
 

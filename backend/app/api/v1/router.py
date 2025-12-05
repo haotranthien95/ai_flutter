@@ -3,7 +3,7 @@ Main API v1 router
 """
 from fastapi import APIRouter
 
-from app.api.v1 import auth, users, seller, products, categories, cart
+from app.api.v1 import auth, users, seller, products, categories, cart, orders
 
 # Create main API router
 api_router = APIRouter()
@@ -15,7 +15,4 @@ api_router.include_router(seller.router, prefix="/seller", tags=["Seller"])
 api_router.include_router(products.router)
 api_router.include_router(categories.router)
 api_router.include_router(cart.router)
-
-# Future routers will be added here:
-# from app.api.v1 import orders, etc.
-# api_router.include_router(orders.router)
+api_router.include_router(orders.router, prefix="/orders", tags=["Orders"])

@@ -17,9 +17,11 @@ from app.repositories.product import ProductRepository, ProductVariantRepository
 from app.repositories.category import CategoryRepository
 from app.repositories.shop import ShopRepository
 from app.repositories.cart import CartRepository
+from app.repositories.order import OrderRepository, OrderItemRepository
 from app.services.product import ProductService
 from app.services.category import CategoryService
 from app.services.cart import CartService
+from app.services.order import OrderService
 
 # HTTP Bearer security scheme
 security = HTTPBearer()
@@ -246,4 +248,33 @@ async def get_cart_service(
         product_repo=product_repo,
         variant_repo=variant_repo,
     )
-    return CategoryService(category_repo=category_repo)
+
+
+async def get_order_service(
+    db: AsyncSession = Depends(get_db)
+) -> OrderService:
+    """
+    Get OrderService instance with all required repositories
+    
+    Args:
+        db: Database session
+        
+    Returns:
+        OrderService instance
+    """
+    order_repo = OrderRepository(db)
+    order_item_repo = OrderItemRepository(db)
+    product_repo = ProductRepository(db)
+    variant_repo = ProductVariantRepository(db)
+    cart_repo = CartRepository(db)
+    shop_repo = ShopRepository(db)
+    
+    return OrderService(
+        order_repo=order_repo,
+        order_item_repo=order_item_repo,
+        product_repo=product_repo,
+        variant_repo=variant_repo,
+        cart_repo=cart_repo,
+        shop_repo=shop_repo,
+        db=db,
+    )

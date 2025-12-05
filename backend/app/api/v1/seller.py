@@ -1,11 +1,12 @@
 """
 Seller API routes for shop and product management
 """
+from typing import Optional
 from uuid import UUID
 from fastapi import APIRouter, Depends, status, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.dependencies import get_current_user, get_db, get_product_service
+from app.dependencies import get_current_user, get_db, get_product_service, get_order_service
 from app.models.user import User
 from app.schemas.shop import ShopCreate, ShopUpdate, ShopResponse
 from app.schemas.product import (
@@ -18,8 +19,15 @@ from app.schemas.product import (
     ProductVariantUpdate,
     ProductVariantResponse,
 )
+from app.schemas.order import (
+    OrderListResponse,
+    OrderResponse,
+    OrderStatusUpdate,
+    OrderStatus,
+)
 from app.services.shop import ShopService
 from app.services.product import ProductService
+from app.services.order import OrderService
 
 router = APIRouter()
 
@@ -160,3 +168,92 @@ async def delete_variant(
 ):
     """Delete a product variant (only for own products)"""
     await product_service.delete_variant(current_user.id, variant_id)
+
+
+# Order management endpoints
+
+@router.get("/orders", response_model=OrderListResponse)
+async def list_shop_orders(
+    status_filter: Optional[OrderStatus] = Query(None, description="Filter by order status"),
+    page: int = Query(1, ge=1, description="Page number"),
+    page_size: int = Query(20, ge=1, le=100, description="Items per page"),
+    current_user: User = Depends(get_current_user),
+    order_service: OrderService = Depends(get_order_service),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    List all orders for seller's shop
+    
+    - Supports pagination
+    - Optional status filter
+    - Returns order summaries
+    
+    Requires seller with active shop.
+    """
+    # Get seller's shop
+    shop_service = ShopService(db)
+    shop = await shop_service.get_my_shop(current_user.id)
+    
+    return await order_service.list_shop_orders(
+        shop_id=shop.id,
+        status_filter=status_filter,
+        page=page,
+        page_size=page_size
+    )
+
+
+@router.get("/orders/{order_id}", response_model=OrderResponse)
+async def get_shop_order_detail(
+    order_id: UUID,
+    current_user: User = Depends(get_current_user),
+    order_service: OrderService = Depends(get_order_service),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Get detailed information about a shop order
+    
+    - Includes all order items
+    - Shows buyer information
+    
+    Requires seller with active shop and order ownership.
+    """
+    # Get seller's shop
+    shop_service = ShopService(db)
+    shop = await shop_service.get_my_shop(current_user.id)
+    
+    return await order_service.get_shop_order_detail(
+        shop_id=shop.id,
+        order_id=order_id
+    )
+
+
+@router.patch("/orders/{order_id}/status", response_model=OrderResponse)
+async def update_order_status(
+    order_id: UUID,
+    status_update: OrderStatusUpdate,
+    current_user: User = Depends(get_current_user),
+    order_service: OrderService = Depends(get_order_service),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Update order status
+    
+    Valid status transitions:
+    - PENDING → CONFIRMED, CANCELLED
+    - CONFIRMED → PACKED, CANCELLED
+    - PACKED → SHIPPING
+    - SHIPPING → DELIVERED
+    - DELIVERED → COMPLETED
+    
+    Requires seller with active shop and order ownership.
+    """
+    # Get seller's shop
+    shop_service = ShopService(db)
+    shop = await shop_service.get_my_shop(current_user.id)
+    
+    return await order_service.update_order_status(
+        shop_id=shop.id,
+        order_id=order_id,
+        status_update=status_update
+    )
+
