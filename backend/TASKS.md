@@ -711,69 +711,73 @@
 
 ### Model & Schema Tasks
 
-- [ ] **T071**: Create Order model
-  - Create `app/models/order.py`
-  - Define Order table with fields:
-    - id (UUID, PK)
-    - order_number (String, UNIQUE)
-    - buyer_id (UUID, FK → users.id)
-    - shop_id (UUID, FK → shops.id)
-    - address_id (UUID, FK → addresses.id)
-    - shipping_address (JSON snapshot)
-    - status (Enum: PENDING, CONFIRMED, PACKED, SHIPPING, DELIVERED, COMPLETED, CANCELLED)
-    - payment_method (Enum: COD, BANK_TRANSFER, E_WALLET)
-    - payment_status (Enum: PENDING, PAID, FAILED, REFUNDED)
-    - subtotal (Decimal)
-    - shipping_fee (Decimal)
-    - discount (Decimal)
-    - total (Decimal)
-    - currency (String)
-    - voucher_code (String, nullable)
-    - notes (Text, nullable)
-    - cancellation_reason (Text, nullable)
-    - created_at, updated_at, completed_at
-  - Add indexes on buyer_id, shop_id, status, order_number
+- [x] **T071**: Create Order model ✅
+  - Created `app/models/order.py`
+  - Defined Order table with fields:
+    * id (UUID, PK)
+    * order_number (String, UNIQUE)
+    * buyer_id (UUID, FK → users.id, CASCADE)
+    * shop_id (UUID, FK → shops.id, CASCADE)
+    * address_id (UUID, FK → addresses.id, SET NULL)
+    * shipping_address (JSON snapshot)
+    * status (Enum: PENDING, CONFIRMED, PACKED, SHIPPING, DELIVERED, COMPLETED, CANCELLED)
+    * payment_method (Enum: COD, BANK_TRANSFER, E_WALLET)
+    * payment_status (Enum: PENDING, PAID, FAILED, REFUNDED)
+    * subtotal, shipping_fee, discount, total, currency
+    * voucher_code, notes, cancellation_reason
+    * created_at, updated_at, completed_at
+  - Added composite indexes: (buyer_id, status), (shop_id, status)
+  - Added relationships to buyer, shop, address, items
 
-- [ ] **T072**: Create OrderItem model
+- [x] **T072**: Create OrderItem model ✅
   - In `app/models/order.py`
-  - Define OrderItem table with fields:
-    - id (UUID, PK)
-    - order_id (UUID, FK → orders.id)
-    - product_id (UUID, FK → products.id)
-    - variant_id (UUID, FK → product_variants.id, nullable)
-    - product_snapshot (JSON)
-    - variant_snapshot (JSON, nullable)
-    - quantity (Integer)
-    - unit_price (Decimal)
-    - subtotal (Decimal)
-    - currency (String)
-  - Add index on order_id
+  - Defined OrderItem table with fields:
+    * id (UUID, PK)
+    * order_id (UUID, FK → orders.id, CASCADE)
+    * product_id (UUID, FK → products.id, SET NULL)
+    * variant_id (UUID, FK → product_variants.id, SET NULL)
+    * product_snapshot (JSON) - immutable product data
+    * variant_snapshot (JSON, nullable) - immutable variant data
+    * quantity, unit_price, subtotal, currency
+  - Added index on order_id
+  - Added relationships to order, product, variant
 
-- [ ] **T073**: Create Order schemas
-  - Create `app/schemas/order.py`
-  - Define `OrderCreate`
-  - Define `OrderItemCreate`
-  - Define `OrderResponse`
-  - Define `OrderItemResponse`
-  - Define `OrderListResponse` with pagination
-  - Define `OrderCancelRequest`
-  - Define `OrderStatusUpdate`
-  - Define enums for OrderStatus, PaymentMethod, PaymentStatus
+- [x] **T073**: Create Order schemas ✅
+  - Created `app/schemas/order.py`
+  - Defined request schemas:
+    * OrderItemCreate - product_id, variant_id, quantity
+    * OrderCreate - items, address_id, payment_method, voucher_code, notes
+    * OrderCancelRequest - reason
+    * OrderStatusUpdate - status
+  - Defined response schemas:
+    * OrderItemResponse - with snapshots
+    * OrderResponse - full order with items
+    * OrderSummaryResponse - for list views
+    * OrderListResponse - paginated list
+    * CheckoutSummaryResponse - pre-order summary
+  - Defined enums: OrderStatus, PaymentMethod, PaymentStatus
+  - Updated `app/schemas/__init__.py` with exports
 
-- [ ] **T074**: Create database migration for orders
-  - Run `alembic revision --autogenerate -m "Create orders and order_items tables"`
-  - Review and apply migration
+- [x] **T074**: Create database migration for orders ✅
+  - Generated migration: `ca608a4c3040_create_orders_and_order_items_tables.py`
+  - Applied migration with `alembic upgrade head`
+  - Created tables: orders, order_items
+  - Created indexes: buyer_id, shop_id, status, order_number, composite indexes
 
 ### Core Implementation Tasks
 
-- [ ] **T075**: Create Order repository
-  - Create `app/repositories/order.py`
-  - Implement `get_by_id(order_id: UUID) -> Order | None`
-  - Implement `get_by_order_number(order_number: str) -> Order | None`
-  - Implement `list_by_buyer(buyer_id, filters, pagination) -> List[Order]`
-  - Implement `list_by_shop(shop_id, filters, pagination) -> List[Order]`
-  - Implement `create(order: Order) -> Order`
-  - Implement `update(order: Order) -> Order`
+- [x] **T075**: Create Order repository ✅
+  - Created `app/repositories/order.py`
+  - OrderRepository methods:
+    * `get_by_order_number(order_number)` - find by order number
+    * `get_with_items(order_id)` - load with items, buyer, shop
+    * `list_by_buyer(buyer_id, status, pagination)` - buyer's orders with filtering
+    * `list_by_shop(shop_id, status, pagination)` - shop's orders with filtering
+    * Inherited from BaseRepository: create, update, get, delete
+  - OrderItemRepository methods:
+    * `list_by_order(order_id)` - get all items for order
+    * Inherited from BaseRepository: create, update, get, delete
+  - Both repositories support eager loading with joinedload/selectinload
 
 - [ ] **T076**: Implement Order service (buyer)
   - Create `app/services/order.py`
