@@ -38,6 +38,16 @@ from app.schemas.order import (
     OrderListResponse,
     CheckoutSummaryResponse,
 )
+from app.schemas.voucher import (
+    VoucherType,
+    VoucherCreate,
+    VoucherUpdate,
+    VoucherValidateRequest,
+    VoucherResponse,
+    VoucherListResponse,
+    VoucherValidateResponse,
+    VoucherAvailableResponse,
+)
 
 __all__ = [
     # Product schemas
@@ -75,4 +85,13 @@ __all__ = [
     "OrderSummaryResponse",
     "OrderListResponse",
     "CheckoutSummaryResponse",
+    # Voucher schemas
+    "VoucherType",
+    "VoucherCreate",
+    "VoucherUpdate",
+    "VoucherValidateRequest",
+    "VoucherResponse",
+    "VoucherListResponse",
+    "VoucherValidateResponse",
+    "VoucherAvailableResponse",
 ]

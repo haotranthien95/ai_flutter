@@ -6,7 +6,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, status, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.dependencies import get_current_user, get_db, get_product_service, get_order_service
+from app.dependencies import get_current_user, get_db, get_product_service, get_order_service, get_voucher_service
 from app.models.user import User
 from app.schemas.shop import ShopCreate, ShopUpdate, ShopResponse
 from app.schemas.product import (
@@ -25,9 +25,16 @@ from app.schemas.order import (
     OrderStatusUpdate,
     OrderStatus,
 )
+from app.schemas.voucher import (
+    VoucherCreate,
+    VoucherUpdate,
+    VoucherResponse,
+    VoucherListResponse,
+)
 from app.services.shop import ShopService
 from app.services.product import ProductService
 from app.services.order import OrderService
+from app.services.voucher import VoucherService
 
 router = APIRouter()
 
@@ -256,4 +263,123 @@ async def update_order_status(
         order_id=order_id,
         status_update=status_update
     )
+
+
+# ==================== Voucher Management ====================
+
+@router.post("/shops/{shop_id}/vouchers", response_model=VoucherResponse, status_code=status.HTTP_201_CREATED)
+async def create_voucher(
+    shop_id: UUID,
+    voucher_data: VoucherCreate,
+    current_user: User = Depends(get_current_user),
+    voucher_service: VoucherService = Depends(get_voucher_service)
+):
+    """
+    Create a new voucher for a shop
+    
+    Voucher types:
+    - PERCENTAGE: Discount as a percentage (0-100)
+    - FIXED_AMOUNT: Fixed discount amount
+    
+    Optional constraints:
+    - min_order_value: Minimum order value to apply
+    - max_discount: Maximum discount for percentage type
+    - usage_limit: Total usage limit (null for unlimited)
+    - start_date/end_date: Validity period
+    
+    Requires seller with shop ownership.
+    """
+    return await voucher_service.create_voucher(
+        shop_id=shop_id,
+        voucher_data=voucher_data,
+        seller_id=current_user.id
+    )
+
+
+@router.get("/shops/{shop_id}/vouchers", response_model=VoucherListResponse)
+async def list_shop_vouchers(
+    shop_id: UUID,
+    page: int = Query(1, ge=1, description="Page number"),
+    page_size: int = Query(20, ge=1, le=100, description="Items per page"),
+    is_active: Optional[bool] = Query(None, description="Filter by active status"),
+    current_user: User = Depends(get_current_user),
+    voucher_service: VoucherService = Depends(get_voucher_service)
+):
+    """
+    List vouchers for a shop with pagination
+    
+    Optional filters:
+    - is_active: true/false/null (all)
+    
+    Requires seller with shop ownership.
+    """
+    return await voucher_service.list_shop_vouchers(
+        shop_id=shop_id,
+        seller_id=current_user.id,
+        page=page,
+        page_size=page_size,
+        is_active=is_active
+    )
+
+
+@router.get("/vouchers/{voucher_id}", response_model=VoucherResponse)
+async def get_voucher(
+    voucher_id: UUID,
+    current_user: User = Depends(get_current_user),
+    voucher_service: VoucherService = Depends(get_voucher_service)
+):
+    """
+    Get voucher details
+    
+    Requires seller with shop ownership.
+    """
+    return await voucher_service.get_voucher(
+        voucher_id=voucher_id,
+        seller_id=current_user.id
+    )
+
+
+@router.patch("/vouchers/{voucher_id}", response_model=VoucherResponse)
+async def update_voucher(
+    voucher_id: UUID,
+    voucher_data: VoucherUpdate,
+    current_user: User = Depends(get_current_user),
+    voucher_service: VoucherService = Depends(get_voucher_service)
+):
+    """
+    Update a voucher
+    
+    Can update all fields except:
+    - code (immutable)
+    - shop_id (immutable)
+    - usage_count (system-managed)
+    
+    Requires seller with shop ownership.
+    """
+    return await voucher_service.update_voucher(
+        voucher_id=voucher_id,
+        voucher_data=voucher_data,
+        seller_id=current_user.id
+    )
+
+
+@router.delete("/vouchers/{voucher_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_voucher(
+    voucher_id: UUID,
+    current_user: User = Depends(get_current_user),
+    voucher_service: VoucherService = Depends(get_voucher_service)
+):
+    """
+    Delete a voucher
+    
+    Permanently removes the voucher. Cannot be undone.
+    
+    Requires seller with shop ownership.
+    """
+    await voucher_service.delete_voucher(
+        voucher_id=voucher_id,
+        seller_id=current_user.id
+    )
+    return None
+
 

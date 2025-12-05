@@ -35,6 +35,7 @@ class Shop(BaseModel):
     # Relationships
     owner = relationship("User", back_populates="shop")
     orders = relationship("Order", back_populates="shop")
+    vouchers = relationship("Voucher", back_populates="shop", cascade="all, delete-orphan")
     
     def __repr__(self):
         return f"<Shop {self.shop_name}: {self.status.value}>"
