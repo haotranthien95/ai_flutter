@@ -87,7 +87,7 @@ class User(BaseModel):
     
     # Relationships (will be defined as models are created)
     addresses = relationship("Address", back_populates="user", cascade="all, delete-orphan")
-    # shop = relationship("Shop", back_populates="owner", uselist=False)
+    shop = relationship("Shop", back_populates="owner", uselist=False, cascade="all, delete-orphan")
     # cart_items = relationship("CartItem", back_populates="user", cascade="all, delete-orphan")
     # orders = relationship("Order", foreign_keys="Order.buyer_id", back_populates="buyer")
     # reviews = relationship("Review", back_populates="user")

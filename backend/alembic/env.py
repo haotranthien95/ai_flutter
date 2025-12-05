@@ -16,6 +16,7 @@ from app.config import settings
 from app.models.base import Base
 from app.models.user import User  # Import all models here
 from app.models.address import Address
+from app.models.shop import Shop
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
