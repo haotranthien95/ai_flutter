@@ -686,20 +686,24 @@
 
 ### Testing Tasks
 
-- [ ] **T069**: Write unit tests for Cart service
-  - Create `tests/unit/services/test_cart.py`
-  - Test add to cart
-  - Test update quantity
-  - Test remove from cart
-  - Test stock validation
-  - Test cart sync
+- [x] **T069**: Write unit tests for Cart service ✅
+  - Created `tests/unit/services/test_cart_service.py`
+  - 7 test classes with ~30 test methods
+  - Test add to cart (new item, existing item, with variant)
+  - Test update quantity with stock validation
+  - Test remove from cart with ownership check
+  - Test stock validation and error handling
+  - Test cart sync (guest → logged in)
+  - Test clear cart
 
-- [ ] **T070**: Write integration tests for Cart endpoints
-  - Create `tests/integration/api/test_cart.py`
-  - Test full cart flow (add, update, delete)
-  - Test cart sync
-  - Test authentication requirement
+- [x] **T070**: Write integration tests for Cart endpoints ✅
+  - Created `tests/integration/api/test_cart.py`
+  - Test full cart flow (add, update, remove, clear)
+  - Test cart sync and replace existing items
+  - Test authentication requirement on all endpoints
   - Test stock validation errors
+  - Test shop grouping functionality
+  - Test complete cart workflow end-to-end
 
 ---
 
