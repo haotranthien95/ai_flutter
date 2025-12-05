@@ -588,21 +588,24 @@
 
 ### Testing Tasks
 
-- [ ] **T060**: Write unit tests for Product service
-  - Create `tests/unit/services/test_product.py`
+- [x] **T060**: Write unit tests for Product service ✅
+  - Created `tests/unit/services/test_product_service.py`
+  - 9 test classes with ~30 test methods
   - Test product listing with filters
-  - Test product search
+  - Test product search and autocomplete
   - Test product creation (seller)
   - Test product update and delete
   - Test ownership validation
+  - Test variant management
 
-- [ ] **T061**: Write integration tests for Product endpoints
-  - Create `tests/integration/api/test_products.py`
-  - Test GET /products with various filters
-  - Test product search
-  - Test product detail
-  - Test seller product CRUD
-  - Test authorization checks
+- [x] **T061**: Write integration tests for Product endpoints ✅
+  - Created `tests/integration/api/test_products.py`
+  - Test GET /products with various filters (category, price, search, pagination, sorting)
+  - Test product search and autocomplete
+  - Test product detail and variants
+  - Test seller product CRUD operations
+  - Test authorization checks and ownership validation
+  - Test variant management endpoints
 
 ---
 
