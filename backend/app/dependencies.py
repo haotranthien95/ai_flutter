@@ -1,0 +1,175 @@
+"""
+FastAPI dependencies for authentication and authorization
+"""
+from typing import Optional
+from uuid import UUID
+
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from jose import JWTError
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.core.security import get_user_id_from_token, get_user_role_from_token
+from app.database import get_db
+from app.models.user import User, UserRole
+from app.repositories.user import UserRepository
+
+# HTTP Bearer security scheme
+security = HTTPBearer()
+
+
+async def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: AsyncSession = Depends(get_db)
+) -> User:
+    """
+    Get current authenticated user from JWT token
+    
+    Args:
+        credentials: HTTP Authorization header with Bearer token
+        db: Database session
+        
+    Returns:
+        Current authenticated user
+        
+    Raises:
+        HTTPException: If token is invalid or user not found
+    """
+    token = credentials.credentials
+    
+    try:
+        # Extract user ID from token
+        user_id = get_user_id_from_token(token)
+        user_uuid = UUID(user_id)
+        
+        # Get user from database
+        user_repo = UserRepository(db)
+        user = await user_repo.get_by_id(user_uuid)
+        
+        if user is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="User not found"
+            )
+        
+        if user.is_suspended:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="User account is suspended"
+            )
+        
+        return user
+        
+    except (JWTError, ValueError) as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=f"Could not validate credentials: {str(e)}",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+
+async def get_current_verified_user(
+    current_user: User = Depends(get_current_user)
+) -> User:
+    """
+    Get current user and ensure they are verified
+    
+    Args:
+        current_user: Current authenticated user
+        
+    Returns:
+        Current verified user
+        
+    Raises:
+        HTTPException: If user is not verified
+    """
+    if not current_user.is_verified:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Phone number not verified. Please verify your account."
+        )
+    
+    return current_user
+
+
+async def require_seller(
+    current_user: User = Depends(get_current_verified_user)
+) -> User:
+    """
+    Require user to have SELLER or ADMIN role
+    
+    Args:
+        current_user: Current authenticated and verified user
+        
+    Returns:
+        Current user if they are a seller or admin
+        
+    Raises:
+        HTTPException: If user is not a seller or admin
+    """
+    if current_user.role not in [UserRole.SELLER, UserRole.ADMIN]:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Seller privileges required. Please register as a seller first."
+        )
+    
+    return current_user
+
+
+async def require_admin(
+    current_user: User = Depends(get_current_verified_user)
+) -> User:
+    """
+    Require user to have ADMIN role
+    
+    Args:
+        current_user: Current authenticated and verified user
+        
+    Returns:
+        Current user if they are an admin
+        
+    Raises:
+        HTTPException: If user is not an admin
+    """
+    if current_user.role != UserRole.ADMIN:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Admin privileges required"
+        )
+    
+    return current_user
+
+
+async def get_optional_current_user(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(HTTPBearer(auto_error=False)),
+    db: AsyncSession = Depends(get_db)
+) -> Optional[User]:
+    """
+    Get current user if authenticated, None otherwise
+    Useful for endpoints that work differently for authenticated vs anonymous users
+    
+    Args:
+        credentials: Optional HTTP Authorization header
+        db: Database session
+        
+    Returns:
+        Current user if authenticated, None otherwise
+    """
+    if credentials is None:
+        return None
+    
+    try:
+        token = credentials.credentials
+        user_id = get_user_id_from_token(token)
+        user_uuid = UUID(user_id)
+        
+        user_repo = UserRepository(db)
+        user = await user_repo.get_by_id(user_uuid)
+        
+        if user and not user.is_suspended:
+            return user
+        
+        return None
+        
+    except (JWTError, ValueError):
+        return None
