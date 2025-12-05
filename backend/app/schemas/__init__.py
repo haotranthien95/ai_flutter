@@ -48,6 +48,14 @@ from app.schemas.voucher import (
     VoucherValidateResponse,
     VoucherAvailableResponse,
 )
+from app.schemas.review import (
+    ReviewCreate,
+    ReviewUpdate,
+    ReviewResponse,
+    ReviewUserInfo,
+    ReviewListResponse,
+    ReviewStats,
+)
 
 __all__ = [
     # Product schemas
@@ -94,4 +102,11 @@ __all__ = [
     "VoucherListResponse",
     "VoucherValidateResponse",
     "VoucherAvailableResponse",
+    # Review schemas
+    "ReviewCreate",
+    "ReviewUpdate",
+    "ReviewResponse",
+    "ReviewUserInfo",
+    "ReviewListResponse",
+    "ReviewStats",
 ]

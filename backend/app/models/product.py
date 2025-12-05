@@ -43,9 +43,9 @@ class Product(BaseModel):
     shop = relationship("Shop", backref="products")
     category = relationship("Category", backref="products")
     variants = relationship("ProductVariant", back_populates="product", cascade="all, delete-orphan")
+    reviews = relationship("Review", back_populates="product", cascade="all, delete-orphan")
     # cart_items = relationship("CartItem", back_populates="product", cascade="all, delete-orphan")
     # order_items = relationship("OrderItem", back_populates="product")
-    # reviews = relationship("Review", back_populates="product", cascade="all, delete-orphan")
     
     def __repr__(self):
         return f"<Product {self.title} (shop_id={self.shop_id})>"

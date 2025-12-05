@@ -7,8 +7,9 @@ from decimal import Decimal
 
 from fastapi import APIRouter, Depends, Query
 
-from app.dependencies import get_product_service
+from app.dependencies import get_product_service, get_review_service
 from app.services.product import ProductService
+from app.services.review import ReviewService
 from app.schemas.product import (
     ProductResponse,
     ProductListResponse,
@@ -16,6 +17,7 @@ from app.schemas.product import (
     ProductVariantResponse,
     ProductCondition,
 )
+from app.schemas.review import ReviewListResponse, ReviewStats
 
 router = APIRouter(prefix="/products", tags=["products"])
 
@@ -104,3 +106,41 @@ async def get_product_variants(
     """
     variants = await product_service.get_product_variants(product_id)
     return [ProductVariantResponse.model_validate(v) for v in variants]
+
+
+@router.get("/{product_id}/reviews", response_model=ReviewListResponse)
+async def get_product_reviews(
+    product_id: UUID,
+    page: int = Query(1, ge=1, description="Page number"),
+    page_size: int = Query(20, ge=1, le=100, description="Items per page"),
+    rating: Optional[int] = Query(None, ge=1, le=5, description="Filter by rating (1-5)"),
+    verified_only: bool = Query(False, description="Show only verified purchases"),
+    review_service: ReviewService = Depends(get_review_service)
+):
+    """
+    Get reviews for a product with pagination and filters
+    
+    Returns review list with average rating and rating distribution.
+    Public endpoint - no authentication required.
+    """
+    return await review_service.get_product_reviews(
+        product_id=product_id,
+        page=page,
+        page_size=page_size,
+        rating_filter=rating,
+        verified_only=verified_only
+    )
+
+
+@router.get("/{product_id}/reviews/stats", response_model=ReviewStats)
+async def get_product_review_stats(
+    product_id: UUID,
+    review_service: ReviewService = Depends(get_review_service)
+):
+    """
+    Get review statistics for a product
+    
+    Returns total reviews, average rating, and rating distribution.
+    Public endpoint - no authentication required.
+    """
+    return await review_service.get_product_stats(product_id=product_id)

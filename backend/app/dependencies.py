@@ -19,11 +19,13 @@ from app.repositories.shop import ShopRepository
 from app.repositories.cart import CartRepository
 from app.repositories.order import OrderRepository, OrderItemRepository
 from app.repositories.voucher import VoucherRepository
+from app.repositories.review import ReviewRepository
 from app.services.product import ProductService
 from app.services.category import CategoryService
 from app.services.cart import CartService
 from app.services.order import OrderService
 from app.services.voucher import VoucherService
+from app.services.review import ReviewService
 
 # HTTP Bearer security scheme
 security = HTTPBearer()
@@ -300,4 +302,27 @@ async def get_voucher_service(
     return VoucherService(
         voucher_repo=voucher_repo,
         shop_repo=shop_repo,
+    )
+
+
+async def get_review_service(
+    db: AsyncSession = Depends(get_db)
+) -> ReviewService:
+    """
+    Get ReviewService instance with all required repositories
+    
+    Args:
+        db: Database session
+        
+    Returns:
+        ReviewService instance
+    """
+    review_repo = ReviewRepository(db)
+    order_repo = OrderRepository(db)
+    product_repo = ProductRepository(db)
+    
+    return ReviewService(
+        review_repo=review_repo,
+        order_repo=order_repo,
+        product_repo=product_repo,
     )
