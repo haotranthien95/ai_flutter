@@ -13,6 +13,11 @@ from app.core.security import get_user_id_from_token, get_user_role_from_token
 from app.database import get_db
 from app.models.user import User, UserRole
 from app.repositories.user import UserRepository
+from app.repositories.product import ProductRepository, ProductVariantRepository
+from app.repositories.category import CategoryRepository
+from app.repositories.shop import ShopRepository
+from app.services.product import ProductService
+from app.services.category import CategoryService
 
 # HTTP Bearer security scheme
 security = HTTPBearer()
@@ -173,3 +178,46 @@ async def get_optional_current_user(
         
     except (JWTError, ValueError):
         return None
+
+
+# Service dependencies
+
+async def get_product_service(
+    db: AsyncSession = Depends(get_db)
+) -> ProductService:
+    """
+    Get ProductService instance with all required repositories
+    
+    Args:
+        db: Database session
+        
+    Returns:
+        ProductService instance
+    """
+    product_repo = ProductRepository(db)
+    variant_repo = ProductVariantRepository(db)
+    category_repo = CategoryRepository(db)
+    shop_repo = ShopRepository(db)
+    
+    return ProductService(
+        product_repo=product_repo,
+        variant_repo=variant_repo,
+        category_repo=category_repo,
+        shop_repo=shop_repo,
+    )
+
+
+async def get_category_service(
+    db: AsyncSession = Depends(get_db)
+) -> CategoryService:
+    """
+    Get CategoryService instance
+    
+    Args:
+        db: Database session
+        
+    Returns:
+        CategoryService instance
+    """
+    category_repo = CategoryRepository(db)
+    return CategoryService(category_repo=category_repo)
