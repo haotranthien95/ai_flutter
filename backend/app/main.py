@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.config import settings
-from app.database import close_db, init_db
+from app.database import close_db, init_db, AsyncSessionLocal
 
 
 @asynccontextmanager
@@ -93,6 +93,29 @@ async def health_check():
         "version": settings.APP_VERSION,
         "environment": settings.ENVIRONMENT,
     }
+
+
+# Database health check endpoint
+@app.get("/health/db", tags=["Health"])
+async def database_health_check():
+    """Database connection health check"""
+    from sqlalchemy import text
+    try:
+        async with AsyncSessionLocal() as session:
+            # Try to execute a simple query
+            result = await session.execute(text("SELECT 1"))
+            result.scalar()
+            return {
+                "status": "healthy",
+                "database": "connected",
+                "message": "Database connection successful"
+            }
+    except Exception as e:
+        return {
+            "status": "unhealthy",
+            "database": "disconnected",
+            "error": str(e)
+        }
 
 
 # Root endpoint
