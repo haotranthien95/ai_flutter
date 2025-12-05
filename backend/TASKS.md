@@ -882,7 +882,7 @@
     - is_active (Boolean)
   - Add index on shop_id and code
 
-- [ ] **T084**: Create Voucher schemas
+- [x] **T084**: Create Voucher schemas ✅ 2025-01-XX
   - Create `app/schemas/voucher.py`
   - Define `VoucherCreate`
   - Define `VoucherUpdate`
@@ -891,13 +891,13 @@
   - Define `VoucherValidateResponse`
   - Define `VoucherType` enum
 
-- [ ] **T085**: Create database migration for vouchers
+- [x] **T085**: Create database migration for vouchers ✅ 2025-01-XX
   - Run `alembic revision --autogenerate -m "Create vouchers table"`
   - Review and apply migration
 
 ### Core Implementation Tasks
 
-- [ ] **T086**: Create Voucher repository
+- [x] **T086**: Create Voucher repository ✅ 2025-01-XX
   - Create `app/repositories/voucher.py`
   - Implement `get_by_id(voucher_id: UUID) -> Voucher | None`
   - Implement `get_by_code(code: str) -> Voucher | None`
@@ -907,7 +907,7 @@
   - Implement `update(voucher: Voucher) -> Voucher`
   - Implement `increment_usage(voucher_id: UUID) -> None`
 
-- [ ] **T087**: Implement Voucher service
+- [x] **T087**: Implement Voucher service ✅ 2025-01-XX
   - Create `app/services/voucher.py`
   - Implement `validate_voucher(code, shop_id, subtotal) -> VoucherValidateResponse`
     - Check if active
@@ -920,33 +920,33 @@
   - Implement `update_voucher(shop_id, voucher_id, data) -> VoucherResponse`
   - Implement `list_shop_vouchers(shop_id) -> List[VoucherResponse]`
 
-- [ ] **T088**: Create Voucher API routes (buyer)
+- [x] **T088**: Create Voucher API routes (buyer) ✅ 2025-01-XX
   - Create `app/api/v1/vouchers.py`
   - Implement `POST /vouchers/validate`
   - Implement `GET /vouchers/available?shop_id=...&subtotal=...`
   - Add authentication
 
-- [ ] **T089**: Create Voucher API routes (seller)
+- [x] **T089**: Create Voucher API routes (seller) ✅ 2025-01-XX
   - Update `app/api/v1/seller.py`
   - Implement `POST /seller/vouchers`
   - Implement `GET /seller/vouchers`
   - Implement `PUT /seller/vouchers/{voucher_id}`
   - Add seller authentication
 
-- [ ] **T090**: Include vouchers router in main router
+- [x] **T090**: Include vouchers router in main router ✅ 2025-01-XX
   - Update `app/api/v1/router.py`
   - Include vouchers router with prefix `/vouchers`
 
 ### Testing Tasks
 
-- [ ] **T091**: Write unit tests for Voucher service
+- [x] **T091**: Write unit tests for Voucher service ✅ 2025-01-XX
   - Create `tests/unit/services/test_voucher.py`
   - Test voucher validation
   - Test discount calculation (percentage and fixed)
   - Test usage limit enforcement
   - Test min order value check
 
-- [ ] **T092**: Write integration tests for Voucher endpoints
+- [x] **T092**: Write integration tests for Voucher endpoints ✅ 2025-01-XX
   - Create `tests/integration/api/test_vouchers.py`
   - Test voucher validation endpoint
   - Test get available vouchers
