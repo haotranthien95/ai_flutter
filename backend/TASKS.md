@@ -955,11 +955,11 @@
 
 ---
 
-## Phase 9: Review & Rating Module
+## Phase 9: Review & Rating Module ✅ COMPLETE
 
 ### Model & Schema Tasks
 
-- [ ] **T093**: Create Review model
+- [x] **T093**: Create Review model ✅ 2025-01-XX
   - Create `app/models/review.py`
   - Define Review table with fields:
     - id (UUID, PK)
@@ -975,20 +975,20 @@
   - Add unique constraint on (user_id, product_id)
   - Add indexes on product_id and user_id
 
-- [ ] **T094**: Create Review schemas
+- [x] **T094**: Create Review schemas ✅ 2025-01-XX
   - Create `app/schemas/review.py`
   - Define `ReviewCreate`
   - Define `ReviewUpdate`
   - Define `ReviewResponse`
   - Define `ReviewListResponse` with pagination
 
-- [ ] **T095**: Create database migration for reviews
+- [x] **T095**: Create database migration for reviews ✅ 2025-01-XX
   - Run `alembic revision --autogenerate -m "Create reviews table"`
   - Review and apply migration
 
 ### Core Implementation Tasks
 
-- [ ] **T096**: Create Review repository
+- [x] **T096**: Create Review repository ✅ 2025-01-XX
   - Create `app/repositories/review.py`
   - Implement `get_by_id(review_id: UUID) -> Review | None`
   - Implement `list_by_product(product_id, filters, pagination) -> List[Review]`
@@ -998,7 +998,7 @@
   - Implement `update(review: Review) -> Review`
   - Implement `delete(review_id: UUID) -> None`
 
-- [ ] **T097**: Implement Review service
+- [x] **T097**: Implement Review service ✅ 2025-01-XX
   - Create `app/services/review.py`
   - Implement `create_review(user_id, product_id, order_id, rating, content, images) -> ReviewResponse`
     - Validate order exists and is delivered
@@ -1009,7 +1009,7 @@
   - Implement `delete_review(user_id, review_id) -> None`
   - Implement `update_product_rating(product_id) -> None` (recalculate average)
 
-- [ ] **T098**: Create Review API routes
+- [x] **T098**: Create Review API routes ✅ 2025-01-XX
   - Update `app/api/v1/products.py`
   - Implement `GET /products/{id}/reviews`
   - Create separate reviews route if needed
@@ -1020,14 +1020,14 @@
 
 ### Testing Tasks
 
-- [ ] **T099**: Write unit tests for Review service
+- [x] **T099**: Write unit tests for Review service ✅ 2025-01-XX
   - Create `tests/unit/services/test_review.py`
   - Test review creation
   - Test duplicate review prevention
   - Test rating aggregation
   - Test review update and delete
 
-- [ ] **T100**: Write integration tests for Review endpoints
+- [x] **T100**: Write integration tests for Review endpoints ✅ 2025-01-XX
   - Create `tests/integration/api/test_reviews.py`
   - Test review creation after order delivered
   - Test get product reviews
