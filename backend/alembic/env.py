@@ -19,6 +19,7 @@ from app.models.address import Address
 from app.models.shop import Shop
 from app.models.category import Category
 from app.models.product import Product, ProductVariant
+from app.models.cart import CartItem
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

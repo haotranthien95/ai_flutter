@@ -610,64 +610,76 @@
 
 ### Model & Schema Tasks
 
-- [ ] **T062**: Create CartItem model
-  - Create `app/models/cart.py`
-  - Define CartItem table with fields:
-    - id (UUID, PK)
-    - user_id (UUID, FK → users.id)
-    - product_id (UUID, FK → products.id)
-    - variant_id (UUID, FK → product_variants.id, nullable)
-    - quantity (Integer)
-    - added_at
-  - Add unique constraint on (user_id, product_id, variant_id)
-  - Add index on user_id
+- [x] **T062**: Create CartItem model ✅
+  - Created `app/models/cart.py`
+  - Defined CartItem table with fields:
+    * id (UUID, PK)
+    * user_id (UUID, FK → users.id, CASCADE delete)
+    * product_id (UUID, FK → products.id, CASCADE delete)
+    * variant_id (UUID, FK → product_variants.id, CASCADE delete, nullable)
+    * quantity (Integer, default=1)
+    * added_at (created_at from BaseModel)
+  - Added unique constraint on (user_id, product_id, variant_id)
+  - Added index on user_id
+  - Added relationships to User, Product, ProductVariant
+  - Updated User model with cart_items relationship
 
-- [ ] **T063**: Create Cart schemas
-  - Create `app/schemas/cart.py`
-  - Define `CartItemCreate`
-  - Define `CartItemUpdate`
-  - Define `CartItemResponse` (with product details)
-  - Define `CartResponse` (grouped by shop)
-  - Define `CartSyncRequest`
+- [x] **T063**: Create Cart schemas ✅
+  - Created `app/schemas/cart.py`
+  - Defined `CartItemCreate` - add item to cart
+  - Defined `CartItemUpdate` - update quantity (1-999)
+  - Defined `CartItemResponse` - with product details, unit_price, total_price
+  - Defined `ProductSummary` and `VariantSummary` - simplified product info
+  - Defined `ShopCartGroup` - items grouped by shop with subtotal
+  - Defined `CartResponse` - full cart with shop grouping and totals
+  - Defined `CartSyncItem` and `CartSyncRequest` - sync cart items
+  - Added validation for quantity limits and unique items
 
-- [ ] **T064**: Create database migration for cart
-  - Run `alembic revision --autogenerate -m "Create cart_items table"`
-  - Review and apply migration
+- [x] **T064**: Create database migration for cart ✅
+  - Generated migration: `a47db99ca9af_create_cart_items_table.py`
+  - Created table: cart_items
+  - Applied migration successfully
+  - All indexes, constraints, and foreign keys created
 
 ### Core Implementation Tasks
 
-- [ ] **T065**: Create Cart repository
-  - Create `app/repositories/cart.py`
-  - Implement `list_by_user(user_id: UUID) -> List[CartItem]`
-  - Implement `get_by_id(cart_item_id: UUID) -> CartItem | None`
-  - Implement `find_item(user_id, product_id, variant_id) -> CartItem | None`
-  - Implement `create(cart_item: CartItem) -> CartItem`
-  - Implement `update(cart_item: CartItem) -> CartItem`
-  - Implement `delete(cart_item_id: UUID) -> None`
-  - Implement `clear_user_cart(user_id: UUID) -> None`
+- [x] **T065**: Create Cart repository ✅
+  - Created `app/repositories/cart.py`
+  - Implemented `list_by_user()` - get all cart items with eager loading
+  - Implemented `find_item()` - find specific product/variant in cart
+  - Implemented `get_with_relations()` - get cart item with product and variant
+  - Implemented `clear_user_cart()` - remove all items for user
+  - Implemented `delete_by_product()` - delete specific product/variant
+  - Extended BaseRepository with CartRepository
 
-- [ ] **T066**: Implement Cart service
-  - Create `app/services/cart.py`
-  - Implement `get_cart(user_id) -> CartResponse`
-  - Implement `add_to_cart(user_id, product_id, variant_id, quantity) -> CartItemResponse`
-  - Implement `update_cart_item(user_id, cart_item_id, quantity) -> CartItemResponse`
-  - Implement `remove_from_cart(user_id, cart_item_id) -> None`
-  - Implement `sync_cart(user_id, items) -> CartResponse`
-  - Add stock validation
-  - Group items by shop in response
+- [x] **T066**: Implement Cart service ✅
+  - Created `app/services/cart.py`
+  - Implemented `get_cart()` - get cart with items grouped by shop
+  - Implemented `add_to_cart()` - add or increment quantity with stock validation
+  - Implemented `update_cart_item()` - update quantity with stock check
+  - Implemented `remove_from_cart()` - remove item with ownership check
+  - Implemented `sync_cart()` - sync items (guest → logged in)
+  - Implemented `clear_cart()` - clear all items
+  - Added `_build_cart_item_response()` - compute unit/total prices
+  - Added `_group_by_shop()` - group items by shop with subtotals
+  - Stock validation on add and update
+  - Automatic quantity increment for existing items
 
-- [ ] **T067**: Create Cart API routes
-  - Create `app/api/v1/cart.py`
-  - Implement `GET /cart`
-  - Implement `POST /cart`
-  - Implement `PATCH /cart/items/{cart_item_id}`
-  - Implement `DELETE /cart/items/{cart_item_id}`
-  - Implement `POST /cart/sync`
-  - Add authentication requirement
+- [x] **T067**: Create Cart API routes ✅
+  - Created `app/api/v1/cart.py`
+  - Implemented `GET /cart` - get user's cart with shop grouping
+  - Implemented `POST /cart` - add item to cart
+  - Implemented `PATCH /cart/items/{cart_item_id}` - update quantity
+  - Implemented `DELETE /cart/items/{cart_item_id}` - remove item
+  - Implemented `POST /cart/sync` - sync cart items
+  - Implemented `DELETE /cart` - clear entire cart
+  - All endpoints require authentication
 
-- [ ] **T068**: Include cart router in main router
-  - Update `app/api/v1/router.py`
-  - Include cart router with prefix `/cart`
+- [x] **T068**: Include cart router in main router ✅
+  - Updated `app/api/v1/router.py`
+  - Included cart router with prefix `/cart`
+  - Added cart service dependency in `app/dependencies.py`:
+    * `get_cart_service()` - returns CartService with all repos
 
 ### Testing Tasks
 
