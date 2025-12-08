@@ -1119,7 +1119,7 @@
 
 ### Core Implementation Tasks
 
-- [ ] **T111**: Implement Admin service
+- [x] **T111**: Implement Admin service ✅ 2024-12-08
   - Create `app/services/admin.py`
   - Implement `get_platform_metrics() -> dict` (users, products, orders, revenue)
   - Implement `list_users(filters, pagination) -> List[UserResponse]`
@@ -1131,13 +1131,13 @@
   - Implement `list_all_products(filters, pagination) -> List[ProductResponse]`
   - Implement `moderate_product(product_id, action) -> ProductResponse`
 
-- [ ] **T112**: Implement Category management (admin)
+- [x] **T112**: Implement Category management (admin) ✅ 2024-12-08
   - Update `app/services/category.py`
   - Implement `create_category(data) -> CategoryResponse`
   - Implement `update_category(category_id, data) -> CategoryResponse`
   - Implement `delete_category(category_id) -> None`
 
-- [ ] **T113**: Create Admin API routes
+- [x] **T113**: Create Admin API routes ✅ 2024-12-08
   - Create `app/api/v1/admin.py`
   - Implement `GET /admin/dashboard`
   - Implement `GET /admin/users`
@@ -1152,20 +1152,20 @@
   - Implement `DELETE /admin/categories/{category_id}`
   - Add admin role requirement
 
-- [ ] **T114**: Include admin router in main router
+- [x] **T114**: Include admin router in main router ✅ 2024-12-08
   - Update `app/api/v1/router.py`
   - Include admin router with prefix `/admin`
 
 ### Testing Tasks
 
-- [ ] **T115**: Write unit tests for Admin service
+- [x] **T115**: Write unit tests for Admin service ✅ 2024-12-08
   - Create `tests/unit/services/test_admin.py`
   - Test platform metrics
   - Test user suspension
   - Test shop approval
   - Test product moderation
 
-- [ ] **T116**: Write integration tests for Admin endpoints
+- [x] **T116**: Write integration tests for Admin endpoints ✅ 2024-12-08
   - Create `tests/integration/api/test_admin.py`
   - Test dashboard metrics
   - Test user management
