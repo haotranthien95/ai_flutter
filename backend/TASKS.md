@@ -1315,7 +1315,7 @@
 
 ### Documentation Tasks
 
-- [ ] **T131**: Write backend README
+- [✓] **T131**: Write backend README
   - Create comprehensive `backend/README.md`
   - Document setup instructions
   - Document environment variables
@@ -1323,21 +1323,32 @@
   - Document running tests
   - Document running migrations
   - Document API endpoints (link to Swagger)
+  - Include quick start guide
+  - Include troubleshooting section
 
-- [ ] **T132**: Document database schema
+- [✓] **T132**: Document database schema
   - Create `backend/DATABASE.md`
   - Document all tables with descriptions
   - Document relationships
   - Document indexes
-  - Add ER diagram (mermaid or image)
+  - Add ER diagram (mermaid)
+  - Document migration history
+  - Include performance considerations
+  - Add backup & recovery instructions
 
-- [ ] **T133**: Write deployment guide
+- [✓] **T133**: Write deployment guide
   - Create `backend/DEPLOYMENT.md`
   - Document production setup steps
   - Document environment configuration
   - Document Docker deployment
+  - Document manual deployment
   - Document database migration strategy
   - Document rollback procedures
+  - Include Nginx configuration
+  - Add SSL setup with Let's Encrypt
+  - Include security hardening steps
+  - Add monitoring & logging setup
+  - Include CI/CD pipeline example
 
 ---
 
