@@ -2,8 +2,21 @@
 
 **Feature Branch**: `001-ecommerce-marketplace`  
 **Created**: 2025-12-03  
-**Status**: Draft  
+**Updated**: 2025-12-04  
+**Status**: In Progress  
+**Scope**: Full-stack application (Flutter Mobile + FastAPI Python Backend)  
 **Input**: Multi-vendor e-commerce application inspired by Shopee for Vietnamese market
+
+## Project Structure
+
+```
+ai_flutter/
+├── mobile/          # Flutter mobile application (iOS/Android)
+├── backend/         # FastAPI Python REST API server
+├── specs/           # Feature specifications and planning
+├── brandstorm/      # Project ideation documents
+└── README.md        # Project overview
+```
 
 ## Clarifications
 
@@ -562,11 +575,16 @@ Platform can run flash sales with countdown timers, limited stock, and special p
 
 ### Technical Architecture
 
-**Backend**: REST API with separate backend service
-- Flutter app communicates with backend via HTTP REST endpoints
-- Backend handles business logic, data persistence, authentication, and integrations
-- Supports future scaling and customization of business rules
-- Enables proper separation of concerns between mobile client and server logic
+**Backend**: FastAPI Python REST API
+- Asynchronous Python web framework built on Starlette and Pydantic
+- Automatic API documentation with OpenAPI/Swagger UI
+- Type hints and data validation with Pydantic models
+- High performance with async/await support
+- JWT-based authentication with python-jose
+- Password hashing with passlib and bcrypt
+- Structured logging with Python logging module
+- Testing with pytest and httpx async client
+- Enables rapid development with automatic request validation
 
 **Database**: PostgreSQL (relational database)
 - ACID transactions ensure data consistency for orders and payments
@@ -574,8 +592,11 @@ Platform can run flash sales with countdown timers, limited stock, and special p
 - Strong support for complex queries (filtering, sorting, analytics)
 - JSON column support for flexible product attributes and variant data
 - Battle-tested for e-commerce scalability
+- SQLAlchemy ORM for database interactions
+- Alembic for database migrations
 
 **Real-Time Communication**: WebSocket for chat messaging
+- FastAPI native WebSocket support for buyer-seller chat
 - Bidirectional real-time communication between buyers and sellers
 - Low-latency message delivery (<3 seconds per SC-019)
 - Persistent connection for active chat sessions
@@ -588,7 +609,8 @@ Platform can run flash sales with countdown timers, limited stock, and special p
 - Local backend storage for temporary uploads during processing (validation, resizing, optimization)
 - After processing, images are uploaded to cloud storage and local copies are deleted
 - Database stores only image URLs/references, not binary data
-- Image optimization pipeline: resize to multiple resolutions, compress, generate thumbnails
+- Image optimization pipeline with Pillow: resize to multiple resolutions, compress, generate thumbnails
+- Async image processing to avoid blocking API requests
 
 **Shipping Fee Calculation**: Seller-defined flat rate
 - Each seller configures a flat shipping fee per order in their shop settings
@@ -597,6 +619,19 @@ Platform can run flash sales with countdown timers, limited stock, and special p
 - If buyer's subtotal from a shop meets/exceeds free shipping threshold, shipping fee is waived for that shop
 - Future enhancement: Integration with logistics carriers for dynamic weight/distance-based pricing
 - Shipping fees displayed in VND and clearly shown in cart grouped by shop
+
+**Backend Technology Stack**:
+- **Framework**: FastAPI 0.100+
+- **ORM**: SQLAlchemy 2.0+ with async support
+- **Database Driver**: asyncpg (PostgreSQL async driver)
+- **Migrations**: Alembic
+- **Authentication**: python-jose (JWT), passlib (password hashing)
+- **Validation**: Pydantic v2
+- **Testing**: pytest, pytest-asyncio, httpx
+- **Image Processing**: Pillow
+- **Background Tasks**: FastAPI BackgroundTasks or Celery for heavy operations
+- **API Documentation**: Auto-generated OpenAPI/Swagger UI
+- **CORS**: FastAPI CORS middleware for Flutter app communication
 
 ---
 
