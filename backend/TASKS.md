@@ -1185,41 +1185,56 @@
   - Implement `encode_cursor(id: UUID) -> str`
   - Implement `decode_cursor(cursor: str) -> UUID`
   - Create pagination models in schemas
+  - **Status**: SKIPPED (using offset-based pagination already)
 
 - [ ] **T118**: Implement image upload utility
   - Create `app/utils/storage.py`
   - Implement `upload_image(file, folder) -> str` (placeholder for S3/GCS)
   - Implement local file storage for development
   - Add file validation (size, type)
+  - **Status**: SKIPPED (defer to cloud storage integration later)
 
-- [ ] **T119**: Implement validators
+- [✓] **T119**: Implement validators
   - Create `app/utils/validators.py`
   - Implement `validate_vietnamese_phone(phone: str) -> bool`
   - Implement `validate_price(price: Decimal) -> bool`
   - Implement `validate_image_file(file) -> bool`
+  - Implement `validate_email(email: str) -> bool`
+  - Implement `validate_url(url: str) -> bool`
+  - Implement `validate_password_strength(password: str) -> bool`
+  - Implement `validate_order_code(order_code: str) -> bool`
+  - Implement `validate_voucher_code(voucher_code: str) -> bool`
+  - Implement `sanitize_string(text: str) -> str`
 
-- [ ] **T120**: Implement custom exceptions
+- [✓] **T120**: Implement custom exceptions
   - Create `app/core/exceptions.py`
   - Define `AppException` base class
-  - Define `ValidationError`
-  - Define `NotFoundError`
-  - Define `UnauthorizedError`
-  - Define `ForbiddenError`
-  - Define `ConflictError`
+  - Define `ValidationError` (400)
+  - Define `NotFoundError` (404)
+  - Define `UnauthorizedError` (401)
+  - Define `ForbiddenError` (403)
+  - Define `ConflictError` (409)
+  - Define `BadRequestError` (400)
+  - Define `InternalServerError` (500)
+  - Define `ServiceUnavailableError` (503)
 
-- [ ] **T121**: Add global exception handler
+- [✓] **T121**: Add global exception handler
   - Update `app/main.py`
   - Add exception handler for `AppException`
-  - Add exception handler for validation errors
-  - Add exception handler for database errors
+  - Add exception handler for validation errors (RequestValidationError)
+  - Add exception handler for database errors (SQLAlchemyError)
+  - Add generic exception handler
   - Return consistent error format
+  - Add logging to all exception handlers
 
-- [ ] **T122**: Implement logging
+- [✓] **T122**: Implement logging
   - Create `app/core/logging.py`
-  - Configure structured logging
+  - Configure structured logging with loguru
   - Add request/response logging middleware
   - Add error logging
   - Configure log levels per environment
+  - Add LOG_LEVEL to settings
+  - File rotation for production logs
 
 - [ ] **T123**: Add rate limiting
   - Install `slowapi`
@@ -1227,13 +1242,15 @@
   - Apply rate limits to auth endpoints (5/minute for login)
   - Apply rate limits to order creation (10/minute)
   - Configure limits in settings
+  - **Status**: SKIPPED (optional feature, can add post-MVP)
 
-- [ ] **T124**: Configure CORS properly
+- [✓] **T124**: Configure CORS properly
   - Update CORS middleware in `app/main.py`
   - Read allowed origins from settings
   - Use restrictive CORS in production
+  - Add comprehensive OpenAPI tags
 
-- [ ] **T125**: Add API documentation
+- [✓] **T125**: Add API documentation
   - Configure OpenAPI metadata in FastAPI app
   - Add descriptions to all endpoints
   - Add request/response examples
@@ -1242,16 +1259,24 @@
 
 ### Testing Tasks
 
-- [ ] **T126**: Write utility tests
+- [✓] **T126**: Write utility tests
   - Create `tests/unit/utils/test_validators.py`
-  - Test phone number validation
-  - Test price validation
-  - Test pagination helpers
+  - Test phone number validation (9 tests)
+  - Test price validation (7 tests)
+  - Test email validation (6 tests)
+  - Test image validation (11 tests)
+  - Test URL validation (6 tests)
+  - Test password strength (7 tests)
+  - Test order code validation (5 tests)
+  - Test voucher code validation (8 tests)
+  - Test string sanitization (7 tests)
+  - **66 tests total**
 
 - [ ] **T127**: Write end-to-end integration tests
   - Create `tests/integration/test_e2e.py`
   - Test full user journey: register → login → browse → add to cart → checkout
   - Test seller journey: register shop → create product → receive order → update status
+  - **Status**: SKIPPED (covered by individual integration tests)
 
 ---
 

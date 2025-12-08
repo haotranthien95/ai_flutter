@@ -7,21 +7,30 @@ from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from sqlalchemy.exc import SQLAlchemyError
 
 from app.config import settings
+from app.core.logging import setup_logging, get_logger
 from app.database import close_db, init_db, AsyncSessionLocal
+from app.core.exceptions import AppException
+
+
+# Setup logging
+setup_logging()
+log = get_logger(__name__)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan events"""
     # Startup
-    print(f"Starting {settings.APP_NAME} v{settings.APP_VERSION}")
-    print(f"Environment: {settings.ENVIRONMENT}")
+    log.info(f"Starting {settings.APP_NAME} v{settings.APP_VERSION}")
+    log.info(f"Environment: {settings.ENVIRONMENT}")
+    log.info(f"Debug mode: {settings.DEBUG}")
     # await init_db()  # Uncomment when ready to use
     yield
     # Shutdown
-    print("Shutting down...")
+    log.info("Shutting down application...")
     await close_db()
 
 
@@ -29,11 +38,25 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
-    description="E-Commerce Marketplace REST API built with FastAPI",
+    description="E-Commerce Marketplace REST API - A comprehensive platform for buyers and sellers",
     docs_url=f"{settings.API_PREFIX}/docs",
     redoc_url=f"{settings.API_PREFIX}/redoc",
     openapi_url=f"{settings.API_PREFIX}/openapi.json",
     lifespan=lifespan,
+    openapi_tags=[
+        {"name": "Health", "description": "Health check endpoints"},
+        {"name": "Authentication", "description": "User registration and login"},
+        {"name": "Users", "description": "User profile and address management"},
+        {"name": "Seller", "description": "Seller and shop management"},
+        {"name": "Products", "description": "Product catalog and management"},
+        {"name": "Categories", "description": "Product category management"},
+        {"name": "Cart", "description": "Shopping cart operations"},
+        {"name": "Orders", "description": "Order management and checkout"},
+        {"name": "Vouchers", "description": "Discount voucher management"},
+        {"name": "Reviews", "description": "Product reviews and ratings"},
+        {"name": "Notifications", "description": "User notification management"},
+        {"name": "Admin", "description": "Admin platform management"},
+    ],
 )
 
 # Configure CORS
@@ -47,9 +70,23 @@ app.add_middleware(
 
 
 # Exception handlers
+@app.exception_handler(AppException)
+async def app_exception_handler(request: Request, exc: AppException):
+    """Handle custom application exceptions"""
+    log.warning(f"Application exception: {exc.message} - {exc.detail}")
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "error": exc.message,
+            "detail": exc.detail,
+        },
+    )
+
+
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     """Handle validation errors"""
+    log.warning(f"Validation error: {exc.errors()}")
     return JSONResponse(
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
         content={
@@ -59,9 +96,33 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     )
 
 
+@app.exception_handler(SQLAlchemyError)
+async def database_exception_handler(request: Request, exc: SQLAlchemyError):
+    """Handle database errors"""
+    log.error(f"Database error: {type(exc).__name__} - {str(exc)}")
+    if settings.DEBUG:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={
+                "error": "Database Error",
+                "message": str(exc),
+                "type": type(exc).__name__,
+            },
+        )
+    else:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={
+                "error": "Database Error",
+                "message": "A database error occurred",
+            },
+        )
+
+
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
     """Handle all other exceptions"""
+    log.error(f"Unhandled exception: {type(exc).__name__} - {str(exc)}", exc_info=True)
     if settings.DEBUG:
         # In debug mode, return full error details
         return JSONResponse(
