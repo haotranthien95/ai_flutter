@@ -28,6 +28,7 @@ from app.services.order import OrderService
 from app.services.voucher import VoucherService
 from app.services.review import ReviewService
 from app.services.notification import NotificationService
+from app.services.admin import AdminService
 
 # HTTP Bearer security scheme
 security = HTTPBearer()
@@ -346,4 +347,30 @@ async def get_notification_service(
     
     return NotificationService(
         notification_repo=notification_repo,
+    )
+
+
+async def get_admin_service(
+    db: AsyncSession = Depends(get_db)
+) -> AdminService:
+    """
+    Get AdminService instance with all required repositories
+    
+    Args:
+        db: Database session
+        
+    Returns:
+        AdminService instance
+    """
+    user_repo = UserRepository(db)
+    shop_repo = ShopRepository(db)
+    product_repo = ProductRepository(db)
+    order_repo = OrderRepository(db)
+    
+    return AdminService(
+        user_repo=user_repo,
+        shop_repo=shop_repo,
+        product_repo=product_repo,
+        order_repo=order_repo,
+        db=db,
     )
