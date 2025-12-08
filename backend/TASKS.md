@@ -1284,7 +1284,7 @@
 
 ### Script Tasks
 
-- [ ] **T128**: Create database seed script
+- [✓] **T128**: Create database seed script
   - Create `scripts/seed_data.py`
   - Seed 10 test users (different roles)
   - Seed 5 shops
@@ -1293,19 +1293,21 @@
   - Seed 50 orders with different statuses
   - Seed 200 reviews
   - Make script idempotent (check before insert)
+  - Seed addresses, vouchers, and notifications
 
-- [ ] **T129**: Create admin user script
+- [✓] **T129**: Create admin user script
   - Create `scripts/create_admin.py`
   - Prompt for admin credentials
   - Create admin user with ADMIN role
   - Verify admin created successfully
+  - Handle existing users (upgrade to admin)
 
-- [ ] **T130**: Create database reset script
+- [✓] **T130**: Create database reset script
   - Create `scripts/reset_db.py`
   - Drop all tables
   - Run migrations
   - Optionally seed data
-  - Add confirmation prompt
+  - Add confirmation prompt (double confirmation)
 
 ---
 
