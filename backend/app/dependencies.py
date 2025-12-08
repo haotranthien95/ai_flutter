@@ -20,12 +20,14 @@ from app.repositories.cart import CartRepository
 from app.repositories.order import OrderRepository, OrderItemRepository
 from app.repositories.voucher import VoucherRepository
 from app.repositories.review import ReviewRepository
+from app.repositories.notification import NotificationRepository
 from app.services.product import ProductService
 from app.services.category import CategoryService
 from app.services.cart import CartService
 from app.services.order import OrderService
 from app.services.voucher import VoucherService
 from app.services.review import ReviewService
+from app.services.notification import NotificationService
 
 # HTTP Bearer security scheme
 security = HTTPBearer()
@@ -325,4 +327,23 @@ async def get_review_service(
         review_repo=review_repo,
         order_repo=order_repo,
         product_repo=product_repo,
+    )
+
+
+async def get_notification_service(
+    db: AsyncSession = Depends(get_db)
+) -> NotificationService:
+    """
+    Get NotificationService instance with all required repositories
+    
+    Args:
+        db: Database session
+        
+    Returns:
+        NotificationService instance
+    """
+    notification_repo = NotificationRepository(db)
+    
+    return NotificationService(
+        notification_repo=notification_repo,
     )

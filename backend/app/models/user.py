@@ -91,7 +91,7 @@ class User(BaseModel):
     cart_items = relationship("CartItem", back_populates="user", cascade="all, delete-orphan")
     orders = relationship("Order", foreign_keys="Order.buyer_id", back_populates="buyer")
     reviews = relationship("Review", back_populates="user", cascade="all, delete-orphan")
-    # notifications = relationship("Notification", back_populates="user", cascade="all, delete-orphan")
+    notifications = relationship("Notification", back_populates="user", cascade="all, delete-orphan")
     
     def __repr__(self):
         return f"<User(id={self.id}, phone={self.phone_number}, role={self.role})>"

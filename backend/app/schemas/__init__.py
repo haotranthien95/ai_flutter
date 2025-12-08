@@ -56,6 +56,15 @@ from app.schemas.review import (
     ReviewListResponse,
     ReviewStats,
 )
+from app.schemas.notification import (
+    NotificationType,
+    NotificationCreate,
+    NotificationResponse,
+    NotificationListResponse,
+    NotificationUnreadCountResponse,
+    MarkAsReadRequest,
+    NotificationPreferences,
+)
 
 __all__ = [
     # Product schemas
@@ -109,4 +118,12 @@ __all__ = [
     "ReviewUserInfo",
     "ReviewListResponse",
     "ReviewStats",
+    # Notification schemas
+    "NotificationType",
+    "NotificationCreate",
+    "NotificationResponse",
+    "NotificationListResponse",
+    "NotificationUnreadCountResponse",
+    "MarkAsReadRequest",
+    "NotificationPreferences",
 ]

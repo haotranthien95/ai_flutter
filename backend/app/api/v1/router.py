@@ -3,7 +3,7 @@ Main API v1 router
 """
 from fastapi import APIRouter
 
-from app.api.v1 import auth, users, seller, products, categories, cart, orders, vouchers, reviews
+from app.api.v1 import auth, users, seller, products, categories, cart, orders, vouchers, reviews, notifications
 
 # Create main API router
 api_router = APIRouter()
@@ -18,3 +18,4 @@ api_router.include_router(cart.router)
 api_router.include_router(orders.router, prefix="/orders", tags=["Orders"])
 api_router.include_router(vouchers.router, tags=["Vouchers"])
 api_router.include_router(reviews.router)
+api_router.include_router(notifications.router, prefix="/notifications", tags=["Notifications"])
