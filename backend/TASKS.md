@@ -1040,7 +1040,7 @@
 
 ### Model & Schema Tasks
 
-- [ ] **T101**: Create Notification model
+- [x] **T101**: Create Notification model ✅ 2024-12-08
   - Create `app/models/notification.py`
   - Define Notification table with fields:
     - id (UUID, PK)
@@ -1054,19 +1054,19 @@
     - created_at
   - Add indexes on user_id, is_read, created_at
 
-- [ ] **T102**: Create Notification schemas
+- [x] **T102**: Create Notification schemas ✅ 2024-12-08
   - Create `app/schemas/notification.py`
   - Define `NotificationResponse`
   - Define `NotificationListResponse` with pagination
   - Define `NotificationType` enum
 
-- [ ] **T103**: Create database migration for notifications
+- [x] **T103**: Create database migration for notifications ✅ 2024-12-08
   - Run `alembic revision --autogenerate -m "Create notifications table"`
   - Review and apply migration
 
 ### Core Implementation Tasks
 
-- [ ] **T104**: Create Notification repository
+- [x] **T104**: Create Notification repository ✅ 2024-12-08
   - Create `app/repositories/notification.py`
   - Implement `list_by_user(user_id, pagination) -> List[Notification]`
   - Implement `get_unread_count(user_id: UUID) -> int`
@@ -1074,7 +1074,7 @@
   - Implement `mark_as_read(notification_id: UUID) -> None`
   - Implement `mark_all_as_read(user_id: UUID) -> None`
 
-- [ ] **T105**: Implement Notification service
+- [x] **T105**: Implement Notification service ✅ 2024-12-08
   - Create `app/services/notification.py`
   - Implement `create_notification(user_id, type, title, message, entity_type, entity_id) -> None`
   - Implement `get_user_notifications(user_id, pagination) -> NotificationListResponse`
@@ -1082,12 +1082,12 @@
   - Implement `mark_as_read(user_id, notification_id) -> None`
   - Implement `mark_all_as_read(user_id) -> None`
 
-- [ ] **T106**: Integrate notifications with order status updates
+- [x] **T106**: Integrate notifications with order status updates ✅ 2024-12-08
   - Update `app/services/order.py`
   - Call notification service when order status changes
   - Create notifications for buyer and seller
 
-- [ ] **T107**: Create Notification API routes
+- [x] **T107**: Create Notification API routes ✅ 2024-12-08
   - Create `app/api/v1/notifications.py`
   - Implement `GET /notifications`
   - Implement `GET /notifications/unread-count`
@@ -1095,19 +1095,19 @@
   - Implement `POST /notifications/mark-all-read`
   - Add authentication
 
-- [ ] **T108**: Include notifications router
+- [x] **T108**: Include notifications router ✅ 2024-12-08
   - Update `app/api/v1/router.py`
   - Include notifications router with prefix `/notifications`
 
 ### Testing Tasks
 
-- [ ] **T109**: Write unit tests for Notification service
+- [x] **T109**: Write unit tests for Notification service ✅ 2024-12-08
   - Create `tests/unit/services/test_notification.py`
   - Test notification creation
   - Test mark as read
   - Test unread count
 
-- [ ] **T110**: Write integration tests for Notification endpoints
+- [x] **T110**: Write integration tests for Notification endpoints ✅ 2024-12-08
   - Create `tests/integration/api/test_notifications.py`
   - Test get notifications
   - Test mark as read
